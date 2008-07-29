@@ -17,7 +17,7 @@
   <modules>
     <module>flex-server-connector</module>
     <module>nuxeo-flex-components</module>
-    <module>samples</module>
+    <!--<module>samples</module>-->
   </modules>
 
   <repositories>
