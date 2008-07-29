@@ -3,16 +3,16 @@
 
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
-    <artifactId>nuxeo-platform-ui-flex-sample</artifactId>
+    <artifactId>nuxeo-platform-ui-flex</artifactId>
     <version>5.2-SNAPSHOT</version>
   </parent>
 
-  <artifactId>nuxeo-platform-ui-flex-samples-browser-parent</artifactId>
-  <name>Nuxeo Flex browswer</name>
-  <packaging>pom</packaging>
+  <artifactId>nuxeo-platform-ui-flex-sample</artifactId>
+  <name>Nuxeo Web Framework Flex samples</name>
   <description>
-    Nuxeo Enterprise Platform: Flex Browser parent pom
+    Nuxeo Enterprise Platform: Flex samples based on JBoss SEAM
   </description>
+  <packaging>pom</packaging>
 
   <repositories>
         <repository>
@@ -24,14 +24,16 @@
         </repository>
     </repositories>
 
-   <modules>
-    <module>client</module>
-    <module>server</module>
-   </modules>
+  <modules>
+    <module>actions</module>
+    <module>browser</module>
+    <module>documentAPI</module>
+    <module>flex-login</module>
+    <module>simple</module>
+    <module>tree</module>
+    <module>users</module>
+    <module>vocabularies</module>
+  </modules>
 
-  <properties>
-    <nuxeo.platform.flex.sample.version>5.2-SNAPSHOT</nuxeo.platform.flex.sample.version>
-  </properties>
 
 </project>
-
