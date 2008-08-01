@@ -30,6 +30,8 @@
             <include type="org.nuxeo.ecm.flex.javadto.FlexDocumentModel"/>
         </externalizer>
     </externalizers>
+ <invocationlistener type="org.nuxeo.ecm.platform.ui.flex.listener.NuxeoServiceInvocationListener"/>
+
 
 
 </granite-config>
