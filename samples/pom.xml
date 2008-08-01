@@ -24,10 +24,37 @@
         </repository>
     </repositories>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.graniteds</groupId>
+      <artifactId>granite-seam</artifactId>
+      <version>1.1.0_RC3</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graniteds</groupId>
+      <artifactId>granite-seam</artifactId>
+      <version>1.1.0_RC3</version>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graniteds</groupId>
+      <artifactId>granite</artifactId>
+      <version>1.1.0_RC3</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.graniteds</groupId>
+      <artifactId>granite</artifactId>
+      <version>1.1.0_RC3</version>
+      <type>swc</type>
+    </dependency>
+  </dependencies>
+
   <modules>
     <module>actions</module>
     <module>browser</module>
-    <module>documentAPI</module>
+    <module>documentAPI</module> 
     <module>flex-login</module>
     <module>simple</module>
     <module>tree</module>

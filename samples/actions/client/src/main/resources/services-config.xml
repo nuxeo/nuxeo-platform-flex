@@ -2,7 +2,7 @@
 
 <services-config>
     <services>
-        <service
+           <service
             id="flexRepositoryService"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
@@ -12,15 +12,21 @@
             this value is used on client and server side.
             this is a Seam component name.
             -->
-            <destination id="flexRepositoryService"/>
-            <default-channels>
+            <destination id="flexRepositoryService">
+            <channels>
                 <!--
                 Note:
                 this is URL/channel configuration
                 -->
                 <channel ref="seam-amf"/>
-            </default-channels>
-        </service>
+            </channels>
+                <properties>
+                    <factory>seamFactory</factory>
+                    <source>flexRepositoryService</source>
+                </properties>
+            
+            </destination>
+            </service>
 	<service
             id="flexActionsService"
             class="flex.messaging.services.RemotingService"
@@ -31,21 +37,30 @@
             this value is used on client and server side.
             this is a Seam component name.
             -->
-            <destination id="flexActionsService"/>
-            <default-channels>
+            <destination id="flexActionsService">
+            <channels>
                 <!--
                 Note:
                 this is URL/channel configuration
                 -->
                 <channel ref="seam-amf"/>
-            </default-channels>
-        </service>
+            </channels>
+                <properties>
+                    <factory>seamFactory</factory>
+                    <source>flexActionsService</source>
+                </properties>
+            </destination>
+      </service>
     </services>
+
+    <factories>
+        <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
+    </factories>
 
     <channels>
         <channel-definition id="seam-amf" class="mx.messaging.channels.AMFChannel">
             <endpoint
-                uri="http://{server.name}:{server.port}/nuxeo/seam/resource/nuxeo-amf"
+                uri="http://{server.name}:{server.port}/nuxeo/nuxeo-amf/amf"
                 class="flex.messaging.endpoints.AMFEndpoint"/>
         </channel-definition>
 

@@ -44,6 +44,8 @@
 			import org.nuxeo.ecm.flex.login.NuxeoLogin;
 			import flash.net.*;
 
+
+
 			private var nxLogin:NuxeoLogin;
 
 			[Bindable] 
@@ -51,10 +53,11 @@
 
 			private function init():void
 			{
+			
 				nxLogin = new NuxeoLogin();
 				checkLogin();
 			}
-			
+
 			private function doLogin():void {				
 				nxLogin.setLoginSucessCallBack(loginSuccessHandler);
 				nxLogin.setLoginFailedCallBack(loginErrorHandler);

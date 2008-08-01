@@ -22,6 +22,13 @@
       <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
+    <filter-mapping>
+      <filter-name>NuxeoAuthenticationFilter</filter-name>
+        <url-pattern>/nuxeo-amf/*</url-pattern>
+      <dispatcher>REQUEST</dispatcher>
+      <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
   </extension>
 
   <extension target="web#CONTEXT-PARAM">
@@ -32,7 +39,6 @@
     </context-param>
    -->
   </extension>
-
 
   <extension target="web#SERVLET">
     <servlet>
@@ -46,9 +52,38 @@
       <servlet-name>Nuxeo Flex Login Servlet</servlet-name>
       <url-pattern>/flexlogin/*</url-pattern>
     </servlet-mapping>
+    
   </extension>
 
 
+  <extension target="web#SERVLET">
+     <servlet>
+        <servlet-name>AMFMessageServlet</servlet-name>
+        <servlet-class>org.granite.messaging.webapp.AMFMessageServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>AMFMessageServlet</servlet-name>
+        <url-pattern>/nuxeo-amf/*</url-pattern>
+    </servlet-mapping>
+    
+      
+      <filter>
+        <filter-name>AMFMessageFilter</filter-name>
+        <filter-class>org.granite.messaging.webapp.AMFMessageFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AMFMessageFilter</filter-name>
+        <url-pattern>/nuxeo-amf/*</url-pattern>
+    </filter-mapping>
+  
+  
+  </extension>
+
+
+
+  
   <install>
 
     <!--  create a temp dir -->
@@ -60,8 +95,9 @@
       <include>OSGI-INF/**</include>
       <include>WEB/**</include>
     </unzip>
-
-    <copy from="nxflexplatform.tmp/WEB/lib" to="lib/" />
+    
+    <copy from="nxflexplatform.tmp/WEB/servicesConfig.xml" to="nuxeo.war/WEB-INF/flex/services-config.xml" />
+    <copy from="nxflexplatform.tmp/WEB/graniteConfiguration.xml" to="nuxeo.war/WEB-INF/granite/granite-config.xml" />
 
     <delete path="nxflexplatform.tmp" />
 

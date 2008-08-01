@@ -81,6 +81,11 @@
       	<exclude name="nuxeo-platform-ui-flex-*-sources.jar" />
       </fileset>
     </copy>
+    <copy todir="${jboss.nuxeo.ear}/lib">
+      <fileset dir="${basedir}/flex-server-connector/target/lib/">
+	<include name="granite*.jar" />
+      </fileset>
+    </copy>
   </target>
 
 </project>
