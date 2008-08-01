@@ -1,18 +1,12 @@
 package org.nuxeo.ecm.flex.javadto;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.nuxeo.ecm.core.api.DocumentRef;
 
-public class FlexDocumentModel implements Externalizable {
+    public class FlexDocumentModel {
 
 
     private String docRef;
@@ -71,38 +65,20 @@ public class FlexDocumentModel implements Externalizable {
         return data.get(schemaName).get(fieldName);
     }
 
-
-    public void readExternal(ObjectInput in) throws IOException,
-            ClassNotFoundException {
-
-        docRef=in.readUTF();
-        name=in.readUTF();
-        path=in.readUTF();
-        lifeCycleState=in.readUTF();
-        type=in.readUTF();
-        //only ready dirty fields
-        dirtyFields=(Map<String,Serializable>) in.readObject();
-        // don't read all data
-        //data = (Map<String, Map<String,Serializable>>) in.readObject();
-
+    public Map<String, Map<String, Serializable>> getData() {
+        return data;
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
+    public void setData(Map<String, Map<String, Serializable>> data) {
+        this.data = data;
+    }
 
-        out.writeUTF(docRef);
-        if (name==null)
-            out.writeUTF("");
-        else
-            out.writeUTF(name);
-        out.writeUTF(path);
-        if (lifeCycleState==null)
-            out.writeUTF("");
-        else
-            out.writeUTF(lifeCycleState);
-        out.writeUTF(type);
-        out.writeBoolean(isFolder);
-        // only sends data : nothing is dirty for now
-        out.writeObject(data);
+    public Boolean getIsFolder() {
+        return isFolder;
+    }
+
+    public void setDirtyFields(Map<String, Serializable> dirtyFields) {
+        this.dirtyFields = dirtyFields;
     }
 
     public String getDocRef() {
