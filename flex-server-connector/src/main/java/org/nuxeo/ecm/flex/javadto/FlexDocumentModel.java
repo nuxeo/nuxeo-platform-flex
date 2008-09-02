@@ -15,6 +15,7 @@ import org.nuxeo.ecm.core.api.DocumentRef;
     private String lifeCycleState;
     private String type;
     private Boolean isFolder=false;
+    private String sessionId;
 
 
     private transient Map<String, Map<String,Serializable>> data = new HashMap<String, Map<String,Serializable>>();
@@ -29,13 +30,14 @@ import org.nuxeo.ecm.core.api.DocumentRef;
         type=null;
     }
 
-    public FlexDocumentModel(DocumentRef ref, String name, String path, String lcState,String type)
+    public FlexDocumentModel(String sessionId, DocumentRef ref, String name, String path, String lcState,String type)
     {
         docRef=ref.toString();
         this.name=name;
         this.path=path;
         lifeCycleState=lcState;
         this.type=type;
+        this.sessionId=sessionId;
     }
 
 
@@ -119,6 +121,14 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 
 }

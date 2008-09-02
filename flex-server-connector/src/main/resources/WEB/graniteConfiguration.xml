@@ -24,7 +24,7 @@
 -->
 
 <granite-config scan="true">
-    
+
 <externalizers>
         <externalizer type="org.nuxeo.ecm.flex.javadto.FlexDocumentModelExternalizer">
             <include type="org.nuxeo.ecm.flex.javadto.FlexDocumentModel"/>

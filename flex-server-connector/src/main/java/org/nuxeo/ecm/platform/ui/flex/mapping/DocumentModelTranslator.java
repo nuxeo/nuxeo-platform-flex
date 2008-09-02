@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.Blob;
+import org.nuxeo.ecm.core.api.CoreInstance;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
@@ -62,9 +63,9 @@ public class DocumentModelTranslator {
 
     public static FlexDocumentModel toFlexTypeFromPrefetch(DocumentModel doc)
             throws Exception {
-        FlexDocumentModel fdm = new FlexDocumentModel(doc.getRef(),
-                doc.getName(), doc.getPathAsString(),
-                doc.getCurrentLifeCycleState(), doc.getType());
+        FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(), doc
+                .getRef(), doc.getName(), doc.getPathAsString(), doc
+                .getCurrentLifeCycleState(), doc.getType());
 
         fdm.setIsFolder(doc.isFolder());
 
@@ -98,9 +99,9 @@ public class DocumentModelTranslator {
     public static FlexDocumentModel toFlexType(DocumentModel doc)
             throws Exception {
 
-        FlexDocumentModel fdm = new FlexDocumentModel(doc.getRef(),
-                doc.getName(), doc.getPathAsString(),
-                doc.getCurrentLifeCycleState(), doc.getType());
+        FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(), doc
+                .getRef(), doc.getName(), doc.getPathAsString(), doc
+                .getCurrentLifeCycleState(), doc.getType());
 
         fdm.setIsFolder(doc.isFolder());
 
@@ -127,12 +128,12 @@ public class DocumentModelTranslator {
                         Blob blob = (Blob) blobProp.getValue();
                         if (blob != null) {
                             String fileName = blob.getFilename();
-                            if (fileName==null)
-                            {
+                            if (fileName == null) {
                                 // XXX Hack !
-                                if (parts[i].getSchema().getName().equals("file"))
-                                {
-                                    fileName=(String) doc.getProperty("file", "filename");
+                                if (parts[i].getSchema().getName().equals(
+                                        "file")) {
+                                    fileName = (String) doc.getProperty("file",
+                                            "filename");
                                 }
                             }
                             String dwURL = DocumentModelFunctions.fileUrl(
@@ -161,6 +162,13 @@ public class DocumentModelTranslator {
         return fdm;
     }
 
+    public static DocumentModel toDocumentModel(FlexDocumentModel fdoc)
+            throws Exception {
+        CoreSession session = CoreInstance.getInstance().getSession(
+                fdoc.getSessionId());
+        return toDocumentModel(fdoc, session);
+    }
+
     public static DocumentModel toDocumentModel(FlexDocumentModel fdoc,
             CoreSession session) throws Exception {
 
@@ -170,7 +178,8 @@ public class DocumentModelTranslator {
             String docType = fdoc.getType();
             String name = fdoc.getName();
             String docPath = fdoc.getPath();
-            String parentPath = new Path(docPath).removeLastSegments(1).toString();
+            String parentPath = new Path(docPath).removeLastSegments(1)
+                    .toString();
             doc = session.createDocumentModel(parentPath, name, docType);
             doc = session.createDocument(doc);
         } else {

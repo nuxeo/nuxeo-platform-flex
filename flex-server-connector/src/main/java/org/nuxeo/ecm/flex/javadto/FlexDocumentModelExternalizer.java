@@ -13,9 +13,10 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
 
     @Override
     public void readExternal(Object o, ObjectInput in) throws IOException,
-            ClassNotFoundException, IllegalAccessException {        
+            ClassNotFoundException, IllegalAccessException {
         if (o instanceof FlexDocumentModel){
             FlexDocumentModel fdm = (FlexDocumentModel)o;
+            fdm.setSessionId((String) in.readUTF());
             fdm.setDocRef((String) in.readObject());
             fdm.setName((String) in.readObject());
             fdm.setPath((String) in.readObject());
@@ -31,6 +32,7 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
             IllegalAccessException {
         if (o instanceof FlexDocumentModel){
             FlexDocumentModel fdm = (FlexDocumentModel)o;
+            out.writeUTF(fdm.getSessionId());
             out.writeUTF(fdm.getDocRef());
             if (fdm.getName()==null)
                 out.writeUTF("");
@@ -45,7 +47,7 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
             out.writeBoolean(fdm.getIsFolder());
             // only sends data : nothing is dirty for now
             out.writeObject(fdm.getData());
-        
+
         }
     }
 }
