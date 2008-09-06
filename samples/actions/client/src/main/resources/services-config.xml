@@ -18,7 +18,7 @@
                 Note:
                 this is URL/channel configuration
                 -->
-                <channel ref="seam-amf"/>
+                <channel ref="nx-amf"/>
             </channels>
                 <properties>
                     <factory>seamFactory</factory>
@@ -43,7 +43,7 @@
                 Note:
                 this is URL/channel configuration
                 -->
-                <channel ref="seam-amf"/>
+                <channel ref="nx-amf"/>
             </channels>
                 <properties>
                     <factory>seamFactory</factory>
@@ -58,7 +58,7 @@
     </factories>
 
     <channels>
-        <channel-definition id="seam-amf" class="mx.messaging.channels.AMFChannel">
+        <channel-definition id="nx-amf" class="mx.messaging.channels.AMFChannel">
             <endpoint
                 uri="http://{server.name}:{server.port}/nuxeo/nuxeo-amf/amf"
                 class="flex.messaging.endpoints.AMFEndpoint"/>

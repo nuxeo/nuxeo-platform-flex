@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService">
+  <documentation>
+    The nxgranite configuration service provides extension points for pluggable flex remote sevices.
+
+    @author Laurent Doguin (ldoguin@nuxeo.com)
+  </documentation>
+
+  <implementation class="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" />
+
+  <service>
+	  <provide interface="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigManager" />
+  </service>
+
+  <extension-point name="services">
+    <documentation>
+    	
+    There are two available type of services:
+     
+     -Runtime services
+     -Seam services
+     
+     Here is the minimum configuration to register your service:
+     
+      <code>
+        <runtime id="myID" class="my.package.MyFilter" />
+        <seam id="myID" />
+      </code>
+     The id is the default service id. They will be used as the destination name if not specified.
+     For Seam service, the id will be use a the default Seam component Name if not specified.
+     
+     A complete service declaration would look like this:
+         
+      <code>
+        <runtime id="myID" destinationId="myDestinationId" class="my.package.MyRuntimeServiceClass" />
+        <seam id="myID" destinationId="myDestinationId" source="mySeamComponentName"/>
+      </code>  
+
+
+    </documentation>
+    <object class="org.nuxeo.ecm.platform.ui.granite.config.RuntimeComponent" />
+    <object class="org.nuxeo.ecm.platform.ui.granite.config.SeamComponent" />
+  </extension-point>
+</component>

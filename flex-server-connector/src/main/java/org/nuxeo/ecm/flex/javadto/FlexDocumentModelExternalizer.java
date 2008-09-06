@@ -22,6 +22,7 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
             fdm.setPath((String) in.readObject());
             fdm.setLifeCycleState((String) in.readObject());
             fdm.setType((String) in.readObject());
+            fdm.setIsFolder((Boolean)in.readObject());
             //only ready dirty fields
             fdm.setDirtyFields((Map<String,Serializable>) in.readObject());
         }

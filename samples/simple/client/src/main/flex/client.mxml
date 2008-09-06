@@ -1,7 +1,7 @@
 <!--
   -->
 
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:word="*">
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:word="*" >
 
    <mx:Script>
 		<![CDATA[
@@ -10,6 +10,7 @@
 
 			import mx.controls.Alert;
 			import mx.rpc.events.FaultEvent;
+					
 
 			private function faultHandler(event:FaultEvent):void {
 				 Alert.show(event.fault.faultString, event.fault.faultCode.toString());
@@ -50,11 +51,20 @@
 				doc.setProperty(schemaName,fieldName,fieldValue);
 				Alert.show("doc property has been updated locally", "info");
 			}
+			
+			private function addComment(comment:String):void{
+				var doc:FlexDocumentModel = service.getSomeDocumentModel("/default-domain").lastResult;	
+				commentService.createComment(doc,comment,"Administrator");
+				Alert.show("comment has been added", "info");
+			}
+			
+			
 
 	]]>
 	</mx:Script>
 
     <mx:RemoteObject id="service" destination="flexStatelessPingTestBean" fault="faultHandler(event)"/>
+    <mx:RemoteObject id="commentService" destination="commentManager" fault="faultHandler(event)"/>
 
     <mx:Panel
         title="Nuxeo-Flex AMF Ping test"
@@ -78,7 +88,21 @@
         <mx:Label text='The server said: "{service.pingUser.lastResult}"'/>
 
     </mx:Panel>
+    
+    <mx:Panel
+        title="Nuxeo-Flex AMF Comment Service test"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
 
+        <mx:HBox>
+        	<mx:TextArea
+                id="comment"
+                maxChars="300"
+                text="Enter your comment..."/>
+            
+            <mx:Button label="Add Comment" click="addComment(comment.text)"/>
+        </mx:HBox>
+    </mx:Panel>
+    
     <mx:Panel
         title="Nuxeo-Flex AMF test serialization"
         paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">

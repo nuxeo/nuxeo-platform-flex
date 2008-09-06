@@ -60,7 +60,7 @@ public class FlexStatelessPingTestBean implements Serializable {
 
 
     @WebRemote
-    public FlexDocumentModel getTestDocumentModel()
+    public DocumentModel getTestDocumentModel() throws Exception
     {
         FlexDocumentModel doc = new FlexDocumentModel();
 
@@ -74,25 +74,26 @@ public class FlexStatelessPingTestBean implements Serializable {
 
         doc.feed("dublincore", schemadata);
 
+        return DocumentModelTranslator.toDocumentModel(doc, flexDocumentManager);
+    }
+
+    @WebRemote
+    public DocumentModel getSomeDocumentModel(String path) throws Exception
+    {
+        DocumentModel doc = flexDocumentManager.getDocument(new PathRef(path));
+        //FlexDocumentModel flexDoc = DocumentModelTranslator.toFlexType(doc);
+        //CoreInstance.getInstance().close(session);
         return doc;
     }
 
     @WebRemote
-    public FlexDocumentModel getSomeDocumentModel(String path) throws Exception
+    public DocumentModel saveDocument(DocumentModel dm) throws Exception
     {
-        DocumentModel doc = flexDocumentManager.getDocument(new PathRef(path));
-        FlexDocumentModel flexDoc = DocumentModelTranslator.toFlexType(doc);
-        //CoreInstance.getInstance().close(session);
-        return flexDoc;
-    }
-
-    @WebRemote
-    public FlexDocumentModel saveDocument(FlexDocumentModel fdm) throws Exception
-    {
-        DocumentModel doc = DocumentModelTranslator.toDocumentModel(fdm, flexDocumentManager);
-        doc=flexDocumentManager.saveDocument(doc);
+        //DocumentModel doc = DocumentModelTranslator.toDocumentModel(fdm, flexDocumentManager);
+        dm=flexDocumentManager.saveDocument(dm);
         flexDocumentManager.save();
-        return DocumentModelTranslator.toFlexType(doc);
+        return dm;
+       // return DocumentModelTranslator.toFlexType(doc);
     }
 
 

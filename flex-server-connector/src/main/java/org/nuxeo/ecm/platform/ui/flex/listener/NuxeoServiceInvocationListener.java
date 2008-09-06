@@ -39,7 +39,7 @@ public class NuxeoServiceInvocationListener implements
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     public void afterInvocationError(ServiceInvocationContext context,

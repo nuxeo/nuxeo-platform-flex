@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.ecm.platform.ui.granite.config.simple">
+
+    <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
+						
+	<seam id="authPingTester"/>
+	<seam id="flexStatelessPingTestBean"/>
+	<runtime id="commentManager" class="org.nuxeo.ecm.platform.comment.api.CommentManager"/>
+
+  </extension>
+</component>
