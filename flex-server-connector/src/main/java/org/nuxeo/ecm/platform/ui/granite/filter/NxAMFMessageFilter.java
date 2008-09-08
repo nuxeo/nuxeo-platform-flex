@@ -48,8 +48,18 @@ public class NxAMFMessageFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
-        this.graniteConfig = GraniteConfig.loadConfig(config.getServletContext());
-        this.servicesConfig = ServicesConfig.loadConfig(config.getServletContext());
+        this.graniteConfig = GraniteConfig.loadConfig(config.getServletContext());      
+        this.servicesConfig = (ServicesConfig)config.getServletContext().getAttribute(ServicesConfig.class.getName() + "_CACHE");
+        if (this.servicesConfig == null){       
+            this.servicesConfig = ServicesConfig.loadConfig(config.getServletContext());
+            addNxServicesConfig();
+        }
+        else if (servicesConfig.findFactoryById(NxGraniteConfigService.SEAM_FACTORY) == null){
+            addNxServicesConfig();
+        }               
+     }
+
+    public void addNxServicesConfig() throws ServletException{
         this.servicesConfig.addFactory(
                 getSeamFactory());
         this.servicesConfig.addFactory(
@@ -68,9 +78,8 @@ public class NxAMFMessageFilter implements Filter {
             this.servicesConfig.addService(
                     service);
         }
-        
-     }
-
+    }
+    
     public Factory getSeamFactory() {
         return new Factory(NxGraniteConfigService.SEAM_FACTORY, NxGraniteConfigService.SEAM_FACTORY_CLASS, mockMap);
     }
@@ -99,7 +108,7 @@ public class NxAMFMessageFilter implements Filter {
                     graniteConfig, servicesConfig, config.getServletContext(),
                     (HttpServletRequest) request,
                     (HttpServletResponse) response);
-
+            
             
             AMFContextImpl amf = (AMFContextImpl) context.getAMFContext();
 
