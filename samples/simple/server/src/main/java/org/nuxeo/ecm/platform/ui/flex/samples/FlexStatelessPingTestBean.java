@@ -81,7 +81,6 @@ public class FlexStatelessPingTestBean implements Serializable {
     public DocumentModel getSomeDocumentModel(String path) throws Exception
     {
         DocumentModel doc = flexDocumentManager.getDocument(new PathRef(path));
-        //FlexDocumentModel flexDoc = DocumentModelTranslator.toFlexType(doc);
         //CoreInstance.getInstance().close(session);
         return doc;
     }
@@ -89,11 +88,9 @@ public class FlexStatelessPingTestBean implements Serializable {
     @WebRemote
     public DocumentModel saveDocument(DocumentModel dm) throws Exception
     {
-        //DocumentModel doc = DocumentModelTranslator.toDocumentModel(fdm, flexDocumentManager);
         dm=flexDocumentManager.saveDocument(dm);
         flexDocumentManager.save();
         return dm;
-       // return DocumentModelTranslator.toFlexType(doc);
     }
 
 

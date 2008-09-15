@@ -17,12 +17,12 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
         if (o instanceof FlexDocumentModel){
             FlexDocumentModel fdm = (FlexDocumentModel)o;
             fdm.setSessionId((String) in.readUTF());
-            fdm.setDocRef((String) in.readObject());
-            fdm.setName((String) in.readObject());
-            fdm.setPath((String) in.readObject());
-            fdm.setLifeCycleState((String) in.readObject());
-            fdm.setType((String) in.readObject());
-            fdm.setIsFolder((Boolean)in.readObject());
+            fdm.setDocRef((String) in.readUTF());
+            fdm.setName((String) in.readUTF());
+            fdm.setPath((String) in.readUTF());
+            fdm.setLifeCycleState((String) in.readUTF());
+            fdm.setType((String) in.readUTF());
+            fdm.setIsFolder((Boolean)in.readBoolean());
             //only ready dirty fields
             fdm.setDirtyFields((Map<String,Serializable>) in.readObject());
         }

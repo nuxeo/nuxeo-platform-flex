@@ -37,7 +37,7 @@
 				_callstack = new Array();
 				_callstack2 = new Array();
 				_callstack2.splice(_callstack2.length-1,0,"init");
-				flexDocumentManager.getDocument("/default-domain");
+				flexDocumentManager.getDocument("pathRef:/default-domain");
 			}
 
 	
@@ -105,14 +105,14 @@
 				   var docId:String = item["docId"];       				
 				   _itemToOpen=item;
 				    _callstack.splice(_callstack.length-1,0,"tree");
-				   flexDocumentManager.getChildren(docId);
+				   flexDocumentManager.getChildren("idRef:"+docId);
 		               }
            		}	
 
 			private function selectContainer(event:Event):void {
 				var docId:String = event.currentTarget.selectedItem.docId;					
 				_callstack.splice(_callstack.length-1,0,"grid");	
-  			        flexDocumentManager.getChildren(docId);					
+  			        flexDocumentManager.getChildren("idRef:"+docId);					
            		}	
 
 			private function displayTitle( row:Object, column:DataGridColumn ):String {
@@ -128,7 +128,7 @@
 			private function selectDoc(event:ListEvent):void {
 				var docId:String = event.target.selectedItem.id;					
 				_callstack2.splice(_callstack2.length-1,0,"details");
-				flexDocumentManager.getDocument(docId);								
+				flexDocumentManager.getDocument("idRef:"+docId);								
            		}		
 			
 			private function fetchDetailFromDoc(doc:FlexDocumentModel):void
@@ -154,7 +154,7 @@
 	]]>
 	</mx:Script>
 
-    <mx:RemoteObject id="flexDocumentManager" destination="flexRepositoryService" fault="faultHandler(event)">
+    <mx:RemoteObject id="flexDocumentManager" destination="flexDocumentManager" fault="faultHandler(event)">
       <mx:method name="getDocument" result="getDocumentHandler(event)" />
       <mx:method name="getChildren" result="getChildrenHandler(event)" />
     </mx:RemoteObject>

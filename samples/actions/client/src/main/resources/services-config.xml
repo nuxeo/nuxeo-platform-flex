@@ -3,7 +3,7 @@
 <services-config>
     <services>
            <service
-            id="flexRepositoryService"
+            id="flexDocumentManager"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
 
@@ -12,7 +12,7 @@
             this value is used on client and server side.
             this is a Seam component name.
             -->
-            <destination id="flexRepositoryService">
+            <destination id="flexDocumentManager">
             <channels>
                 <!--
                 Note:
@@ -22,13 +22,13 @@
             </channels>
                 <properties>
                     <factory>seamFactory</factory>
-                    <source>flexRepositoryService</source>
+                    <source>flexDocumentManager</source>
                 </properties>
             
             </destination>
             </service>
 	<service
-            id="flexActionsService"
+            id="flexActionService"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
 
@@ -37,7 +37,7 @@
             this value is used on client and server side.
             this is a Seam component name.
             -->
-            <destination id="flexActionsService">
+            <destination id="flexActionService">
             <channels>
                 <!--
                 Note:
@@ -47,7 +47,7 @@
             </channels>
                 <properties>
                     <factory>seamFactory</factory>
-                    <source>flexActionsService</source>
+                    <source>flexActionService</source>
                 </properties>
             </destination>
       </service>

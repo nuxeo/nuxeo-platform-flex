@@ -18,7 +18,7 @@ import org.nuxeo.ecm.platform.actions.ActionContext;
 import org.nuxeo.ecm.platform.actions.ejb.ActionManager;
 import org.nuxeo.ecm.platform.ui.web.util.SeamContextHelper;
 
-@Name("flexActionsService")
+@Name("flexActionService")
 @Scope(ScopeType.STATELESS)
 public class FlexActionService {
 

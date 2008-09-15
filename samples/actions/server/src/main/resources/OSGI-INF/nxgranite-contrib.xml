@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component name="org.nuxeo.ecm.platform.ui.granite.config.simple">
+<component name="org.nuxeo.ecm.platform.ui.granite.config.actions">
 
     <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
 						
-	<seam id="flexStatelessPingTestBean"/>
+	<seam id="flexDocumentManager" />
+	<seam id="flexActionService" />
+	
 
   </extension>
 </component>

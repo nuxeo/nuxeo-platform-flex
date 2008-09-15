@@ -24,13 +24,13 @@
 			private function init():void
 			{
 				docTreeList= new ArrayCollection();
-				flexDocumentManager.getDocument("/default-domain");
+				documentManager.getDocument("pathRef:/default-domain");
 			}
 
 
 			private function getActionsHandler(event:ResultEvent):void
 			{
-				var actions:ArrayCollection = flexActionsManager.getActionsList.lastResult;
+				var actions:ArrayCollection = actionManager.getActionsList.lastResult;
 				//var disp:String="";
 			        //for(var i:int = 0; i < actions.length; i++) {
 				//	disp=disp+actions[i].categories + "-" + actions[i].label +";" 
@@ -40,7 +40,7 @@
 			}	
 			private function getDocumentHandler(event:ResultEvent):void
 			{
-				var doc:FlexDocumentModel = flexDocumentManager.getDocument.lastResult;
+				var doc:FlexDocumentModel = documentManager.getDocument.lastResult;
                		        var obj:ObjectProxy = new ObjectProxy();
 				obj["type"] = "doc";
 				obj["children"] = new ArrayCollection();
@@ -54,7 +54,7 @@
 
 			private function getChildrenHandler(event:ResultEvent):void
 			{
-				var children:ArrayCollection = flexDocumentManager.getChildren.lastResult;
+				var children:ArrayCollection = documentManager.getChildren.lastResult;
                		        var obj:ObjectProxy;
 			        for(var i:int = 0; i < children.length; i++) {
 			                obj= new ObjectProxy();
@@ -85,7 +85,7 @@
 				   var item:Object = event.item;
 				   var docId:String = item["docId"];       				
 				   _itemToOpen=item;
-				   flexDocumentManager.getChildren(docId);
+				   documentManager.getChildren("idRef:"+docId);
 		               }
            		}
 	
@@ -97,18 +97,18 @@
 				var categories:ArrayCollection=new ArrayCollection();
 				categories.addItem("FLEX_ACTIONS_ON_CONTAINER");
 				categories.addItem("FLEX_TABS");
-				flexActionsManager.getActionsList(categories,docId);
+				actionManager.getActionsList(categories,docId);
            		}
 		
 	]]>
 	</mx:Script>
 
-    <mx:RemoteObject id="flexDocumentManager" destination="flexRepositoryService" fault="faultHandler(event)">
+    <mx:RemoteObject id="documentManager" destination="flexDocumentManager" fault="faultHandler(event)">
       <mx:method name="getDocument" result="getDocumentHandler(event)" />
       <mx:method name="getChildren" result="getChildrenHandler(event)" />
     </mx:RemoteObject>
 
-    <mx:RemoteObject id="flexActionsManager" destination="flexActionsService" fault="faultHandler(event)">
+    <mx:RemoteObject id="actionManager" destination="flexActionService" fault="faultHandler(event)">
       <mx:method name="getActionsList" result="getActionsHandler(event)" />
     </mx:RemoteObject>
 
@@ -122,7 +122,7 @@
 	itemOpen="setView(event)" change="selectContainer(event)"/>
 
 
-	<mx:DataGrid id="actionsGrid" width="100%" height="100%" rowCount="5" dataProvider="{flexActionsManager.getActionsList.lastResult}">
+	<mx:DataGrid id="actionsGrid" width="100%" height="100%" rowCount="5" dataProvider="{actionManager.getActionsList.lastResult}">
             <mx:columns>
                 <mx:DataGridColumn dataField="categories" headerText="Category"/>
                 <mx:DataGridColumn dataField="label" headerText="Label"/>

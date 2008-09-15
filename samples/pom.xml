@@ -52,7 +52,7 @@
   </dependencies>
 
   <modules>
-    <module>actions</module>
+    <module>actions</module> 
     <module>browser</module>
     <module>documentAPI</module> 
     <module>flex-login</module>

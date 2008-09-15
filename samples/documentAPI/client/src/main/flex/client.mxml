@@ -44,7 +44,7 @@
 	]]>
 	</mx:Script>
 
-    <mx:RemoteObject id="flexDocumentManager" destination="flexRepositoryService" fault="faultHandler(event)"/>
+    <mx:RemoteObject id="flexDocumentManager" destination="flexDocumentManager" fault="faultHandler(event)"/>
 
     <mx:Panel
         title="Nuxeo-Flex AMF DocumentAPI test"
@@ -56,7 +56,7 @@
                 id="docPath"
                 maxChars="100"
                 text="/default-domain"/>
-            <mx:Button label="get document by path" click="flexDocumentManager.getDocument(docPath.text)"/>
+            <mx:Button label="get document by path" click="flexDocumentManager.getDocument('pathRef:'+docPath.text)"/>
         </mx:HBox>
 
         <mx:Label text='returned doc id: "{flexDocumentManager.getDocument.lastResult.id}"'/>
@@ -104,7 +104,7 @@
 
 
         <mx:HBox>
-            <mx:Button label="get Children" click="flexDocumentManager.getChildren(flexDocumentManager.getDocument.lastResult.id)"/>
+            <mx:Button label="get Children" click="flexDocumentManager.getChildren('idRef:'+flexDocumentManager.getDocument.lastResult.id)"/>
         </mx:HBox>
 
 
@@ -134,7 +134,7 @@
         </mx:Form>
 
         <mx:HBox>
-            <mx:Button label="navigate to" click="flexDocumentManager.getChildren(dg.selectedItem.id)"/>
+            <mx:Button label="navigate to" click="flexDocumentManager.getChildren('idRef:'+dg.selectedItem.id)"/>
         </mx:HBox>        <mx:HBox>
             <mx:Button label="get additionnal meta-data" click="displayMeta(dg.selectedItem)"/>
         </mx:HBox>

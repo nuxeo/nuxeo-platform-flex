@@ -4,7 +4,7 @@
     <services>
         
         <service
-            id="ping-service"
+            id="flexStatelessPingTestBean"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
 
@@ -27,40 +27,12 @@
                 </properties>
             
             </destination>
-        </service>
-        
-        
-        <service
-            id="comment-service"
-            class="flex.messaging.services.RemotingService"
-            messageTypes="flex.messaging.messages.RemotingMessage">
-
-            <!--
-            Note:
-            this value is used on client and server side.
-            this is a Seam component name.
-            -->
-            <destination id="commentManager">
-            <channels>
-                <!--
-                Note:
-                this is URL/channel configuration
-                -->
-                <channel ref="nx-amf"/>
-            </channels>
-                <properties>
-                    <factory>nxruntimeFactory</factory>
-                    <class>org.nuxeo.ecm.platform.comment.api.CommentManager</class>
-                </properties>
-            
-            </destination>
-        </service>
+        </service>        
         
     </services>
     
     <factories>
         <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
-        <factory id="nxruntimeFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoRuntimeServiceFactory" />
     </factories>
     
 

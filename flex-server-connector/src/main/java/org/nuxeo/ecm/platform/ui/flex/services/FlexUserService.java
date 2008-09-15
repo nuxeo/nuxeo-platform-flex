@@ -10,7 +10,6 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.remoting.WebRemote;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.NuxeoGroup;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
@@ -52,7 +51,6 @@ public class FlexUserService {
         return flexGroup;
     }
 
-    @WebRemote
     public List<Object> getUsers(String userNamePattern) throws ClientException
     {
         List<NuxeoPrincipal> users= userManager.searchPrincipals(userNamePattern);
@@ -67,7 +65,6 @@ public class FlexUserService {
         return flexUsers;
     }
 
-    @WebRemote
     public Object getUser(String userName) throws ClientException
     {
         NuxeoPrincipal user = userManager.getPrincipal(userName);
@@ -78,7 +75,6 @@ public class FlexUserService {
         return mapPrincipal(user);
     }
 
-    @WebRemote
     public Object updateUser(String userName, Object userValues) throws ClientException
     {
         NuxeoPrincipal user = userManager.getPrincipal(userName);
@@ -111,8 +107,6 @@ public class FlexUserService {
         return mapPrincipal(userManager.getPrincipal(userName));
     }
 
-
-    @WebRemote
     public Object createUser(Object userValues) throws ClientException
     {
         Map<String,Serializable> userMap = (Map<String,Serializable>) userValues;
@@ -148,7 +142,6 @@ public class FlexUserService {
         return mapPrincipal(userManager.getPrincipal(userName));
     }
 
-    @WebRemote
     public List<Object> getGroups(String groupNamePattern) throws ClientException
     {
         List<NuxeoGroup> groups= userManager.searchGroups(groupNamePattern);
@@ -163,8 +156,6 @@ public class FlexUserService {
         return flexGroups;
     }
 
-
-    @WebRemote
     public List<String> getUserNames(String userNamePattern) throws ClientException
     {
         List<NuxeoPrincipal> users= userManager.searchPrincipals(userNamePattern);
@@ -179,7 +170,6 @@ public class FlexUserService {
         return flexUserNames;
     }
 
-    @WebRemote
     public List<String> getGroupNames(String groupNamePattern) throws ClientException
     {
         List<NuxeoGroup> groups= userManager.searchGroups(groupNamePattern);
@@ -194,7 +184,6 @@ public class FlexUserService {
         return flexGroupNamess;
     }
 
-    @WebRemote
     public Map<String,Serializable> getGroup(String groupName) throws ClientException
     {
         NuxeoGroup group = userManager.getGroup(groupName);
@@ -205,8 +194,6 @@ public class FlexUserService {
         return mapGroup(group);
     }
 
-
-    @WebRemote
     public void addUserToGroup(String userName, String groupName) throws ClientException
     {
         NuxeoPrincipal user = userManager.getPrincipal(userName);

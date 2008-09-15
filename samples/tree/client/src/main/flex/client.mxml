@@ -23,7 +23,7 @@
 			private function init():void
 			{
 				docTreeList= new ArrayCollection();
-				flexDocumentManager.getDocument("/default-domain");
+				flexDocumentManager.getDocument("pathRef:/default-domain");
 			}
 
 	
@@ -74,14 +74,14 @@
 				   var item:Object = event.item;
 				   var docId:String = item["docId"];       				
 				   _itemToOpen=item;
-				   flexDocumentManager.getChildren(docId);
+				   flexDocumentManager.getChildren("idRef:"+docId);
 		               }
            		}			
 		
 	]]>
 	</mx:Script>
 
-    <mx:RemoteObject id="flexDocumentManager" destination="flexRepositoryService" fault="faultHandler(event)">
+    <mx:RemoteObject id="flexDocumentManager" destination="flexDocumentManager" fault="faultHandler(event)">
       <mx:method name="getDocument" result="getDocumentHandler(event)" />
       <mx:method name="getChildren" result="getChildrenHandler(event)" />
     </mx:RemoteObject>

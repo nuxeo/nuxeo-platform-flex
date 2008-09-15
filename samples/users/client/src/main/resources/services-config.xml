@@ -3,7 +3,7 @@
 <services-config>
     <services>
         <service
-            id="user-service"
+            id="flexUserService"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
 

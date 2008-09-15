@@ -3,7 +3,7 @@
 <services-config>
     <services>
         <service
-            id="voc-service"
+            id="flexVocabularyService"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
 
@@ -27,10 +27,13 @@
             
             </destination>
         </service>
+        
+ 
+        
     </services>
     
     <factories>
-        <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
+		<factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />  
     </factories>
 
     <channels>
