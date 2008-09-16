@@ -3,7 +3,7 @@
 <services-config>
     <services>
         <service
-            id="flexDocumentManager"
+            id="authPingTester"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
 
@@ -12,37 +12,35 @@
             this value is used on client and server side.
             this is a Seam component name.
             -->
-            <destination id="flexDocumentManager">
+            <destination id="authPingTester">
             <channels>
                 <!--
                 Note:
                 this is URL/channel configuration
                 -->
-                <channel ref="nx-amf"/>
+                <channel ref="seam-amf"/>
             </channels>
                 <properties>
                     <factory>seamFactory</factory>
-                    <source>flexDocumentManager</source>
+                    <source>authPingTester</source>
                 </properties>
             
             </destination>
         </service>
-              
     </services>
-   
+    
     <factories>
-	  <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
+        <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
     </factories>
 
     <channels>
-        <channel-definition id="nx-amf" class="mx.messaging.channels.AMFChannel">
+        <channel-definition id="seam-amf" class="mx.messaging.channels.AMFChannel">
             <endpoint
-                uri="http://{server.name}:{server.port}/nuxeo/nuxeo-amf/amf"
+                uri="http://localhost:8080/nuxeo/nuxeo-amf/amf"
                 class="flex.messaging.endpoints.AMFEndpoint"/>
         </channel-definition>
 
         <!--server.port and server.name are resolved dynamically at run time-->
     </channels>
-
 
 </services-config>

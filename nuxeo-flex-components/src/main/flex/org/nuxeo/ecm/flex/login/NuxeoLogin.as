@@ -11,6 +11,7 @@ package org.nuxeo.ecm.flex.login
 
     private var _service:HTTPService;
     private var _targetURL:String;
+    private var _serverURL:String;
     private var _loginSuccessCB:Function;
     private var _loginFailedCB:Function;
     private var _logoutSuccessCB:Function;
@@ -24,6 +25,7 @@ package org.nuxeo.ecm.flex.login
       _service.resultFormat= "e4x";
       //_service.concurrency="single";
       _targetURL="/nuxeo/flexlogin/";
+      _serverURL="";
     }
 
     public function get targetUrl(): String
@@ -36,12 +38,23 @@ package org.nuxeo.ecm.flex.login
       _targetURL=url;
     }
 
+
+    public function get servertUrl(): String
+    {
+      return _serverURL;
+    }
+
+    public function set serverURL(url:String): void
+    {
+      _serverURL=url;
+    }
+
     public function login(userName:String, password:String):void
     {
       _service.method="POST";
       //_service.showBusyCursor=true;
       _service.addEventListener(ResultEvent.RESULT, loginResultHandler);
-      _service.url = _targetURL;
+      _service.url = _serverURL + _targetURL;
       var params:Object=new Object();
       params['user_name']=userName;
       params['user_password']=password;
@@ -56,7 +69,7 @@ package org.nuxeo.ecm.flex.login
       else
          _cbLogout=null;
       _service.addEventListener(ResultEvent.RESULT, logoutResultHandler);
-      _service.url = "/nuxeo/logout";
+      _service.url = _serverURL + "/nuxeo/logout";
       _service.send();
     }
 

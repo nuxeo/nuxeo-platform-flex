@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.ecm.platform.ui.granite.config.facetExplorer">
+
+    <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
+
+	<runtime id="schemaManager" class="org.nuxeo.ecm.core.schema.SchemaManager" />
+
+  </extension>
+</component>

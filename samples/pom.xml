@@ -54,7 +54,8 @@
   <modules>
     <module>actions</module> 
     <module>browser</module>
-    <module>documentAPI</module> 
+    <module>documentAPI</module>
+    <module>facet-explorer</module>
     <module>flex-login</module>
     <module>simple</module>
     <module>tree</module>

@@ -7,7 +7,7 @@
     <version>5.2-SNAPSHOT</version>
   </parent>
 
-  <artifactId>nuxeo-platform-ui-flex-login-parent</artifactId>
+  <artifactId>nuxeo-platform-ui-flex-sample-login-parent</artifactId>
   <name>Nuxeo Flex Login </name>
   <packaging>pom</packaging>
   <description>
@@ -25,6 +25,7 @@
     </repositories>
 
    <modules>
+    <module>air-client</module>
     <module>client</module>
     <module>server</module>
    </modules>

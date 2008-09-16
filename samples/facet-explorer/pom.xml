@@ -7,13 +7,11 @@
     <version>5.2-SNAPSHOT</version>
   </parent>
 
-<groupId>org.ecm.platform</groupId>
-<version>5.2-SNAPSHOT</version>
-  <artifactId>nuxeo-platform-ui-flex-samples-simple-parent</artifactId>
-  <name>Nuxeo Simple Flex Sample</name>
+  <artifactId>nuxeo-platform-ui-flex-samples-facet-explorer-parent</artifactId>
+  <name>Nuxeo Flex Facet Explorer</name>
   <packaging>pom</packaging>
   <description>
-    Nuxeo Enterprise Platform: Flex simple sample parent pom
+   Nuxeo Enterprise Platform: Flex Facet Explorer parent pom
   </description>
 
   <repositories>
@@ -31,6 +29,10 @@
     <module>client</module>
     <module>server</module>
    </modules>
+
+  <properties>
+    <nuxeo.platform.flex.sample.version>5.2-SNAPSHOT</nuxeo.platform.flex.sample.version>
+  </properties>
 
 </project>
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application xmlns="http://ns.adobe.com/air/application/1.0"
+    minimumPatchLevel="1047">
+    <id>org.nuxeo.ecm.air</id>
+    <version>0.1</version>
+    <filename>Nuxeo Sample login</filename>
+    <name>Nuxeo Sample login</name>
+    <description>
+        Nuxeo Sample login
+    </description>
+    <initialWindow>
+        <title>Nuxeo Sample login</title>
+        <content>target/nuxeo-platform-ui-flex-login-swf-air-5.2-SNAPSHOT.swf</content>
+        <systemChrome>none</systemChrome>
+        <transparent>true</transparent>
+        <visible>true</visible>
+        <minimizable>true</minimizable>
+        <maximizable>true</maximizable>
+        <resizable>true</resizable>
+        <width>640</width>
+        <height>480</height>
+    </initialWindow> 
+</application>
+

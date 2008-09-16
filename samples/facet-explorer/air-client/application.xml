@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application xmlns="http://ns.adobe.com/air/application/1.0"
+    minimumPatchLevel="1047">
+    <id>org.nuxeo.ecm.air</id>
+    <version>0.1</version>
+    <filename>Nuxeo Sample facet explorer</filename>
+    <name>Nuxeo Sample facet explorer</name>
+    <description>
+        Nuxeo Sample facet explorer
+    </description>
+    <initialWindow>
+        <title>Nuxeo Sample facet explorer</title>
+
+        <content>target/nuxeo-platform-ui-flex-samples-facet-explorer-swf-air-5.2-SNAPSHOT.swf</content>
+        <systemChrome>none</systemChrome>
+        <transparent>true</transparent>
+        <visible>true</visible>
+        <minimizable>true</minimizable>
+        <maximizable>true</maximizable>
+        <resizable>true</resizable>
+        <width>640</width>
+        <height>480</height>
+    </initialWindow> 
+</application>
+

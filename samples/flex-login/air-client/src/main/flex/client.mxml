@@ -1,0 +1,35 @@
+<!--
+	  -->
+
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:nx="org.nuxeo.ecm.flex.login.*">
+	
+	<mx:Script>
+	<![CDATA[
+		import mx.controls.Alert;
+		import mx.rpc.events.FaultEvent;
+		import mx.rpc.events.ResultEvent;	
+		import org.nuxeo.ecm.flex.login.NuxeoLogin;
+		import flash.net.*;
+
+		private function faultHandler(event:FaultEvent):void {
+			 Alert.show(event.fault.faultString, event.fault.faultCode.toString());
+		}	
+
+
+	]]>
+	</mx:Script>
+
+	<mx:RemoteObject id="authPingTester" destination="authPingTester" fault="faultHandler(event)"/>
+
+
+	<nx:NxLogForm id="logForm" showServerUrl="true" title="Nuxeo-Flex Login Screen" paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"/>  
+	
+	<mx:VBox>
+		<mx:Button id="pingButton" visible="{logForm.currentState=='LoggedInState'}" label="ping server" click="authPingTester.ping()"/>
+		<mx:Label id="pingLabel" visible="{logForm.currentState=='LoggedInState'}" text='server ping reply: "{authPingTester.ping.lastResult}"'/>
+	</mx:VBox>
+
+
+
+</mx:WindowedApplication>
+

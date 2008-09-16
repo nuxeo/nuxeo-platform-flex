@@ -10,9 +10,9 @@
  
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.nuxeo.ecm.platform</groupId>
-    <artifactId>nuxeo-platform-ui-flex-sample-login-swf</artifactId>
+    <artifactId>nuxeo-platform-ui-flex-sample-login-swf-air</artifactId>
     <packaging>swf</packaging>
-    <name>Nuxeo Flex Login SWF</name>
+    <name>Nuxeo Flex air Sample Login SWF</name>
     <version>5.2-SNAPSHOT</version>
     <properties>
         <flex.home>${env.FLEX_HOME}</flex.home>
@@ -27,6 +27,7 @@
     </dependency>
  </dependencies>
 
+
     <build>
         <plugins>
             <plugin>
@@ -36,8 +37,10 @@
                 <extensions>true</extensions>
                 <configuration>
                     <flexHome>${flex.home}</flexHome>
+                    <flexConfig>${flex.home}/frameworks/air-config.xml</flexConfig>
                     <main>client.mxml</main>
                     <dataServicesConfig>src/main/resources/services-config.xml</dataServicesConfig>
+                    <useNetwork>true</useNetwork>
                     <extraParameters>
                         <parameter>
                             <name>compiler.fonts.local-fonts-snapshot</name>

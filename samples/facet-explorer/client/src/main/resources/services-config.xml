@@ -1,37 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <services-config>
-    <services>
+    <services>        
         <service
-            id="flexDocumentManager"
+            id="schemaManager"
             class="flex.messaging.services.RemotingService"
             messageTypes="flex.messaging.messages.RemotingMessage">
-
-            <!--
-            Note:
-            this value is used on client and server side.
-            this is a Seam component name.
-            -->
-            <destination id="flexDocumentManager">
-            <channels>
-                <!--
-                Note:
-                this is URL/channel configuration
-                -->
+            <destination id="schemaManager">
+            <channels>      
                 <channel ref="nx-amf"/>
             </channels>
                 <properties>
-                    <factory>seamFactory</factory>
-                    <source>flexDocumentManager</source>
+                    <factory>nxruntimeFactory</factory>
+                    <class>org.nuxeo.ecm.core.schema.SchemaManager</class>
                 </properties>
             
             </destination>
         </service>
-              
+        
     </services>
    
     <factories>
-	  <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
+        <factory id="nxRuntimeFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoRuntimeServiceFactory" />  
     </factories>
 
     <channels>
