@@ -41,7 +41,7 @@
 
 			private function displayProperty(doc:FlexDocumentModel, schemaName:String, fieldName:String):void
 			{
-				var val:String= doc.getProperty(schemaName,fieldName);
+				var val:String= doc.getProperty(schemaName,fieldName).toString();
 				propertyValue.text=val;
 			}
 

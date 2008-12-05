@@ -22,7 +22,7 @@
             </channels>
                 <properties>
                     <factory>seamFactory</factory>
-                    <source>flexDocumentManager</source>
+                    <source>flexRepositoryService</source>
                 </properties>
             
             </destination>

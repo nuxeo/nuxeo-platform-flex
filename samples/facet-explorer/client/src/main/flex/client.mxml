@@ -1,39 +1,22 @@
-<!--
-  -->
-
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:nx="org.nuxeo.ecm.flex.login.*"  xmlns:word="*" >
-
-   <mx:Script>
-		<![CDATA[
-			import org.nuxeo.ecm.flex.dto.FlexDocumentModel;			
-			import mx.collections.ArrayCollection;
-			import mx.controls.Alert;
-			import mx.rpc.events.FaultEvent;
-			import mx.rpc.events.ResultEvent;	
-
-
-			private function faultHandler(event:FaultEvent):void {
-				 Alert.show(event.fault.faultString, event.fault.faultCode.toString());
-			}	
-
-		
-	]]>
-	</mx:Script>
-
-    <mx:RemoteObject id="schemaManager" destination="schemaManager" fault="faultHandler(event)"/>
-
-    <mx:Panel
-        title="Nuxeo Facet explorer"
-        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
-
-
-		<mx:VBox>
-			<mx:TextInput id="facet" maxChars="30" text="Folderish"/>
-			<mx:Button label="get Document Type" click="schemaManager.getDocumentTypeNamesForFacet(facet.text)"/>
-       
-			<mx:List id="typeList" height="100%" width="100%" dataProvider="{schemaManager.getDocumentTypeNamesForFacet.lastResult}" />
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"   xmlns:word="*">    
     
-		</mx:VBox>
-     </mx:Panel>
+        <mx:RemoteObject id="schemaManager" destination="schemaManager"/>
 
+        <mx:Panel title="Nuxeo Facet explorer"
+            paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+        
+            <mx:VBox>
+          
+              <mx:TextInput id="facet" maxChars="30" text="Folderish"/>
+          
+              <mx:Button label="get Document Type" 
+                click="schemaManager.getDocumentTypeNamesForFacet(facet.text)"/>                            
+          
+              <mx:List id="typeList" height="100%" width="100%" 
+                dataProvider="{schemaManager.getDocumentTypeNamesForFacet.lastResult}" />
+            
+            </mx:VBox>
+        
+      </mx:Panel>
+      
 </mx:Application>
