@@ -1,4 +1,3 @@
-
 package org.nuxeo.ecm.flex.dto
 {
   import mx.collections.ArrayCollection;
@@ -19,6 +18,8 @@ package org.nuxeo.ecm.flex.dto
     private var _data:Object;
     private var _dirty:Object;
     private var _type:String;
+    private var _icon:String;
+    private var _iconExpanded:String;
     private var _isFolder:Boolean;
 
     public function FlexDocumentModel()
@@ -44,6 +45,12 @@ package org.nuxeo.ecm.flex.dto
     {
 
     }
+    
+    public function get sessionId():String
+    {
+		return _sessionId;
+    }
+    
 
     public function readExternal(input:IDataInput):void {
 	_sessionId = input.readUTF();
@@ -52,6 +59,8 @@ package org.nuxeo.ecm.flex.dto
       _path = input.readUTF();
       _lifeCycleState = input.readUTF();
       _type=input.readUTF();
+      _icon=input.readUTF();
+      _iconExpanded=input.readUTF();   
       _isFolder=input.readBoolean();
       _data = input.readObject();
       _dirty = new Object();
@@ -64,6 +73,8 @@ package org.nuxeo.ecm.flex.dto
             output.writeUTF(_path);
             output.writeUTF(_lifeCycleState);
             output.writeUTF(_type);
+            output.writeUTF(_icon);
+            output.writeUTF(_iconExpanded);
             output.writeBoolean(_isFolder);
       output.writeObject(_dirty);
             //output.writeObject(_data);
@@ -83,6 +94,18 @@ package org.nuxeo.ecm.flex.dto
     {
       return _type;
     }
+
+    public function get icon():String
+    {
+      return _icon;
+    }
+
+    public function get iconExpanded():String
+    {
+      return _iconExpanded;
+    }
+    
+    
 
     public function get contentdata():Object
     {
@@ -106,7 +129,7 @@ package org.nuxeo.ecm.flex.dto
       _dirty.dublincore_title=value;
     }
 
-    public function getProperty(schemaName:String, fieldName:String):String
+    public function getProperty(schemaName:String, fieldName:String):Object
     {
       return _data[schemaName][fieldName];
     }
@@ -149,6 +172,13 @@ package org.nuxeo.ecm.flex.dto
       return fieldNames;
     }
 
+	public function get path():String{
+		return _path;
+	}
+
+	public function get dirtyFields():Object{
+		return _dirty;
+	}
 
   }
 }

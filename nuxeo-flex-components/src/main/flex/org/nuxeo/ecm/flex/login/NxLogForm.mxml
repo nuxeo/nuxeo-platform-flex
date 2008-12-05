@@ -1,23 +1,22 @@
-<mx:Panel xmlns="org.nuxeo.ecm.flex.login" 
-		  xmlns:mx="http://www.adobe.com/2006/mxml"
-		  xmlns:word="*" layout="absolute" creationComplete="init()">
+<mx:Panel xmlns="org.nuxeo.ecm.flex.login" xmlns:mx="http://www.adobe.com/2006/mxml"
+  xmlns:word="*" layout="absolute" creationComplete="init()">
 
 	<mx:states>
 		<mx:State name="LoggedInState">		
-			<mx:SetProperty target="{loginForm}"
-				name="visible" value="false"/>
-			<mx:SetProperty target="{loggedInUser}"
-				name="visible" value="true"/>
-			<mx:SetProperty target="{logoutButton}"
-				name="visible" value="true"/>
+			<mx:SetProperty target="{loginForm}" name="visible"
+  value="false" />
+			<mx:SetProperty target="{loggedInUser}" name="visible"
+  value="true" />
+			<mx:SetProperty target="{logoutButton}" name="visible"
+  value="true" />
 		</mx:State>
 		<mx:State name="NotLoggedInState">			
-			<mx:SetProperty target="{loginForm}"
-				name="visible" value="true"/>
-			<mx:SetProperty target="{loggedInUser}"
-				name="visible" value="false"/>
-			<mx:SetProperty target="{logoutButton}"
-				name="visible" value="false"/>
+			<mx:SetProperty target="{loginForm}" name="visible"
+  value="true" />
+			<mx:SetProperty target="{loggedInUser}" name="visible"
+  value="false" />
+			<mx:SetProperty target="{logoutButton}" name="visible"
+  value="false" />
 		</mx:State>
 	</mx:states>
 
@@ -27,6 +26,7 @@
 		import mx.rpc.events.FaultEvent;
 		import mx.rpc.events.ResultEvent;	
 		import org.nuxeo.ecm.flex.login.NuxeoLogin;
+        import org.nuxeo.ecm.flex.login.NxLoginEvent;
 		import flash.net.*;
 
 		[Bindable]  
@@ -43,6 +43,17 @@
 			nxLogin = new NuxeoLogin();
 			checkLogin();
 		}
+
+		public function autoLogin():void {
+			nxLogin.setLoginSucessCallBack(loginSuccessHandler);
+			nxLogin.setLoginFailedCallBack(loginErrorHandler);
+			
+			nxLogin.serverURL = "http://localhost:8080/";
+			
+			nxLogin.login("Administrator","Administrator");
+		
+		
+		} 
 
 		private function doLogin():void {				
 			nxLogin.setLoginSucessCallBack(loginSuccessHandler);
@@ -81,6 +92,8 @@
 		private function loginSuccessHandler(event:ResultEvent):void {
 				//Alert.show("Login Success : " + nxLogin.getConnectedUser().toString(),"info");
 			currentUser = nxLogin.getConnectedUser();
+            var mev:Event = new Event("loggedin",true,false);
+            dispatchEvent(mev);      
 			//currentState="LoggedInState";
 		}	
 
@@ -93,32 +106,37 @@
 	</mx:Script>
 
 
-	<mx:Form x="0" y="0" width="100%" backgroundColor="#ffffff" borderStyle="solid" height="100%" id="loginForm">
+	<mx:Form x="0" y="0" width="100%" backgroundColor="#ffffff"
+  borderStyle="solid" height="100%" id="loginForm">
 		<mx:FormHeading label="You need to authenticate :" />
-		<mx:FormItem label="Server Address:" visible="{showServerUrl}" width="100%">
-			<mx:TextInput id="serverUrl" width="200"/>					 
+		<mx:FormItem label="Server Address:" visible="{showServerUrl}"
+  width="100%">
+			<mx:TextInput id="serverUrl" width="200" />					 
 		</mx:FormItem>
 		<mx:FormItem label="Login :" width="100%">
-			<mx:TextInput id="login" width="200"/>					 
+			<mx:TextInput id="login" width="200" />					 
 		</mx:FormItem>
 		<mx:FormItem label="Password:" width="100%">
-			<mx:TextInput id="password" width="200" displayAsPassword="true"/>
+			<mx:TextInput id="password" width="200"
+  displayAsPassword="true" />
 		</mx:FormItem>
-		<mx:Button label="Login" click="doLogin()"/>
+		<mx:Button label="Login" click="doLogin()" />
 	</mx:Form>
 
-	<mx:Form x="0" y="0" width="100%" backgroundColor="#ffffff" borderStyle="solid" height="100%" id="loggedInUser" visible="false">
+	<mx:Form x="0" y="0" width="100%" backgroundColor="#ffffff"
+  borderStyle="solid" height="100%" id="loggedInUser" visible="false">
 		<mx:FormHeading label="You are logged in :" />
 		<mx:FormItem label="Login :" width="100%">
-			<mx:Label text="{currentUser.name}"/>
+			<mx:Label text="{currentUser.name}" />
 		</mx:FormItem>
 		<mx:FormItem label="First Name:" width="100%">
-			<mx:Label text="{currentUser.FirstName}"/>
+			<mx:Label text="{currentUser.FirstName}" />
 		</mx:FormItem>
 		<mx:FormItem label="Last Name:" width="100%">
-			<mx:Label text="{currentUser.LastName}"/>
+			<mx:Label text="{currentUser.LastName}" />
 		</mx:FormItem>
-		<mx:Button id="logoutButton" label="Log out" click="doLogout()" visible="false"/>   
+		<mx:Button id="logoutButton" label="Log out" click="doLogout()"
+  visible="false" />   
 	</mx:Form>
 
 

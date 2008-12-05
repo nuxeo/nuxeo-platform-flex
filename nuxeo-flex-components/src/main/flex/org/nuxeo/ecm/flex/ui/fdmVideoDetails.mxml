@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas  xmlns:controls="com.fxcomponents.controls.*" 
+  xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:nxui="org.nuxeo.ecm.flex.ui.*"
+  xmlns:ns1="*" backgroundColor="#FFFFFF">
+
+  <mx:Script>
+  <![CDATA[
+            import org.nuxeo.ecm.flex.dto.FlexDocumentModel;        
+            import mx.controls.Alert;
+            import mx.rpc.events.ResultEvent;   
+            import mx.rpc.events.FaultEvent;       
+            import mx.core.Application; 
+            
+            private var _currentFdm:FlexDocumentModel;
+            
+            public function set currentFdm(value:FlexDocumentModel):void{
+                _currentFdm = value;
+            }
+  ]]>
+  </mx:Script>
+
+   
+    <mx:Style>
+        Panel {
+           borderColor: #99CDEE;
+           borderAlpha: 1;
+           borderThickness: 1;
+           borderThicknessLeft: 1;
+           borderThicknessTop: 0;
+           borderThicknessBottom: 1;
+           borderThicknessRight: 1;
+           roundedBottomCorners: false;
+           cornerRadius: 5;
+           headerColors: #b5e6f3, #81b3e6;
+           dropShadowEnabled: false;
+           titleStyleName: "mypanelTitle";
+           vertical-align:middle;
+           horizontal-align:center;
+        }
+        
+        .mypanelTitle {
+           letterSpacing: 1;
+           color: #333333;
+           fontSize: 12;
+           fontWeight: bold;
+        }
+    </mx:Style>
+    
+    <mx:VBox id="box" verticalGap="0" height="100%" width="100%" cornerRadius="20">
+        <mx:Box paddingBottom="20" paddingTop="20" >
+         <controls:FXVideo width="480" height="360" source="{_currentFdm.getProperty('file','content')}" autoPlay="false" bufferTime="10" />           
+        </mx:Box>
+    <nxui:fdmDetails borderStyle="solid" borderColor="#FFFFFF" cornerRadius="20" id="detailGrid" height="100%" width="100%" currentFdm="{_currentFdm}"  />
+   </mx:VBox>
+
+</mx:Canvas>

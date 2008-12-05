@@ -18,6 +18,23 @@
         <flex.home>${env.FLEX_HOME}</flex.home>
     </properties>
     
+
+ <dependencies>
+   <dependency>
+      <groupId>papervision</groupId>
+      <artifactId>papervision-phunky</artifactId>
+      <version>1</version>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>effects</groupId>
+      <artifactId>tweener</artifactId>
+      <version>1</version>
+      <type>swc</type>
+    </dependency>
+ </dependencies>
+    
+    
     <build>
         <plugins>
             <plugin>

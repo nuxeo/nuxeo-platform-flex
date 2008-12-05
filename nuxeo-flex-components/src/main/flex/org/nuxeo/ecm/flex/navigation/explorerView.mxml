@@ -1,0 +1,59 @@
+<!--
+  -->
+<mx:Canvas xmlns="org.nuxeo.ecm.flex.navigation" xmlns:nxui="org.nuxeo.ecm.flex.ui.*" xmlns:mx="http://www.adobe.com/2006/mxml"
+  xmlns:word="*">
+
+	<mx:states>
+		<mx:State name="icons">
+			<mx:AddChild relativeTo="{canvas1}">
+					<nxui:fdmGrid height="100%" width="100%" cornerRadius="20" borderColor="#FFFFFF"   borderStyle="solid" currentFdm="{Application.application.fdm}" />
+			</mx:AddChild>
+		</mx:State>
+        <mx:State name="picturebook">
+            <mx:AddChild relativeTo="{canvas1}">
+                    <nxui:coverFlowGrid cornerRadius="20"  borderStyle="solid" borderColor="#FFFFFF"    height="100%" width="100%" currentFdm="{Application.application.fdm}" />
+            </mx:AddChild>
+        </mx:State>
+        <mx:State name="video">
+            <mx:AddChild relativeTo="{canvas1}">
+                    <nxui:fdmVideoDetails cornerRadius="20"  borderStyle="solid" borderColor="#FFFFFF"  height="100%" width="100%" currentFdm="{Application.application.fdm}" />
+            </mx:AddChild>
+        </mx:State>
+		<mx:State name="details">
+			<mx:AddChild relativeTo="{canvas1}">
+					<nxui:fdmDetails cornerRadius="20"  borderStyle="solid" borderColor="#FFFFFF"  height="100%" width="100%" currentFdm="{Application.application.fdm}"  />
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	
+   <mx:Script>
+		<![CDATA[
+			import org.nuxeo.ecm.flex.dto.FlexDocumentModel;			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.controls.Tree;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;	
+			import mx.utils.ObjectProxy;
+   	        import mx.events.TreeEvent;
+			import mx.events.ListEvent;
+			import mx.core.Application;
+			
+		    public function set currentFdm(value:FlexDocumentModel):void{
+		    	if (value.doctype == 'PictureBook'){
+					currentState = 'picturebook';
+		    	} else if (value.doctype == 'Video'){
+                    currentState = 'video';
+                } else if (value.isFolder()) {
+					currentState = 'icons';
+		    	} else {
+                    currentState = 'details';
+                }
+		    }
+		    
+		    
+		
+	]]>
+	</mx:Script>
+<mx:Canvas id="canvas1" left="1" right="1" height="100%" width="100%" borderStyle="solid" borderColor="#FFFFFF" cornerRadius="20"  />
+</mx:Canvas>
