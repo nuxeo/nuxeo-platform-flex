@@ -22,6 +22,8 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
             fdm.setPath((String) in.readUTF());
             fdm.setLifeCycleState((String) in.readUTF());
             fdm.setType((String) in.readUTF());
+            fdm.setIcon((String) in.readUTF());
+            fdm.setIconExpanded((String) in.readUTF());
             fdm.setIsFolder((Boolean)in.readBoolean());
             //only ready dirty fields
             fdm.setDirtyFields((Map<String,Serializable>) in.readObject());
@@ -45,6 +47,8 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
             else
                 out.writeUTF(fdm.getLifeCycleState());
             out.writeUTF(fdm.getType());
+            out.writeUTF(fdm.getIcon());
+            out.writeUTF(fdm.getIconExpanded());
             out.writeBoolean(fdm.getIsFolder());
             // only sends data : nothing is dirty for now
             out.writeObject(fdm.getData());

@@ -14,6 +14,8 @@ import org.nuxeo.ecm.core.api.DocumentRef;
     private String path;
     private String lifeCycleState;
     private String type;
+    private String icon;
+    private String iconExpanded;
     private Boolean isFolder=false;
     private String sessionId;
 
@@ -28,15 +30,19 @@ import org.nuxeo.ecm.core.api.DocumentRef;
         path="/default/folder"+name;
         lifeCycleState="work";
         type=null;
+        icon=null;
+        iconExpanded=null;
     }
 
-    public FlexDocumentModel(String sessionId, DocumentRef ref, String name, String path, String lcState,String type)
+    public FlexDocumentModel(String sessionId, DocumentRef ref, String name, String path, String lcState,String type, String icon, String iconExpanded)
     {
         docRef=ref.toString();
         this.name=name;
         this.path=path;
         lifeCycleState=lcState;
         this.type=type;
+        this.icon = icon;
+        this.iconExpanded=iconExpanded;
         this.sessionId=sessionId;
     }
 
@@ -121,6 +127,22 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getIconExpanded() {
+        return iconExpanded;
+    }
+
+    public void setIconExpanded(String iconExpanded) {
+        this.iconExpanded = iconExpanded;
     }
 
     public String getSessionId() {

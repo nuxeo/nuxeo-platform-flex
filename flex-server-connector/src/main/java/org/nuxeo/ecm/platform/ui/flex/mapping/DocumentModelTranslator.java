@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.nuxeo.common.utils.Path;
@@ -25,6 +27,7 @@ import org.nuxeo.ecm.core.schema.SchemaManager;
 import org.nuxeo.ecm.core.schema.types.Schema;
 import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
 import org.nuxeo.ecm.platform.ui.web.tag.fn.DocumentModelFunctions;
+import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.runtime.api.Framework;
 
 public class DocumentModelTranslator {
@@ -32,13 +35,6 @@ public class DocumentModelTranslator {
     private static SchemaManager sm;
 
     private static Map<String, String> schemaCache = new ConcurrentHashMap<String, String>();
-
-    private static FlexDocumentModel addIconURL(FlexDocumentModel fdm,
-            DocumentModel doc) {
-        String iconURL = DocumentModelFunctions.iconPath(doc);
-        fdm.setProperty("common", "icon", iconURL);
-        return fdm;
-    }
 
     private static String getSchemaFromPrefix(String prefix) throws Exception {
 
@@ -60,13 +56,25 @@ public class DocumentModelTranslator {
         schemaCache.put(prefix, schemaName);
         return schemaName;
     }
-
+    
     public static FlexDocumentModel toFlexTypeFromPrefetch(DocumentModel doc)
             throws Exception {
-        FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(), doc
-                .getRef(), doc.getName(), doc.getPathAsString(), doc
-                .getCurrentLifeCycleState(), doc.getType());
+        FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
+                doc.getRef(), doc.getName(), doc.getPathAsString(),
+                doc.getCurrentLifeCycleState(), doc.getType(),
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconPath(doc)+"_flex",
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconExpandedPath(doc)+"_flex");
 
+        if (fdm.getType().equals("Picture")){
+            String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
+            bigDownloadURL += "nxbigfile" + "/";
+            bigDownloadURL += doc.getRepositoryName() + "/";
+            bigDownloadURL += doc.getRef().toString() + "/";
+            bigDownloadURL += "picture:views/item[0]/content/";
+            bigDownloadURL += "orig";
+            fdm.setIcon(bigDownloadURL);
+        }
+        
         fdm.setIsFolder(doc.isFolder());
 
         Map<String, Serializable> prefetch = doc.getPrefetch();
@@ -99,10 +107,22 @@ public class DocumentModelTranslator {
     public static FlexDocumentModel toFlexType(DocumentModel doc)
             throws Exception {
 
-        FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(), doc
-                .getRef(), doc.getName(), doc.getPathAsString(), doc
-                .getCurrentLifeCycleState(), doc.getType());
+        FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
+                doc.getRef(), doc.getName(), doc.getPathAsString(),
+                doc.getCurrentLifeCycleState(), doc.getType(),
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconPath(doc)+"_flex",
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconExpandedPath(doc)+"_flex");
 
+        if (fdm.getType().equals("Picture")){
+            String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
+            bigDownloadURL += "nxbigfile" + "/";
+            bigDownloadURL += doc.getRepositoryName() + "/";
+            bigDownloadURL += doc.getRef().toString() + "/";
+            bigDownloadURL += "picture;views/item[1]/content/";
+            bigDownloadURL += "orig";
+            fdm.setIcon(bigDownloadURL);
+        }
+        
         fdm.setIsFolder(doc.isFolder());
 
         DocumentPart[] parts = doc.getParts();
@@ -118,50 +138,66 @@ public class DocumentModelTranslator {
             for (Property prop : props) {
                 String fieldName = prop.getName();
                 fieldName = fieldName.replace(schemaPrefix + ":", "");
-
-                if (prop.getType().isSimpleType()) {
-                    map.put(fieldName, prop.getValue());
-                } else if (prop.getType().isComplexType()) {
-                    if (prop instanceof BlobProperty) {
-
-                        BlobProperty blobProp = (BlobProperty) prop;
-                        Blob blob = (Blob) blobProp.getValue();
-                        if (blob != null) {
-                            String fileName = blob.getFilename();
-                            if (fileName == null) {
-                                // XXX Hack !
-                                if (parts[i].getSchema().getName().equals(
-                                        "file")) {
-                                    fileName = (String) doc.getProperty("file",
-                                            "filename");
-                                }
-                            }
-                            String dwURL = DocumentModelFunctions.fileUrl(
-                                    "downloadFile", doc, prop.getName(),
-                                    fileName);
-                            map.put(fieldName, dwURL);
-                        }
-                    } else if (prop instanceof MapProperty) {
-                        MapProperty mapProp = (MapProperty) prop;
-                        map.put(fieldName, mapProp.getValue());
-                    }
-                } else if (prop.getType().isListType()) {
-                    if (prop instanceof ListProperty) {
-                        ListProperty listProp = (ListProperty) prop;
-                        List<Serializable> lstProp = new ArrayList<Serializable>();
-                        lstProp.addAll(listProp.getChildren());
-                        map.put(fieldName, (Serializable) lstProp);
-                    } else if (prop instanceof ArrayProperty) {
-                        ArrayProperty arrayProp = (ArrayProperty) prop;
-                        map.put(fieldName, arrayProp.getValue());
-                    }
-                }
+                map.put(fieldName, introspectProperty(prop, doc));
             }
             fdm.feed(parts[i].getName(), map);
         }
         return fdm;
     }
+    
+    public static  Serializable introspectProperty(Property prop, DocumentModel doc)
+    throws Exception {
+        if (prop.getType().isSimpleType()) {
+            return prop.getValue();
+        } else if (prop.getType().isComplexType()) {
+            if (prop instanceof BlobProperty) {
 
+                BlobProperty blobProp = (BlobProperty) prop;
+                Blob blob = (Blob) blobProp.getValue();
+                if (blob != null) {
+                    String fileName = blob.getFilename();
+                    if (fileName == null) {
+                        // XXX Hack !
+                        fileName = (String) doc.getProperty("dublincore",
+                                "title");
+                    }
+                        String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
+                        bigDownloadURL += "nxbigfile" + "/";
+                        bigDownloadURL += doc.getRepositoryName() + "/";
+                        bigDownloadURL += doc.getRef().toString() + "/";
+                        bigDownloadURL += prop.getSchema().getName()+";"+ prop.getName()+ "/";
+                        bigDownloadURL += fileName;
+                    return bigDownloadURL;
+                }
+            } else if (prop instanceof MapProperty) {
+                MapProperty mapProp = (MapProperty) prop;
+                Set<Entry<String, Property>> properties = mapProp.entrySet();
+                Map<String, Serializable> map = new HashMap<String, Serializable>();
+                for (Entry<String, Property> entry : properties) {
+                    map.put(entry.getKey(), introspectProperty(entry.getValue(), doc));
+                }
+                return (Serializable) map;
+            }
+        } else if (prop.getType().isListType()) {
+            if (prop instanceof ListProperty) {
+                ListProperty listProp = (ListProperty) prop;
+                List<Serializable> lstProp = new ArrayList<Serializable>();
+                lstProp.addAll(listProp.getChildren());
+                return (Serializable) lstProp;
+            } else if ((prop instanceof ArrayProperty) &&( prop.getValue() != null)) {
+                Object[] arrayProp = (Object[]) prop.getValue();
+                List<Serializable> lstProp = new ArrayList<Serializable>();
+                int length = arrayProp.length;
+                for (int i = 0; i < length; i++) {
+                    lstProp.add( (Serializable)arrayProp[i]);
+                }
+                return (Serializable) lstProp;
+            }
+        }
+        return "";
+        
+    }
+    
     public static DocumentModel toDocumentModel(FlexDocumentModel fdoc)
             throws Exception {
         CoreSession session = CoreInstance.getInstance().getSession(
@@ -178,8 +214,7 @@ public class DocumentModelTranslator {
             String docType = fdoc.getType();
             String name = fdoc.getName();
             String docPath = fdoc.getPath();
-            String parentPath = new Path(docPath).removeLastSegments(1)
-                    .toString();
+            String parentPath = new Path(docPath).removeLastSegments(1).toString();
             doc = session.createDocumentModel(parentPath, name, docType);
             doc = session.createDocument(doc);
         } else {
