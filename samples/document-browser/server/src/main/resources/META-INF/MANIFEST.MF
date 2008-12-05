@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 1
+Bundle-Name: Nuxeo ECM Flex Document Explorer Sample
+Bundle-SymbolicName: org.nuxeo.ecm.platform.ui.flex.samples.documentExplorer;singleton:=true
+Require-Bundle: org.nuxeo.ecm.platform.ui.flex,
+ org.nuxeo.ecm.war
+Nuxeo-Component: OSGI-INF/flex-actions-contrib.xml,
+ OSGI-INF/nxgranite-contrib.xml
