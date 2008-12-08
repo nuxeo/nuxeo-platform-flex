@@ -1,3 +1,22 @@
+/*
+ * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ *
+ * $Id$
+ */
+
 package org.nuxeo.ecm.platform.ui.flex.tests;
 
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -17,7 +36,7 @@ public class FlexDocumentModelGenerationTests extends RepositoryOSGITestCase {
         deployBundle("org.nuxeo.ecm.platform.types.api");
         deployBundle("org.nuxeo.ecm.platform.types.core");
         openRepository();
-
+        createDocuments();
     }
 
     private void createDocuments() throws Exception {
@@ -49,13 +68,9 @@ public class FlexDocumentModelGenerationTests extends RepositoryOSGITestCase {
 
         String coverage = (String) fdm.getProperty("dublincore", "coverage");
         assertEquals("MyDocCoverage", coverage);
-
     }
 
-    public void testGenFlexDocumentModelFromPrefetch() throws Exception
-    {
-        createDocuments();
-
+    public void testGenFlexDocumentModelFromPrefetch() throws Exception {
         FlexDocumentModel fdm = DocumentModelTranslator.toFlexTypeFromPrefetch(doc);
 
         String title = (String) fdm.getProperty("dublincore", "title");
@@ -63,7 +78,6 @@ public class FlexDocumentModelGenerationTests extends RepositoryOSGITestCase {
 
         String coverage = (String) fdm.getProperty("dublincore", "coverage");
         assertNull(coverage);
-
     }
 
 }

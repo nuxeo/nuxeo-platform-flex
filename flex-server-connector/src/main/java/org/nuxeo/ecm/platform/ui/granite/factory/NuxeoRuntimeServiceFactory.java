@@ -1,3 +1,22 @@
+/*
+ * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ *
+ * $Id$
+ */
+
 package org.nuxeo.ecm.platform.ui.granite.factory;
 
 import java.util.Map;
@@ -31,8 +50,9 @@ public class NuxeoRuntimeServiceFactory extends ServiceFactory {
 
         GraniteContext context = GraniteContext.getCurrentInstance();
         Destination destination = context.getServicesConfig().findDestinationById(messageType, destinationId);
-        if (destination == null)
+        if (destination == null) {
             throw new ServiceException("No matching destination: " + destinationId);
+        }
 
         // all we need is to get bean name
         String clazz = (String) destination.getProperties().get("class");
@@ -44,15 +64,13 @@ public class NuxeoRuntimeServiceFactory extends ServiceFactory {
         } catch (ClassNotFoundException e2) {
             String msg = "Unable to find Class [" + clazz + "]";
             log.error(msg);
-            ServiceException e = new ServiceException(msg, e2);
-            throw e;
+            throw new ServiceException(msg, e2);
         }
 
         if (service == null) {
             String msg = "Unable to find Class [" + clazz + "]";
             log.error(msg);
-            ServiceException e = new ServiceException(msg);
-            throw e;
+            throw new ServiceException(msg);
         }
 
         //Create an instance of the component
@@ -62,18 +80,15 @@ public class NuxeoRuntimeServiceFactory extends ServiceFactory {
         } catch (Exception e1) {
             String msg = "Unable to find service [" + clazz + "]";
             log.error(msg);
-            ServiceException e = new ServiceException(msg, e1);
-            throw e;
+            throw new ServiceException(msg, e1);
         }
-
 
         if (instance == null) {
             String msg = "Unable to find service [" + clazz + "]";
             log.error(msg);
-            ServiceException e = new ServiceException(msg);
-            throw e;
+            throw new ServiceException(msg);
         }
-        
+
         return new NuxeoRuntimeServiceInvoker(destination, this, instance);
     }
 

@@ -1,3 +1,22 @@
+/*
+ * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ *
+ * $Id$
+ */
+
 package org.nuxeo.ecm.platform.ui.granite.config;
 
 import java.io.Serializable;
@@ -7,32 +26,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.granite.config.GraniteConfig;
 import org.granite.config.flex.Adapter;
-import org.granite.config.flex.Channel;
 import org.granite.config.flex.Destination;
-import org.granite.config.flex.EndPoint;
-import org.granite.config.flex.Factory;
 import org.granite.config.flex.Service;
-import org.granite.config.flex.ServicesConfig;
-import org.granite.context.GraniteContext;
-import org.granite.context.SimpleGraniteContext;
-import org.granite.messaging.webapp.HttpGraniteContext;
-import org.jboss.seam.mock.MockServletContext;
-import org.nuxeo.runtime.api.Framework;
-import org.nuxeo.runtime.model.ComponentContext;
 import org.nuxeo.runtime.model.ComponentName;
 import org.nuxeo.runtime.model.DefaultComponent;
 import org.nuxeo.runtime.model.Extension;
-import org.osgi.framework.FrameworkEvent;
-import org.osgi.framework.FrameworkListener;
-import org.restlet.Context;
 
 public class NxGraniteConfigService extends DefaultComponent implements
         NxGraniteConfigManager{//, FrameworkListener {
@@ -62,9 +64,9 @@ public class NxGraniteConfigService extends DefaultComponent implements
 
     public static final String RUNTIME_FACTORY = "nxruntimeFactory";
 
-    private List<String> channelRef = new LinkedList<String>();
+    private final List<String> channelRef = new LinkedList<String>();
 
-    private HashMap<String, Service> servicesMap = new HashMap<String, Service>();
+    private final HashMap<String, Service> servicesMap = new HashMap<String, Service>();
 
     @Override
     public void registerExtension(Extension extension) throws Exception {
@@ -187,17 +189,17 @@ public class NxGraniteConfigService extends DefaultComponent implements
                 try{
                 MockServletContext sc = new MockServletContext();
                 sc.setAttribute(ServicesConfig.class.getName() + "_CACHE", null);
-              
+
                 HttpGraniteContext.createThreadIntance(GraniteConfig.loadConfig(sc), ServicesConfig.loadConfig(sc), null, null, null);
                 }catch (Exception e){
-                    
+
                 }
                 // Add SeamFactory and RuntimeFactory
                 GraniteContext.getCurrentInstance().getServicesConfig().addFactory(
                         getSeamFactory());
                 GraniteContext.getCurrentInstance().getServicesConfig().addFactory(
                         getNxRuntimeFactory());
-                // Add Nuxeo Channel               
+                // Add Nuxeo Channel
                 GraniteContext.getCurrentInstance().getServicesConfig().addChannel(
                         getNxChannel());
                 Collection<Service> services = getServicesMap();

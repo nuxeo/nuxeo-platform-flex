@@ -1,3 +1,22 @@
+/*
+ * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ *
+ * $Id$
+ */
+
 package org.nuxeo.ecm.flex.javadto;
 
 import java.io.Serializable;
@@ -6,8 +25,7 @@ import java.util.Map;
 
 import org.nuxeo.ecm.core.api.DocumentRef;
 
-    public class FlexDocumentModel {
-
+public class FlexDocumentModel {
 
     private String docRef;
     private String name;
@@ -16,60 +34,51 @@ import org.nuxeo.ecm.core.api.DocumentRef;
     private String type;
     private String icon;
     private String iconExpanded;
-    private Boolean isFolder=false;
+    private Boolean isFolder = false;
     private String sessionId;
 
+    private Map<String, Map<String, Serializable>> data = new HashMap<String, Map<String, Serializable>>();
+    private Map<String, Serializable> dirtyFields = new HashMap<String, Serializable>();
 
-    private transient Map<String, Map<String,Serializable>> data = new HashMap<String, Map<String,Serializable>>();
-    private Map<String,Serializable> dirtyFields =  new HashMap<String, Serializable>();
-
-    public FlexDocumentModel()
-    {
-        docRef="docRef";
-        name="docName";
-        path="/default/folder"+name;
-        lifeCycleState="work";
-        type=null;
-        icon=null;
-        iconExpanded=null;
+    public FlexDocumentModel() {
+        docRef = "docRef";
+        name = "docName";
+        path = "/default/folder" + name;
+        lifeCycleState = "work";
+        type = null;
+        icon = null;
+        iconExpanded = null;
     }
 
-    public FlexDocumentModel(String sessionId, DocumentRef ref, String name, String path, String lcState,String type, String icon, String iconExpanded)
-    {
-        docRef=ref.toString();
-        this.name=name;
-        this.path=path;
-        lifeCycleState=lcState;
-        this.type=type;
+    public FlexDocumentModel(String sessionId, DocumentRef ref, String name,
+            String path, String lcState, String type, String icon, String iconExpanded) {
+        docRef = ref.toString();
+        this.name = name;
+        this.path = path;
+        lifeCycleState = lcState;
+        this.type = type;
         this.icon = icon;
-        this.iconExpanded=iconExpanded;
-        this.sessionId=sessionId;
+        this.iconExpanded = iconExpanded;
+        this.sessionId = sessionId;
     }
 
-
-
-    public void setIsFolder(Boolean isFolder)
-    {
-        this.isFolder=isFolder;
+    public void setIsFolder(Boolean isFolder) {
+        this.isFolder = isFolder;
     }
 
-    public Map<String,Serializable> getDirtyFields()
-    {
+    public Map<String, Serializable> getDirtyFields() {
         return dirtyFields;
     }
 
-    public void feed(String schemaName, Map<String,Serializable> map)
-    {
+    public void feed(String schemaName, Map<String, Serializable> map) {
         data.put(schemaName, map);
     }
 
-    public void setProperty(String schemaName, String fieldName, Serializable value)
-    {
+    public void setProperty(String schemaName, String fieldName, Serializable value) {
         data.get(schemaName).put(fieldName, value);
     }
 
-    public Serializable getProperty(String schemaName, String fieldName)
-    {
+    public Serializable getProperty(String schemaName, String fieldName) {
         return data.get(schemaName).get(fieldName);
     }
 

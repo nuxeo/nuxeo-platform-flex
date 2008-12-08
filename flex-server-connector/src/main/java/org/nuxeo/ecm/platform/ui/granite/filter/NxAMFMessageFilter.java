@@ -1,3 +1,22 @@
+/*
+ * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ *
+ * $Id$
+ */
+
 package org.nuxeo.ecm.platform.ui.granite.filter;
 
 import java.io.DataInputStream;
@@ -38,34 +57,33 @@ public class NxAMFMessageFilter implements Filter {
 
     private static final Logger log = Logger.getLogger(AMFMessageFilter.class);
 
-    private FilterConfig config = null;
+    private FilterConfig config;
 
-    private GraniteConfig graniteConfig = null;
+    private GraniteConfig graniteConfig;
 
-    private ServicesConfig servicesConfig = null;
+    private ServicesConfig servicesConfig;
 
-    private Map mockMap = new HashMap();
+    private final Map mockMap = new HashMap();
 
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
-        this.graniteConfig = GraniteConfig.loadConfig(config.getServletContext());      
-        this.servicesConfig = (ServicesConfig)config.getServletContext().getAttribute(ServicesConfig.class.getName() + "_CACHE");
-        if (this.servicesConfig == null){       
-            this.servicesConfig = ServicesConfig.loadConfig(config.getServletContext());
+        graniteConfig = GraniteConfig.loadConfig(config.getServletContext());
+        servicesConfig = (ServicesConfig) config.getServletContext().getAttribute(ServicesConfig.class.getName() + "_CACHE");
+        if (servicesConfig == null) {
+            servicesConfig = ServicesConfig.loadConfig(config.getServletContext());
+            addNxServicesConfig();
+        } else if (servicesConfig.findFactoryById(NxGraniteConfigService.SEAM_FACTORY) == null) {
             addNxServicesConfig();
         }
-        else if (servicesConfig.findFactoryById(NxGraniteConfigService.SEAM_FACTORY) == null){
-            addNxServicesConfig();
-        }               
-     }
+    }
 
-    public void addNxServicesConfig() throws ServletException{
-        this.servicesConfig.addFactory(
+    public void addNxServicesConfig() throws ServletException {
+        servicesConfig.addFactory(
                 getSeamFactory());
-        this.servicesConfig.addFactory(
+        servicesConfig.addFactory(
                 getNxRuntimeFactory());
-        // Add Nuxeo Channel               
-        this.servicesConfig.addChannel(
+        // Add Nuxeo Channel
+        servicesConfig.addChannel(
                 getNxChannel());
         Collection<Service> services;
         try {
@@ -75,30 +93,36 @@ public class NxAMFMessageFilter implements Filter {
             throw new ServletException(e);
         }
         for (Service service : services) {
-            this.servicesConfig.addService(
+            servicesConfig.addService(
                     service);
         }
     }
-    
+
     public Factory getSeamFactory() {
-        return new Factory(NxGraniteConfigService.SEAM_FACTORY, NxGraniteConfigService.SEAM_FACTORY_CLASS, mockMap);
+        return new Factory(
+                NxGraniteConfigService.SEAM_FACTORY, NxGraniteConfigService.SEAM_FACTORY_CLASS, mockMap);
     }
 
     public Factory getNxRuntimeFactory() {
-        return new Factory(NxGraniteConfigService.RUNTIME_FACTORY, NxGraniteConfigService.RUNTIME_FACTORY_CLASS, mockMap);
+        return new Factory(
+                NxGraniteConfigService.RUNTIME_FACTORY, NxGraniteConfigService.RUNTIME_FACTORY_CLASS, mockMap);
     }
 
     public Channel getNxChannel() {
-        return new Channel(NxGraniteConfigService.CHANNEL, NxGraniteConfigService.CHANNEL_CLASS, new EndPoint(NxGraniteConfigService.ENDPOINT,
-                NxGraniteConfigService.ENDPOINT_CLASS), mockMap);
+        return new Channel(
+                NxGraniteConfigService.CHANNEL, NxGraniteConfigService.CHANNEL_CLASS,
+                new EndPoint(NxGraniteConfigService.ENDPOINT, NxGraniteConfigService.ENDPOINT_CLASS),
+                mockMap);
     }
+
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
         if (!(request instanceof HttpServletRequest)
-                || !(response instanceof HttpServletResponse))
+                || !(response instanceof HttpServletResponse)) {
             throw new ServletException("Not in HTTP context: " + request + ", "
                     + response);
+        }
 
         log.debug(">> Incoming AMF0 request from: %s",
                 ((HttpServletRequest) request).getRequestURL());
@@ -108,8 +132,8 @@ public class NxAMFMessageFilter implements Filter {
                     graniteConfig, servicesConfig, config.getServletContext(),
                     (HttpServletRequest) request,
                     (HttpServletResponse) response);
-            
-            
+
+
             AMFContextImpl amf = (AMFContextImpl) context.getAMFContext();
 
             log.debug(">> Deserializing AMF0 request...");
@@ -117,7 +141,7 @@ public class NxAMFMessageFilter implements Filter {
             AMF0Deserializer deserializer = new AMF0Deserializer(
                     new DataInputStream(request.getInputStream()));
             AMF0Message amf0Request = deserializer.getAMFMessage();
-         
+
             amf.setAmf0Request(amf0Request);
 
             log.debug(">> Chaining AMF0 request: %s", amf0Request);
@@ -145,8 +169,9 @@ public class NxAMFMessageFilter implements Filter {
     }
 
     public void destroy() {
-        this.config = null;
-        this.graniteConfig = null;
-        this.servicesConfig = null;
+        config = null;
+        graniteConfig = null;
+        servicesConfig = null;
     }
+
 }

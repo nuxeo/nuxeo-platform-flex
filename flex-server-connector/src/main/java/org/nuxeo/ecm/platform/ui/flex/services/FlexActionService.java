@@ -1,3 +1,22 @@
+/*
+ * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ *
+ * $Id$
+ */
+
 package org.nuxeo.ecm.platform.ui.flex.services;
 
 import java.util.ArrayList;
@@ -22,15 +41,14 @@ import org.nuxeo.ecm.platform.ui.web.util.SeamContextHelper;
 @Scope(ScopeType.STATELESS)
 public class FlexActionService {
 
-
     @In(create = true)
-    private transient ActionManager actionManager;
+    private ActionManager actionManager;
 
     @In(create=true)
-    private transient CoreSession flexDocumentManager;
+    private CoreSession flexDocumentManager;
 
     @In(create=true)
-    private transient FlexNavigationContext flexNavigationContext;
+    private FlexNavigationContext flexNavigationContext;
 
     @In(create=false,required=false)
     NuxeoPrincipal flexUser;
@@ -40,8 +58,7 @@ public class FlexActionService {
         List<Action> list = new ArrayList<Action>();
         ActionContext context = createActionContext(null);
 
-        for (String category : categories)
-        {
+        for (String category : categories) {
             List<Action> actions = actionManager.getActions(category, context);
             if (actions != null) {
                 list.addAll(actions);
@@ -51,11 +68,10 @@ public class FlexActionService {
     }
 
     @WebRemote
-    public List<Action> getActionsList(List<String> categories, String currentDocumentId) throws ClientException  {
+    public List<Action> getActionsList(List<String> categories, String currentDocumentId) throws ClientException {
         List<Action> list = new ArrayList<Action>();
         ActionContext context = createActionContext(currentDocumentId);
-        for (String category : categories)
-        {
+        for (String category : categories) {
             List<Action> actions = actionManager.getActions(category, context);
             if (actions != null) {
                 list.addAll(actions);
@@ -64,12 +80,10 @@ public class FlexActionService {
         return list;
     }
 
-
-    private ActionContext createActionContext(String currentDocumentId) throws ClientException{
+    private ActionContext createActionContext(String currentDocumentId) throws ClientException {
         ActionContext ctx = new ActionContext();
 
-        if (currentDocumentId!=null)
-        {
+        if (currentDocumentId != null) {
             DocumentModel currentDoc = flexDocumentManager.getDocument(new IdRef(currentDocumentId));
             flexNavigationContext.setCurrentDocument(currentDoc);
         }

@@ -1,3 +1,22 @@
+/*
+ * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ *
+ * $Id$
+ */
+
 package org.nuxeo.ecm.platform.ui.flex.mapping;
 
 import java.io.Serializable;
@@ -34,17 +53,17 @@ public class DocumentModelTranslator {
 
     private static SchemaManager sm;
 
-    private static Map<String, String> schemaCache = new ConcurrentHashMap<String, String>();
+    private static final Map<String, String> schemaCache = new ConcurrentHashMap<String, String>();
 
     private static String getSchemaFromPrefix(String prefix) throws Exception {
-
         String schemaName = schemaCache.get(prefix);
-
-        if (schemaName != null)
+        if (schemaName != null) {
             return schemaName;
+        }
 
-        if (sm == null)
+        if (sm == null) {
             sm = Framework.getService(SchemaManager.class);
+        }
 
         Schema schema = sm.getSchemaFromPrefix(prefix);
 
@@ -56,7 +75,7 @@ public class DocumentModelTranslator {
         schemaCache.put(prefix, schemaName);
         return schemaName;
     }
-    
+
     public static FlexDocumentModel toFlexTypeFromPrefetch(DocumentModel doc)
             throws Exception {
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
@@ -65,8 +84,8 @@ public class DocumentModelTranslator {
                 BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconPath(doc)+"_flex",
                 BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconExpandedPath(doc)+"_flex");
 
-        if (fdm.getType().equals("Picture")){
-            String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
+        if (fdm.getType().equals("Picture")) {
+            String bigDownloadURL = BaseURL.getServerURL() + "nuxeo/";
             bigDownloadURL += "nxbigfile" + "/";
             bigDownloadURL += doc.getRepositoryName() + "/";
             bigDownloadURL += doc.getRef().toString() + "/";
@@ -74,16 +93,15 @@ public class DocumentModelTranslator {
             bigDownloadURL += "orig";
             fdm.setIcon(bigDownloadURL);
         }
-        
+
         fdm.setIsFolder(doc.isFolder());
 
         Map<String, Serializable> prefetch = doc.getPrefetch();
         String[] schemas = doc.getDeclaredSchemas();
 
-        for (int i = 0; i < schemas.length; i++) {
+        for (String schema : schemas) {
             Map<String, Serializable> map = new HashMap<String, Serializable>();
-
-            fdm.feed(schemas[i], map);
+            fdm.feed(schema, map);
         }
 
         for (String prefetchKey : prefetch.keySet()) {
@@ -110,8 +128,8 @@ public class DocumentModelTranslator {
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconPath(doc)+"_flex",
-                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconExpandedPath(doc)+"_flex");
+                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.iconPath(doc) + "_flex",
+                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.iconExpandedPath(doc) + "_flex");
 
         if (fdm.getType().equals("Picture")){
             String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
@@ -122,31 +140,32 @@ public class DocumentModelTranslator {
             bigDownloadURL += "orig";
             fdm.setIcon(bigDownloadURL);
         }
-        
+
         fdm.setIsFolder(doc.isFolder());
 
         DocumentPart[] parts = doc.getParts();
 
-        for (int i = 0; i < parts.length; i++) {
+        for (DocumentPart part : parts) {
             Map<String, Serializable> map = new HashMap<String, Serializable>();
-            Collection<Property> props = parts[i].getChildren();
+            Collection<Property> props = part.getChildren();
 
-            String schemaPrefix = parts[i].getSchema().getNamespace().prefix;
-            if (schemaPrefix == "")
-                schemaPrefix = parts[i].getSchema().getName();
+            String schemaPrefix = part.getSchema().getNamespace().prefix;
+            if (schemaPrefix == "") {
+                schemaPrefix = part.getSchema().getName();
+            }
 
             for (Property prop : props) {
                 String fieldName = prop.getName();
                 fieldName = fieldName.replace(schemaPrefix + ":", "");
                 map.put(fieldName, introspectProperty(prop, doc));
             }
-            fdm.feed(parts[i].getName(), map);
+            fdm.feed(part.getName(), map);
         }
         return fdm;
     }
-    
-    public static  Serializable introspectProperty(Property prop, DocumentModel doc)
-    throws Exception {
+
+    public static Serializable introspectProperty(Property prop, DocumentModel doc)
+            throws Exception {
         if (prop.getType().isSimpleType()) {
             return prop.getValue();
         } else if (prop.getType().isComplexType()) {
@@ -161,12 +180,12 @@ public class DocumentModelTranslator {
                         fileName = (String) doc.getProperty("dublincore",
                                 "title");
                     }
-                        String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
-                        bigDownloadURL += "nxbigfile" + "/";
-                        bigDownloadURL += doc.getRepositoryName() + "/";
-                        bigDownloadURL += doc.getRef().toString() + "/";
-                        bigDownloadURL += prop.getSchema().getName()+";"+ prop.getName()+ "/";
-                        bigDownloadURL += fileName;
+                    String bigDownloadURL = BaseURL.getServerURL() + "nuxeo/";
+                    bigDownloadURL += "nxbigfile" + "/";
+                    bigDownloadURL += doc.getRepositoryName() + "/";
+                    bigDownloadURL += doc.getRef().toString() + "/";
+                    bigDownloadURL += prop.getSchema().getName() + ";" + prop.getName() + "/";
+                    bigDownloadURL += fileName;
                     return bigDownloadURL;
                 }
             } else if (prop instanceof MapProperty) {
@@ -184,20 +203,19 @@ public class DocumentModelTranslator {
                 List<Serializable> lstProp = new ArrayList<Serializable>();
                 lstProp.addAll(listProp.getChildren());
                 return (Serializable) lstProp;
-            } else if ((prop instanceof ArrayProperty) &&( prop.getValue() != null)) {
+            } else if ((prop instanceof ArrayProperty) && (prop.getValue() != null)) {
                 Object[] arrayProp = (Object[]) prop.getValue();
                 List<Serializable> lstProp = new ArrayList<Serializable>();
                 int length = arrayProp.length;
                 for (int i = 0; i < length; i++) {
-                    lstProp.add( (Serializable)arrayProp[i]);
+                    lstProp.add((Serializable) arrayProp[i]);
                 }
                 return (Serializable) lstProp;
             }
         }
         return "";
-        
     }
-    
+
     public static DocumentModel toDocumentModel(FlexDocumentModel fdoc)
             throws Exception {
         CoreSession session = CoreInstance.getInstance().getSession(

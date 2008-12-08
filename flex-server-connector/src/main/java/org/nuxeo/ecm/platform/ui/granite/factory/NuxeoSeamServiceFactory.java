@@ -40,26 +40,27 @@ import flex.messaging.messages.RemotingMessage;
 /**
  * @author Laurent Doguin
  */
-public class NuxeoSeamServiceFactory extends SeamServiceFactory {    
+public class NuxeoSeamServiceFactory extends SeamServiceFactory {
+
     private static final long serialVersionUID = 1L;
-    
+
     private static final Log log = Logging.getLog(NuxeoSeamServiceFactory.class);
 
     @Override
     public ServiceInvoker<?> getServiceInstance(RemotingMessage request) throws ServiceException {
         String messageType = request.getClass().getName();
         String destinationId = request.getDestination();
-        
 
         GraniteContext context = GraniteContext.getCurrentInstance();
         if (context instanceof HttpGraniteContext) {
             Principal principal = ((HttpGraniteContext)context).getRequest().getUserPrincipal();
             Contexts.getEventContext().set("flexUser", (NuxeoPrincipal)principal);
         }
-        
+
         Destination destination = context.getServicesConfig().findDestinationById(messageType, destinationId);
-        if (destination == null)
+        if (destination == null) {
             throw new ServiceException("No matching destination: " + destinationId);
+        }
 
         // all we need is to get bean name
         String componentName = destinationId;
@@ -70,8 +71,7 @@ public class NuxeoSeamServiceFactory extends SeamServiceFactory {
         if (component == null) {
             String msg = "Unable to create a Seam component named [" + componentName + "]";
             log.error(msg);
-            ServiceException e = new ServiceException(msg);
-            throw e;
+            throw new ServiceException(msg);
         }
 
         //Create an instance of the component
