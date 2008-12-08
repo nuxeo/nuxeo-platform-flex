@@ -15,7 +15,7 @@ public class FlexDocumentModelGenerationTests extends RepositoryOSGITestCase {
         super.setUp();
         deployBundle("org.nuxeo.ecm.platform.content.template");
         deployBundle("org.nuxeo.ecm.platform.types.api");
-
+        deployBundle("org.nuxeo.ecm.platform.types.core");
         openRepository();
 
     }
@@ -41,6 +41,7 @@ public class FlexDocumentModelGenerationTests extends RepositoryOSGITestCase {
     {
         createDocuments();
 
+        assertEquals("File", doc.getType());
         FlexDocumentModel fdm = DocumentModelTranslator.toFlexType(doc);
 
         String title = (String) fdm.getProperty("dublincore", "title");
