@@ -6,6 +6,7 @@
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex-sample-login-parent</artifactId>
     <version>5.2.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
  
     <modelVersion>4.0.0</modelVersion>
@@ -21,7 +22,6 @@
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
-      <version>5.2-SNAPSHOT</version>
       <type>swc</type>
     </dependency>
  </dependencies>

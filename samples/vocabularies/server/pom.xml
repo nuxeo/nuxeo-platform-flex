@@ -4,7 +4,8 @@
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex-samples-vocabularies-parent</artifactId>
-    <version>5.2-SNAPSHOT</version>
+    <version>5.2.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>nuxeo-platform-ui-flex-samples-vocabularies</artifactId>
@@ -13,21 +14,10 @@
     Nuxeo Enterprise Platform: Flex vocabulary sample server side components
   </description>
 
-  <repositories>
-        <repository>
-            <id>repository.jboss.org</id>
-            <url>http://repository.jboss.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
   <dependencies>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-ui-flex-samples-vocabularies-swf</artifactId>
-      <version>5.2-SNAPSHOT</version>
       <type>swf</type>
     </dependency>
     <dependency>
@@ -41,7 +31,6 @@
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-ui-flex-server-connector</artifactId>
-      <version>5.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
@@ -79,7 +68,6 @@
     <dependency>
       <groupId>javax.transaction</groupId>
       <artifactId>jta</artifactId>
-      <version>1.0.1B</version>
     </dependency>
   </dependencies>
 

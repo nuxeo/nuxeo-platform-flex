@@ -7,13 +7,14 @@
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex</artifactId>
     <version>5.2.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
     <packaging>swc</packaging>
     <name>Nuxeo Flex components</name>
-    <version>5.2.1-SNAPSHOT</version>
+    <version>${nuxeo.features.version}</version>
     <properties>
         <flex.home>${env.FLEX_HOME}</flex.home>
     </properties>

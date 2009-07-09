@@ -20,8 +20,21 @@
     <!--<module>samples</module>-->
   </modules>
 
-  <dependencies>
-    <dependency>
+  <repositories>
+        <repository>
+            <id>flexmojos-repository</id>
+            <url>http://repository.sonatype.org/content/groups/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>flexmojos-repository</id>
+            <url>http://repository.sonatype.org/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+  <dependencies> 
+  <dependency>
       <groupId>org.nuxeo.ecm.core</groupId>
       <artifactId>nuxeo-core-api</artifactId>
     </dependency>
@@ -48,8 +61,6 @@
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-actions-core</artifactId>
-      <version>5.2.1-SNAPSHOT</version>
-      <type>ejb</type>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
@@ -99,12 +110,10 @@
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
-      <version>1.2</version>
     </dependency>
     <dependency>
       <groupId>javax.transaction</groupId>
       <artifactId>jta</artifactId>
-      <version>1.0.1B</version>
     </dependency>
 
 
@@ -134,7 +143,6 @@
       <artifactId>nuxeo-core</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <developers>
@@ -164,7 +172,8 @@
         <artifactId>maven-taglib-plugin</artifactId>
         <configuration>
           <taglib.src.dir>src/main/resources/WEB</taglib.src.dir>
-        </configuration>
+        
+</configuration>
       </plugin>
     </plugins>
   </reporting>

@@ -6,6 +6,7 @@
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex-samples-actions-parent</artifactId>
     <version>5.2.1-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
  
     <modelVersion>4.0.0</modelVersion>
@@ -13,33 +14,15 @@
     <artifactId>nuxeo-platform-ui-flex-samples-actions-swf</artifactId>
     <packaging>swf</packaging>
     <name>Nuxeo Flex actions sample SWF</name>
-    <version>5.2.1-SNAPSHOT</version>
-    <properties>
-        <flex.home>${env.FLEX_HOME}</flex.home>
-    </properties>
+    <version>${nuxeo.features.version}</version>
 
  <dependencies>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
-      <version>5.2.1-SNAPSHOT</version>
       <type>swc</type>
     </dependency>
  </dependencies>
-  <repositories>
-        <repository>
-            <id>flexmojos-repository</id>
-            <url>http://repository.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>flexmojos-repository</id>
-            <url>http://repository.sonatype.org/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    
 
     <build>
         <sourceDirectory>src/main/flex/</sourceDirectory>
@@ -51,5 +34,5 @@
                 <extensions>true</extensions>
             </plugin>
         </plugins>   
- </build>
+  </build>
 </project>
