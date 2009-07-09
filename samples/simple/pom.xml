@@ -16,7 +16,7 @@
   </description>
 
    <modules>
-    <module>air-client</module>
+    <!--module>air-client</module-->
     <module>client</module>
     <module>server</module>
    </modules>

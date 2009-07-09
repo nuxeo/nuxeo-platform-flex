@@ -11,7 +11,7 @@
     <initialWindow>
         <title>Nuxeo Sample facet explorer</title>
 
-        <content>target/nuxeo-platform-ui-flex-samples-facet-explorer-swf-air-5.2-SNAPSHOT.swf</content>
+        <content>target/nuxeo-platform-ui-flex-samples-facet-explorer-swf-air-5.2.1-SNAPSHOT.swf</content>
         <systemChrome>none</systemChrome>
         <transparent>true</transparent>
         <visible>true</visible>
