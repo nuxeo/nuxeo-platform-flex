@@ -2,22 +2,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-               
+
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex</artifactId>
-    <version>5.2-SNAPSHOT</version>
+    <version>5.2.1-SNAPSHOT</version>
   </parent>
 
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
     <packaging>swc</packaging>
     <name>Nuxeo Flex components</name>
-    <version>5.2-SNAPSHOT</version>
+    <version>5.2.1-SNAPSHOT</version>
     <properties>
         <flex.home>${env.FLEX_HOME}</flex.home>
     </properties>
-    
 
  <dependencies>
    <dependency>
@@ -32,27 +31,50 @@
       <version>1</version>
       <type>swc</type>
     </dependency>
- </dependencies>
+        <dependency>
+            <groupId>com.adobe.flex.framework</groupId>
+            <artifactId>flex-framework</artifactId>
+            <version>3.0.0.477</version>
+            <type>pom</type>
+        </dependency>   
+ <dependency>
+        <groupId>com.adobe.cairngorm</groupId>
+        <artifactId>cairngorm-bin</artifactId>
+        <version>2.2.1</version>
+        <type>swc</type>
+    </dependency>
+    <dependency>
+        <groupId>com.adobe.as3core</groupId>
+        <artifactId>corelib.swc</artifactId>
+        <version>0.92</version>
+        <type>swc</type>
+    </dependency>
+  </dependencies> 
     
+       <repositories>
+        <repository>
+            <id>flexmojos-repository</id>
+            <url>http://repository.sonatype.org/content/groups/public/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>flexmojos-repository</id>
+            <url>http://repository.sonatype.org/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     
+
     <build>
+        <sourceDirectory>src/main/flex/</sourceDirectory>
         <plugins>
             <plugin>
-                <groupId>net.israfil.mojo</groupId>
-                <artifactId>maven-flex2-plugin</artifactId>
-                <version>1.3</version>
+                <groupId>org.sonatype.flexmojos</groupId>
+                <artifactId>flexmojos-maven-plugin</artifactId>
+                <version>3.0.0</version>
                 <extensions>true</extensions>
-                <configuration>
-                    <flexHome>${flex.home}</flexHome>
-                    <extraParameters>
-                        <parameter>
-                            <name>compiler.fonts.local-fonts-snapshot</name>
-                            <values><value>${env.FLEX_HOME}/frameworks/localFonts.ser</value></values>
-                        </parameter>
-                    </extraParameters>
-                </configuration>
             </plugin>
-        </plugins>
-    </build>
-    
+        </plugins>   
+ </build>
 </project>

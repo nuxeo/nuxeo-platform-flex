@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex-samples-actions-parent</artifactId>
-    <version>5.2-SNAPSHOT</version>
+    <version>5.2.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>nuxeo-platform-ui-flex-sample-actions</artifactId>
@@ -27,7 +27,7 @@
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-ui-flex-samples-actions-swf</artifactId>
-      <version>5.2-SNAPSHOT</version>
+      <version>5.2.1-SNAPSHOT</version>
       <type>swf</type>
     </dependency>
     <dependency>
@@ -41,7 +41,7 @@
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-ui-flex-server-connector</artifactId>
-      <version>5.2-SNAPSHOT</version>
+      <version>5.2.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
@@ -83,29 +83,6 @@
     </dependency>
   </dependencies>
 
- <build>        
-        <plugins>
-            <plugin>
-                <groupId>net.israfil.mojo</groupId>
-                <artifactId>maven-flex2-plugin</artifactId>
-                <executions><execution>
-                        <id>copy-flex</id>
-                        <phase>process-classes</phase>
-                        <goals><goal>copy-flex-applications</goal></goals>
-                        <configuration>
-                            <modules>
-                                <swfModule>
-                                    <groupId>org.nuxeo.ecm.platform</groupId>
-                                    <artifactId>nuxeo-platform-ui-flex-samples-actions-swf</artifactId>
-                                    <targetPath>${project.build.directory}/classes/nuxeo.war/flexsamples</targetPath>
-                                    <targetFilename>actions.swf</targetFilename>
-                                </swfModule>
-                            </modules>
-                        </configuration>
-                </execution></executions>
-            </plugin>
-	</plugins>
-</build>
    
 
 </project>

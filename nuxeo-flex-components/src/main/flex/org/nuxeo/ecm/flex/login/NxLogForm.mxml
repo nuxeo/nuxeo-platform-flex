@@ -26,7 +26,6 @@
 		import mx.rpc.events.FaultEvent;
 		import mx.rpc.events.ResultEvent;	
 		import org.nuxeo.ecm.flex.login.NuxeoLogin;
-        import org.nuxeo.ecm.flex.login.NxLoginEvent;
 		import flash.net.*;
 
 		[Bindable]  

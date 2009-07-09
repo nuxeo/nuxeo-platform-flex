@@ -19,6 +19,7 @@
 
 package org.nuxeo.ecm.platform.ui.flex.services;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,7 +83,7 @@ public class FlexVocabularyService {
             }
         } else if (directorySchema.equals("xvocabulary")) {
 
-            Map<String, Object> filter = new HashMap<String, Object>();
+            Map<String, Serializable> filter = new HashMap<String, Serializable>();
 
             if (parentKey != null) {
                 filter.put("parent", parentKey);
