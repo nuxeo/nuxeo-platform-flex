@@ -1,27 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex</artifactId>
-    <version>5.2-SNAPSHOT</version>
+    <version>5.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>nuxeo-platform-ui-flex-server-connector</artifactId>
   <name>Nuxeo Web Framework Flex server connector</name>
   <description>
-    Nuxeo Enterprise Platform: Flex integration  based on JBoss SEAM
+    Nuxeo Enterprise Platform: Flex integration based on JBoss SEAM
   </description>
-
-  <repositories>
-        <repository>
-            <id>repository.jboss.org</id>
-            <url>http://repository.jboss.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
   <dependencies>
     <dependency>
@@ -74,12 +65,10 @@
     <pluginManagement>
       <plugins>
         <!--
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-nuxeo-plugin</artifactId>
-            <version>1.0.4</version>
+          <plugin> <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-nuxeo-plugin</artifactId> <version>1.0.4</version>
           </plugin>
-          -->
+        -->
       </plugins>
     </pluginManagement>
   </build>
