@@ -13,7 +13,7 @@
 
 
   <!-- comment that to disable filter based auth -->
-  <extension target="web#STD-AUTH-FILTER">
+  <extension target="web#FILTER-MAPPING">
 
     <filter-mapping>
       <filter-name>NuxeoAuthenticationFilter</filter-name>
