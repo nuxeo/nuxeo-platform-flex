@@ -81,16 +81,16 @@ public class DocumentModelTranslator {
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconPath(doc)+"_flex",
-                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconExpandedPath(doc)+"_flex");
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.bigIconPath(doc),
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.bigIconExpandedPath(doc));
 
         if (fdm.getType().equals("Picture")) {
             String bigDownloadURL = BaseURL.getServerURL() + "nuxeo/";
             bigDownloadURL += "nxbigfile" + "/";
             bigDownloadURL += doc.getRepositoryName() + "/";
             bigDownloadURL += doc.getRef().toString() + "/";
-            bigDownloadURL += "picture:views/item[0]/content/";
-            bigDownloadURL += "orig";
+            bigDownloadURL += "picture:views/0/content/";
+            bigDownloadURL += "midSize";
             fdm.setIcon(bigDownloadURL);
         }
 
@@ -128,16 +128,16 @@ public class DocumentModelTranslator {
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.iconPath(doc) + "_flex",
-                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.iconExpandedPath(doc) + "_flex");
+                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.bigIconPath(doc),
+                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.bigIconExpandedPath(doc));
 
         if (fdm.getType().equals("Picture")){
             String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
             bigDownloadURL += "nxbigfile" + "/";
             bigDownloadURL += doc.getRepositoryName() + "/";
             bigDownloadURL += doc.getRef().toString() + "/";
-            bigDownloadURL += "picture;views/item[1]/content/";
-            bigDownloadURL += "orig";
+            bigDownloadURL += "picture:views/0/content/";
+            bigDownloadURL += "midSize";
             fdm.setIcon(bigDownloadURL);
         }
 

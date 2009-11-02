@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-features-parent</artifactId>
-    <version>5.2.1-SNAPSHOT</version>
+    <version>5.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>nuxeo-platform-ui-flex</artifactId>
@@ -14,6 +14,10 @@
   </description>
   <packaging>pom</packaging>
 
+  <properties>
+    <flex.sdk.version>3.2.0.3958</flex.sdk.version>
+  </properties>
+
   <modules>
     <module>flex-server-connector</module>
     <module>nuxeo-flex-components</module>
@@ -21,17 +25,80 @@
   </modules>
 
   <repositories>
-        <repository>
-            <id>flexmojos-repository</id>
-            <url>http://repository.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>flexmojos-repository</id>
-            <url>http://repository.sonatype.org/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
+    <repository>
+      <id>flexmojos-repository</id>
+      <url>http://repository.sonatype.org/content/groups/public/</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>flexmojos-repository</id>
+      <url>http://repository.sonatype.org/content/groups/public/</url>
+      </pluginRepository>
+  </pluginRepositories>
+
+  <dependencyManagement>
+   <dependencies>
+    <dependency>
+      <groupId>org.graniteds</groupId>
+      <artifactId>granite-seam</artifactId>
+      <version>1.1.0_RC3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.graniteds</groupId>
+      <artifactId>granite</artifactId>
+      <version>1.1.0_RC3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.ecm.platform</groupId>
+      <artifactId>nuxeo-platform-ui-flex-server-connector</artifactId>
+      <version>${nuxeo.features.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.ecm.platform</groupId>
+      <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
+      <version>${nuxeo.features.version}</version>
+      <type>swc</type>
+    </dependency>
+      <dependency>
+        <groupId>papervision</groupId>
+        <artifactId>papervision-phunky</artifactId>
+        <version>1</version>
+        <type>swc</type>
+      </dependency>
+      <dependency>
+        <groupId>effects</groupId>
+        <artifactId>tweener</artifactId>
+        <version>1</version>
+        <type>swc</type>
+      </dependency>
+      <dependency>
+        <groupId>com.adobe.flex.framework</groupId>
+        <artifactId>flex-framework</artifactId>
+        <version>${flex.sdk.version}</version>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>com.adobe.flex.framework</groupId>
+        <artifactId>air-framework</artifactId>
+        <version>${flex.sdk.version}</version>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>com.adobe.cairngorm</groupId>
+        <artifactId>cairngorm-bin</artifactId>
+        <version>2.2.1</version>
+        <type>swc</type>
+      </dependency>
+      <dependency>
+        <groupId>com.adobe.as3core</groupId>
+        <artifactId>corelib.swc</artifactId>
+        <version>0.92</version>
+        <type>swc</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
 
   <dependencies> 
   <dependency>

@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex</artifactId>
-    <version>5.2.1-SNAPSHOT</version>
+    <version>5.3.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -14,68 +14,44 @@
     <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
     <packaging>swc</packaging>
     <name>Nuxeo Flex components</name>
-    <version>${nuxeo.features.version}</version>
-    <properties>
-        <flex.home>${env.FLEX_HOME}</flex.home>
-    </properties>
 
  <dependencies>
    <dependency>
       <groupId>papervision</groupId>
       <artifactId>papervision-phunky</artifactId>
-      <version>1</version>
       <type>swc</type>
     </dependency>
     <dependency>
       <groupId>effects</groupId>
       <artifactId>tweener</artifactId>
-      <version>1</version>
       <type>swc</type>
     </dependency>
-        <dependency>
-            <groupId>com.adobe.flex.framework</groupId>
-            <artifactId>flex-framework</artifactId>
-            <version>3.0.0.477</version>
-            <type>pom</type>
-        </dependency>   
- <dependency>
-        <groupId>com.adobe.cairngorm</groupId>
-        <artifactId>cairngorm-bin</artifactId>
-        <version>2.2.1</version>
-        <type>swc</type>
+    <dependency>
+      <groupId>com.adobe.flex.framework</groupId>
+      <artifactId>flex-framework</artifactId>
+      <type>pom</type>
+    </dependency>   
+    <dependency>
+    <groupId>com.adobe.cairngorm</groupId>
+      <artifactId>cairngorm-bin</artifactId>
+      <type>swc</type>
     </dependency>
     <dependency>
-        <groupId>com.adobe.as3core</groupId>
-        <artifactId>corelib.swc</artifactId>
-        <version>0.92</version>
-        <type>swc</type>
+      <groupId>com.adobe.as3core</groupId>
+      <artifactId>corelib.swc</artifactId>
+      <type>swc</type>
     </dependency>
   </dependencies> 
-    
-       <repositories>
-        <repository>
-            <id>flexmojos-repository</id>
-            <url>http://repository.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>flexmojos-repository</id>
-            <url>http://repository.sonatype.org/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
 
-    
-
-    <build>
-        <sourceDirectory>src/main/flex/</sourceDirectory>
-        <plugins>
-            <plugin>
-                <groupId>org.sonatype.flexmojos</groupId>
-                <artifactId>flexmojos-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <extensions>true</extensions>
-            </plugin>
-        </plugins>   
- </build>
+  <build>
+    <sourceDirectory>src/main/flex/</sourceDirectory>
+      <plugins>
+        <plugin>
+          <groupId>org.sonatype.flexmojos</groupId>
+          <artifactId>flexmojos-maven-plugin</artifactId>
+          <version>3.0.0</version>
+          <extensions>true</extensions>
+        </plugin>
+      </plugins>   
+  </build>
 </project>

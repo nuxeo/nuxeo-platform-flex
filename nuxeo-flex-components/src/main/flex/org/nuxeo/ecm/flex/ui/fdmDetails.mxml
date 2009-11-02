@@ -118,7 +118,7 @@
               for (j=0;j<dirtyFields.length;j++) {
                   _currentFdm.setProperty(dirtyFields[j].schema,dirtyFields[j].fieldName,dirtyFields[j].fieldValue);
               }
-              flexRepositoryService.saveDocument(_currentFdm);
+              flexDocumentManager.saveDocument(_currentFdm);
          }
 
     private function saveDocumentHandler(event:ResultEvent):void{
@@ -127,8 +127,8 @@
 
   ]]>
   </mx:Script>
-  <mx:RemoteObject id="flexRepositoryService"
-    destination="flexRepositoryService" fault="faultHandler(event)">
+  <mx:RemoteObject id="flexDocumentManager"
+    destination="flexDocumentManager" fault="faultHandler(event)">
     <mx:method name="saveDocument" result="saveDocumentHandler(event)" />
   </mx:RemoteObject>
 
