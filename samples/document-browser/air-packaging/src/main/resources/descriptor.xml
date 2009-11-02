@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/1.0">
+
+       <id>org.nuxeo.ecm.air</id>
+       <version>0.1</version>
+       <filename>Nuxeo Sample AIR document explorer</filename>
+       <name>Nuxeo Sample AIR document explorer</name>
+       <description>Nuxeo Sample AIR document explorer</description>
+
+       <initialWindow>
+        <content>${output}</content>
+        <title>Nuxeo Sample document explorer</title>
+        <systemChrome>standard</systemChrome>
+        <transparent>false</transparent>
+        <visible>true</visible>
+        <minimizable>true</minimizable>
+        <maximizable>true</maximizable>
+        <resizable>true</resizable>
+        <width>1024</width>
+        <height>780</height>
+        <minSize>800 600</minSize>
+       </initialWindow>
+
+	<!-- The icon the system uses for the application. For at least one resolution,
+		 specify the path to a PNG file included in the AIR package. Optional. -->
+	<!-- <icon>
+		<image16x16></image16x16>
+		<image32x32></image32x32>
+		<image48x48></image48x48>
+		<image128x128></image128x128>
+	</icon> -->
+
+
+</application>
+

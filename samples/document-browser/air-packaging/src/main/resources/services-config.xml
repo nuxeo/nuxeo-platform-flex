@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services-config>
+    <services>
+      
+        <service
+            id="flexRepositoryService"
+            class="flex.messaging.services.RemotingService"
+            messageTypes="flex.messaging.messages.RemotingMessage">
+
+            <!--
+            Note:
+            this value is used on client and server side.
+            this is a Seam component name.
+            -->
+            <destination id="flexRepositoryService">
+            <channels>
+                <!--
+                Note:
+                this is URL/channel configuration
+                -->
+                <channel ref="nx-amf"/>
+            </channels>
+                <properties>
+                    <factory>seamFactory</factory>
+                    <source>flexRepositoryService</source>
+                </properties>
+            
+            </destination>
+        </service>
+      
+        <service
+            id="flexDocumentManager"
+            class="flex.messaging.services.RemotingService"
+            messageTypes="flex.messaging.messages.RemotingMessage">
+
+            <!--
+            Note:
+            this value is used on client and server side.
+            this is a Seam component name.
+            -->
+            <destination id="flexDocumentManager">
+            <channels>
+                <!--
+                Note:
+                this is URL/channel configuration
+                -->
+                <channel ref="nx-amf"/>
+            </channels>
+                <properties>
+                    <factory>seamFactory</factory>
+                    <source>flexDocumentManager</source>
+                </properties>
+            
+            </destination>
+        </service>
+              
+    </services>
+   
+    <factories>
+	  <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
+    </factories>
+
+    <channels>
+        <channel-definition id="nx-amf" class="mx.messaging.channels.AMFChannel">
+            <endpoint
+                uri="http://{server.name}:{server.port}/nuxeo/nuxeo-amf/amf"
+                class="flex.messaging.endpoints.AMFEndpoint"/>
+        </channel-definition>
+
+        <!--server.port and server.name are resolved dynamically at run time-->
+    </channels>
+
+
+</services-config>
