@@ -24,19 +24,6 @@
     <!--<module>samples</module>-->
   </modules>
 
-  <repositories>
-    <repository>
-      <id>flexmojos-repository</id>
-      <url>http://repository.sonatype.org/content/groups/public/</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>flexmojos-repository</id>
-      <url>http://repository.sonatype.org/content/groups/public/</url>
-      </pluginRepository>
-  </pluginRepositories>
-
   <dependencyManagement>
    <dependencies>
     <dependency>
@@ -238,9 +225,8 @@
         <groupId>net.sourceforge.maven-taglib</groupId>
         <artifactId>maven-taglib-plugin</artifactId>
         <configuration>
-          <taglib.src.dir>src/main/resources/WEB</taglib.src.dir>
-        
-</configuration>
+          <taglib.src.dir>src/main/resources/WEB</taglib.src.dir>  
+        </configuration>
       </plugin>
     </plugins>
   </reporting>
