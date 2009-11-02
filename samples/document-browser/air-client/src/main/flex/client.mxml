@@ -25,7 +25,6 @@
     import mx.controls.Alert;
     import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;	
-    import org.nuxeo.ecm.flex.login.NxLoginEvent;
 
 
       [Bindable]

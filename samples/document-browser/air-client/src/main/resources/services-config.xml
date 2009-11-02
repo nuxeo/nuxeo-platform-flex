@@ -64,7 +64,7 @@
     <channels>
         <channel-definition id="nx-amf" class="mx.messaging.channels.AMFChannel">
             <endpoint
-                uri="http://localhost:8080/nuxeo/nuxeo-amf/amf"
+                uri="http://{server.name}:{server.port}/nuxeo/nuxeo-amf/amf"
                 class="flex.messaging.endpoints.AMFEndpoint"/>
         </channel-definition>
 

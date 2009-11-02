@@ -2,8 +2,6 @@
 <component name="org.nuxeo.ecm.platform.ui.granite.config.documentBrowser">
 
     <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
-
-	<seam id="flexRepositoryService" />
-
+        <seam id="flexDocumentManager" source="flexRepositoryService"/>
   </extension>
 </component>

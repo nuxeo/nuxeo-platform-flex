@@ -1,6 +1,3 @@
-<!--
-  -->
-
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
   xmlns:nxlog="org.nuxeo.ecm.flex.login.*" 
   xmlns:nxnav="org.nuxeo.ecm.flex.navigation.*"

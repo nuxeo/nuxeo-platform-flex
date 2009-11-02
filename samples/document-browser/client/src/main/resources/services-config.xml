@@ -26,12 +26,11 @@
                 </properties>
             
             </destination>
-        </service>
-              
+            </service>
     </services>
-   
+
     <factories>
-	  <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
+        <factory id="seamFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoSeamServiceFactory" />
     </factories>
 
     <channels>
@@ -43,6 +42,5 @@
 
         <!--server.port and server.name are resolved dynamically at run time-->
     </channels>
-
 
 </services-config>
