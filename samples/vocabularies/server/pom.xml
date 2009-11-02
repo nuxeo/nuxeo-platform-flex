@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -11,7 +12,8 @@
   <artifactId>nuxeo-platform-ui-flex-samples-vocabularies</artifactId>
   <name>Nuxeo vocabularies Flex Sample Server side</name>
   <description>
-    Nuxeo Enterprise Platform: Flex vocabulary sample server side components
+    Nuxeo Enterprise Platform: Flex vocabulary sample server side
+    components
   </description>
 
   <dependencies>
@@ -71,29 +73,32 @@
     </dependency>
   </dependencies>
 
- <build>        
-        <plugins>
-            <plugin>
-                <groupId>net.israfil.mojo</groupId>
-                <artifactId>maven-flex2-plugin</artifactId>
-                <executions><execution>
-                        <id>copy-flex</id>
-                        <phase>process-classes</phase>
-                        <goals><goal>copy-flex-applications</goal></goals>
-                        <configuration>
-                            <modules>
-                                <swfModule>
-                                    <groupId>org.nuxeo.ecm.platform</groupId>
-                                    <artifactId>nuxeo-platform-ui-flex-samples-vocabularies-swf</artifactId>
-                                    <targetPath>${project.build.directory}/classes/nuxeo.war/flexsamples</targetPath>
-                                    <targetFilename>vocabularies.swf</targetFilename>
-                                </swfModule>
-                            </modules>
-                        </configuration>
-                </execution></executions>
-            </plugin>
-	</plugins>
-</build>
-   
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>net.israfil.mojo</groupId>
+        <artifactId>maven-flex2-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-flex</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>copy-flex-applications</goal>
+            </goals>
+            <configuration>
+              <modules>
+                <swfModule>
+                  <groupId>org.nuxeo.ecm.platform</groupId>
+                  <artifactId>nuxeo-platform-ui-flex-samples-vocabularies-swf</artifactId>
+                  <targetPath>${project.build.directory}/classes/nuxeo.war/flexsamples</targetPath>
+                  <targetFilename>vocabularies.swf</targetFilename>
+                </swfModule>
+              </modules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
