@@ -29,6 +29,8 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.CoreInstance;
@@ -45,11 +47,14 @@ import org.nuxeo.ecm.core.api.model.impl.primitives.BlobProperty;
 import org.nuxeo.ecm.core.schema.SchemaManager;
 import org.nuxeo.ecm.core.schema.types.Schema;
 import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
-import org.nuxeo.ecm.platform.ui.web.tag.fn.DocumentModelFunctions;
+import org.nuxeo.ecm.platform.types.Type;
+import org.nuxeo.ecm.platform.types.TypeManager;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.runtime.api.Framework;
 
 public class DocumentModelTranslator {
+
+    private static final Log log = LogFactory.getLog(DocumentModelTranslator.class);
 
     private static SchemaManager sm;
 
@@ -78,11 +83,23 @@ public class DocumentModelTranslator {
 
     public static FlexDocumentModel toFlexTypeFromPrefetch(DocumentModel doc)
             throws Exception {
+        String bigIcon = "";
+        String bigIconExpanded = "";
+        try {
+            TypeManager typeManager = Framework.getService(TypeManager.class);
+            Type docType = typeManager.getType(doc.getType());
+            bigIcon = docType.getBigIcon();
+            bigIconExpanded = docType.getBigIconExpanded();
+        } catch (Exception e) {
+            log.error("Could not get TypeManager Service, use default Icon.");
+            bigIcon = "/icons/file_100.png";
+            bigIconExpanded = "/icons/file_100.png";
+        }
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.bigIconPath(doc),
-                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.bigIconExpandedPath(doc));
+                BaseURL.getServerURL()+"nuxeo"+bigIcon,
+                BaseURL.getServerURL()+"nuxeo"+bigIconExpanded);
 
         if (fdm.getType().equals("Picture")) {
             String bigDownloadURL = BaseURL.getServerURL() + "nuxeo/";
@@ -124,12 +141,23 @@ public class DocumentModelTranslator {
 
     public static FlexDocumentModel toFlexType(DocumentModel doc)
             throws Exception {
-
+        String bigIcon = "";
+        String bigIconExpanded = "";
+        try {
+            TypeManager typeManager = Framework.getService(TypeManager.class);
+            Type docType = typeManager.getType(doc.getType());
+            bigIcon = docType.getBigIcon();
+            bigIconExpanded = docType.getBigIconExpanded();
+        } catch (Exception e) {
+            log.error("Could not get TypeManager Service, use default Icon.");
+            bigIcon = "/icons/file_100.png";
+            bigIconExpanded = "/icons/file_100.png";
+        }
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.bigIconPath(doc),
-                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.bigIconExpandedPath(doc));
+                BaseURL.getServerURL()+"nuxeo"+bigIcon,
+                BaseURL.getServerURL()+"nuxeo"+bigIconExpanded);
 
         if (fdm.getType().equals("Picture")){
             String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";

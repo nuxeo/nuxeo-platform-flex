@@ -8,12 +8,6 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
  
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.nuxeo.ecm.platform</groupId>
-    <artifactId>nuxeo-platform-ui-flex-samples-browser-swf</artifactId>
-    <packaging>swf</packaging>
-    <name>Nuxeo Flex Browser SWF</name>
-
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.nuxeo.ecm.platform</groupId>
   <artifactId>nuxeo-platform-ui-flex-samples-browser-swf</artifactId>
