@@ -81,8 +81,8 @@ public class DocumentModelTranslator {
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.bigIconPath(doc),
-                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.bigIconExpandedPath(doc));
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconPath(doc)+"_flex",
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconExpandedPath(doc)+"_flex"); 
 
         if (fdm.getType().equals("Picture")) {
             String bigDownloadURL = BaseURL.getServerURL() + "nuxeo/";
@@ -128,8 +128,8 @@ public class DocumentModelTranslator {
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.bigIconPath(doc),
-                BaseURL.getServerURL() + "nuxeo" + DocumentModelFunctions.bigIconExpandedPath(doc));
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconPath(doc)+"_flex",
+                BaseURL.getServerURL()+"nuxeo"+DocumentModelFunctions.iconExpandedPath(doc)+"_flex"); 
 
         if (fdm.getType().equals("Picture")){
             String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
