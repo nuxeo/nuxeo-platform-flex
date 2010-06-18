@@ -17,6 +17,7 @@
 
   <properties>
     <flex.sdk.version>3.2.0.3958</flex.sdk.version>
+    <granite.version>1.1.0.GA</granite.version>
   </properties>
 
   <modules>
@@ -30,12 +31,12 @@
     <dependency>
       <groupId>org.graniteds</groupId>
       <artifactId>granite-seam</artifactId>
-      <version>1.1.0_RC3</version>
+      <version>${granite.version}</version>
     </dependency>
     <dependency>
       <groupId>org.graniteds</groupId>
-      <artifactId>granite</artifactId>
-      <version>1.1.0_RC3</version>
+      <artifactId>granite-core</artifactId>
+      <version>${granite.version}</version>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>

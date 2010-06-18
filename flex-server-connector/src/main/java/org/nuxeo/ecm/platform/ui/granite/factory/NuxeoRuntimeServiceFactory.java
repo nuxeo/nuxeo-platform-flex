@@ -19,13 +19,12 @@
 
 package org.nuxeo.ecm.platform.ui.granite.factory;
 
-import java.util.Map;
-
 import org.granite.config.flex.Destination;
 import org.granite.context.GraniteContext;
 import org.granite.messaging.service.ServiceException;
 import org.granite.messaging.service.ServiceFactory;
 import org.granite.messaging.service.ServiceInvoker;
+import org.granite.util.XMap;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.log.Logging;
 import org.nuxeo.runtime.api.Framework;
@@ -39,7 +38,7 @@ public class NuxeoRuntimeServiceFactory extends ServiceFactory {
     private static final Log log = Logging.getLog(NuxeoRuntimeServiceFactory.class);
 
     @Override
-    public void configure(Map<String, Object> properties) throws ServiceException {
+    public void configure(XMap properties) throws ServiceException {
         super.configure(properties);
     }
 

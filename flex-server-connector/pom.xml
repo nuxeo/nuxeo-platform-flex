@@ -14,6 +14,10 @@
     Nuxeo Enterprise Platform: Flex integration based on JBoss SEAM
   </description>
 
+  <properties>
+    <granite.version>1.1.0.GA</granite.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
@@ -25,27 +29,27 @@
     </dependency> 
     <dependency>
       <groupId>org.graniteds</groupId>
-      <artifactId>granite</artifactId>
-      <version>1.1.0_RC3</version>
+      <artifactId>granite-core</artifactId>
+      <version>${granite.version}</version>
       <type>jar</type>
     </dependency> 
     <dependency>
       <groupId>org.graniteds</groupId>
-      <artifactId>granite</artifactId>
-      <version>1.1.0_RC3</version>
+      <artifactId>granite-core-swc</artifactId>
+      <version>${granite.version}</version>
       <type>swc</type>
     </dependency>
     <dependency>
       <groupId>org.graniteds</groupId>
       <artifactId>granite-seam</artifactId>
-      <version>1.1.0_RC3</version>
+      <version>${granite.version}</version>
       <type>jar</type>
     </dependency>
 
     <dependency>
       <groupId>org.graniteds</groupId>
-      <artifactId>granite-seam</artifactId>
-      <version>1.1.0_RC3</version>
+      <artifactId>granite-seam-swc</artifactId>
+      <version>${granite.version}</version>
       <type>swc</type>
     </dependency>
     
@@ -72,8 +76,8 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>org.graniteds</groupId>
-                  <artifactId>granite</artifactId>
-                  <destFileName>granite.jar</destFileName>
+                  <artifactId>granite-core</artifactId>
+                  <destFileName>granite-core.jar</destFileName>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.graniteds</groupId>

@@ -19,19 +19,17 @@
 
 package org.nuxeo.ecm.platform.ui.granite.config;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.granite.config.flex.Adapter;
 import org.granite.config.flex.Destination;
 import org.granite.config.flex.Service;
+import org.granite.util.XMap;
 import org.nuxeo.runtime.model.ComponentName;
 import org.nuxeo.runtime.model.DefaultComponent;
 import org.nuxeo.runtime.model.Extension;
@@ -101,7 +99,7 @@ public class NxGraniteConfigService extends DefaultComponent implements
         } else {
             destinationId = component.getDestinationId();
         }
-        Map<String, Serializable> properties = new HashMap<String, Serializable>();
+        XMap properties = new XMap();
         properties.put("class", component.getClassName());
         properties.put("factory", RUNTIME_FACTORY);
         HashMap<String, Destination> destinations = new HashMap<String, Destination>();
@@ -120,7 +118,7 @@ public class NxGraniteConfigService extends DefaultComponent implements
         } else {
             destinationId = component.getDestinationId();
         }
-        Map<String, Serializable> properties = new HashMap<String, Serializable>();
+        XMap properties = new XMap();
         if (component.getSource() == null) {
             properties.put("source", component.getId());
         } else if (component.getSource().equals("")) {
@@ -137,8 +135,8 @@ public class NxGraniteConfigService extends DefaultComponent implements
     }
 
     public Destination createDestination(String id,
-            Map<String, Serializable> properties) {
-        return new Destination(id, channelRef, properties, null, null);
+            XMap properties) {
+        return new Destination(id, channelRef, properties, null, null, null);
     }
 
     @Override

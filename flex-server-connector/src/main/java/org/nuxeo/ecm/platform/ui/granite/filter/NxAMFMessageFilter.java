@@ -23,8 +23,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -49,9 +47,10 @@ import org.granite.messaging.amf.io.AMF0Deserializer;
 import org.granite.messaging.amf.io.AMF0Serializer;
 import org.granite.messaging.webapp.AMFMessageFilter;
 import org.granite.messaging.webapp.HttpGraniteContext;
+import org.granite.util.XMap;
 import org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigManager;
-import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService;
+import org.nuxeo.runtime.api.Framework;
 
 public class NxAMFMessageFilter implements Filter {
 
@@ -62,8 +61,6 @@ public class NxAMFMessageFilter implements Filter {
     private GraniteConfig graniteConfig;
 
     private ServicesConfig servicesConfig;
-
-    private final Map mockMap = new HashMap();
 
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
@@ -100,19 +97,19 @@ public class NxAMFMessageFilter implements Filter {
 
     public Factory getSeamFactory() {
         return new Factory(
-                NxGraniteConfigService.SEAM_FACTORY, NxGraniteConfigService.SEAM_FACTORY_CLASS, mockMap);
+                NxGraniteConfigService.SEAM_FACTORY, NxGraniteConfigService.SEAM_FACTORY_CLASS, XMap.EMPTY_XMAP);
     }
 
     public Factory getNxRuntimeFactory() {
         return new Factory(
-                NxGraniteConfigService.RUNTIME_FACTORY, NxGraniteConfigService.RUNTIME_FACTORY_CLASS, mockMap);
+                NxGraniteConfigService.RUNTIME_FACTORY, NxGraniteConfigService.RUNTIME_FACTORY_CLASS, XMap.EMPTY_XMAP);
     }
 
     public Channel getNxChannel() {
         return new Channel(
                 NxGraniteConfigService.CHANNEL, NxGraniteConfigService.CHANNEL_CLASS,
                 new EndPoint(NxGraniteConfigService.ENDPOINT, NxGraniteConfigService.ENDPOINT_CLASS),
-                mockMap);
+                XMap.EMPTY_XMAP);
     }
 
     public void doFilter(ServletRequest request, ServletResponse response,
