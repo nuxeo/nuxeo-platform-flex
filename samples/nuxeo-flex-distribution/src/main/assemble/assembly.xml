@@ -1,0 +1,72 @@
+<project name="nuxeo-assembly" default="build" xmlns:nx="urn:nuxeo-build"
+  xmlns:artifact="urn:nuxeo-artifact">
+
+  <taskdef resource="org/nuxeo/build/antlib.xml" uri="urn:nuxeo-build" />
+  <taskdef resource="org/nuxeo/build/artifact/antlib.xml" uri="urn:nuxeo-artifact" />
+
+  <filterset id="filter-resources">
+    <filter token="nuxeo.core.version" value="${nuxeo.core.version}" />
+  </filterset>
+
+  <target name="init" unless="init.done">
+    <tstamp />
+    <property name="outdir" value="${maven.project.build.directory}" />
+    <property name="stagedir" value="${outdir}/stage" />
+    <property name="finaltarget" value="../target" />
+    <property name="init.done" value="true" />
+    <property name="app.path" value="${stagedir}/nuxeo-flex-tomcat" />
+    <property name="plugins.dir" value="${app.path}/nxserver/plugins" />
+    <property name="lib.dir" value="${app.path}/nxserver/lib" />
+    <property name="config.dir" value="${app.path}/nxserver/config" />
+    <property name="distribution" value="tomcat" />
+    <antcall target="expand" />
+  </target>
+
+  <target name="build" depends="init">
+    <antcall target="build.cleanoutput" />
+    <antcall target="build.tomcat" />
+  </target>
+
+  <target name="build.cleanoutput">
+    <delete dir="${finaltarget}" />
+  </target>
+
+  <target name="build.tomcat" description="Tomcat Server packaging">
+    <echo>Tomcat server build ${build.distrib}...</echo>
+    <delete dir="${stagedir}" />
+    <mkdir dir="${stagedir}" />
+    <unzip dest="${stagedir}">
+      <artifact:resolveFile
+        key="org.nuxeo.ecm.distribution:nuxeo-distribution-tomcat:${nuxeo.platform.version}:zip"
+        classifier="nuxeo-cap" />
+    </unzip>
+    <nx:rename from="${stagedir}/nuxeo-*" to="${app.path}" />
+    <chmod dir="${app.path}" perm="750" includes="*.sh,bin/*.sh,bin/nuxeoctl" />
+    <!-- Deploy Custom plugins -->
+    <copy todir="${plugins.dir}">
+      <artifact:set artifactId="nuxeo-platform-ui-flex*" groupId="org.nuxeo.ecm.platform" type="jar" />
+    </copy>
+    <!-- Deploy Custom lib -->
+    <copy todir="${lib.dir}">
+      <artifact:set groupId="org.graniteds" type="jar" />
+    </copy>
+    <antcall target="zip" />
+  </target>
+	
+  <target name="expand" unless="no.build">
+    <artifact:expand depth="1" />
+  </target>
+
+  <target name="zip">
+    <zip
+      destfile="${outdir}/${maven.project.artifactId}-${maven.project.version}-${distribution}.zip"
+      basedir="${stagedir}" />
+    <echo>Distribution built:
+      ${outdir}/${maven.project.artifactId}-${maven.project.version}-${distribution}.zip</echo>
+    <artifact:attach
+      file="${outdir}/${maven.project.artifactId}-${maven.project.version}-${distribution}.zip"
+      classifier="${distribution}" type="zip"
+      target="${maven.project.groupId}:${maven.project.artifactId}" />
+  </target>
+
+</project>
