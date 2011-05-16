@@ -34,8 +34,6 @@ Deploy using ant :
 This task uses the build.properties to define the target JBoss/Nuxeo instance.
 This task runs the maven build and then copy the jar into the nuxeo.ear.
 
-
-
-
-
-
+Finally copy the jars below under nuxeo.ear/libi (jboss) or nxserver/lib (tomcat):
+ - granite-core-1.1.0.GA.jar
+ - granite-seam-1.1.0.GA.jar
