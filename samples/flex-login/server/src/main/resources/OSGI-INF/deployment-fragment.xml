@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-
-<fragment>
+<fragment version="1">
 
 
   <extension target="application#MODULE">
@@ -11,15 +10,20 @@
 
   </extension>
 
+
+  <extension target="faces-config#NAVIGATION">
+    <navigation-case>
+      <from-outcome>flexsamples</from-outcome>
+      <to-view-id>/flexsamples/index.xhtml</to-view-id>
+      <redirect />
+    </navigation-case>
+  </extension>
+  
   <install>
-
-    <!--  unzip the swf in the war -->
-    <unzip from="${bundle.fileName}" to="/">
-      <include>nuxeo.war/**</include>
+    <unzip from="${bundle.fileName}" to="/" prefix="web">
+      <include>web/nuxeo.war/**</include>
     </unzip>
-
   </install>
-
 </fragment>
 
 

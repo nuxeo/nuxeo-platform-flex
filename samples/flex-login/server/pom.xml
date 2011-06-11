@@ -37,7 +37,7 @@
                                 <swfModule>
                                     <groupId>org.nuxeo.ecm.platform</groupId>
                                     <artifactId>nuxeo-platform-ui-flex-sample-login-swf</artifactId>
-                                    <targetPath>${project.build.directory}/classes/nuxeo.war</targetPath>
+                                    <targetPath>${project.build.directory}/classes/web/nuxeo.war</targetPath>
                                     <targetFilename>login.swf</targetFilename>
                                 </swfModule>
                             </modules>

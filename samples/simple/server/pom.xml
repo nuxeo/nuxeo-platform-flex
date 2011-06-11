@@ -52,7 +52,7 @@
                 <swfModule>
                   <groupId>org.nuxeo.ecm.platform</groupId>
                   <artifactId>nuxeo-platform-ui-flex-samples-simple-swf</artifactId>
-                  <targetPath>${project.build.directory}/classes/nuxeo.war/flexsamples</targetPath>
+                  <targetPath>${project.build.directory}/classes/web/nuxeo.war/flexsamples</targetPath>
                   <targetFilename>simple.swf</targetFilename>
                 </swfModule>
               </modules>
