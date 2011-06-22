@@ -29,6 +29,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 
+/**
+ * Simple Servlet that is used to return an answer to the Flex client when it authenticates
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class FlexLoginServlet extends HttpServlet {
 
     /**

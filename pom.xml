@@ -5,13 +5,13 @@
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-features-parent</artifactId>
-    <version>5.4.2-SNAPSHOT</version>
+    <version>5.4.2</version>
   </parent>
 
   <artifactId>nuxeo-platform-ui-flex</artifactId>
   <name>Nuxeo Web Framework Flex root integration</name>
   <description>
-    Nuxeo Enterprise Platform: Flex integration  based on JBoss SEAM
+    Nuxeo Enterprise Platform: Flex bridge based on GraniteDS
   </description>
   <packaging>pom</packaging>
 

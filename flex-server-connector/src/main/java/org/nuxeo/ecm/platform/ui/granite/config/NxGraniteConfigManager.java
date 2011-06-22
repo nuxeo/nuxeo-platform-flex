@@ -23,8 +23,20 @@ import java.util.Collection;
 
 import org.granite.config.flex.Service;
 
+/**
+ *
+ * Service interface on top of the Component that manages Services registration
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public interface NxGraniteConfigManager {
 
+    /**
+     * Return the Granite descriptors for the Services that must be exposed
+     *
+     * @return
+     */
     Collection<Service> getServicesMap();
 
 }

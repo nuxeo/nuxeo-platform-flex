@@ -34,8 +34,21 @@ import org.nuxeo.runtime.model.ComponentName;
 import org.nuxeo.runtime.model.DefaultComponent;
 import org.nuxeo.runtime.model.Extension;
 
+/**
+ * Component and Service implementation that manages the GraniteDS
+ * configuration.
+ *
+ * The services exposed via GraniteDS can be Nuxeo Runtime Services or Seam
+ * component.
+ *
+ * This Component provides an extension point to register what services and seam
+ * components must be exposed.
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class NxGraniteConfigService extends DefaultComponent implements
-        NxGraniteConfigManager{//, FrameworkListener {
+        NxGraniteConfigManager {// , FrameworkListener {
 
     public static final ComponentName NAME = new ComponentName(
             "org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService");
@@ -134,8 +147,7 @@ public class NxGraniteConfigService extends DefaultComponent implements
                 new HashMap<String, Adapter>(), destinations);
     }
 
-    public Destination createDestination(String id,
-            XMap properties) {
+    public Destination createDestination(String id, XMap properties) {
         return new Destination(id, channelRef, properties, null, null, null);
     }
 
@@ -159,74 +171,58 @@ public class NxGraniteConfigService extends DefaultComponent implements
     public Collection<Service> getServicesMap() {
         return servicesMap.values();
     }
-    //This code should have set the granite services configuration, but GraniteContext.getinstance return null.
-    //Hack is to set the configuration in a Custom AMFMessageFilter -> NxAMFMessageFilter
-/*
-    public Factory getSeamFactory() {
-        return new Factory(SEAM_FACTORY, SEAM_FACTORY_CLASS, mockMap);
-    }
-
-    public Factory getNxRuntimeFactory() {
-        return new Factory(RUNTIME_FACTORY, RUNTIME_FACTORY_CLASS, mockMap);
-    }
-
-    public Channel getNxChannel() {
-        return new Channel(CHANNEL, CHANNEL_CLASS, new EndPoint(ENDPOINT,
-                ENDPOINT_CLASS), mockMap);
-    }
-
-    public void frameworkEvent(FrameworkEvent event) {
-        if (event.getType() == FrameworkEvent.STARTED) {
-
-            ClassLoader jbossCL = Thread.currentThread().getContextClassLoader();
-            ClassLoader nuxeoCL = NxGraniteConfigService.class.getClassLoader();
-            try {
-                Thread.currentThread().setContextClassLoader(nuxeoCL);
-                log.info("GraniteDS configuration registering");
-                //Can't instanciate
-                try{
-                MockServletContext sc = new MockServletContext();
-                sc.setAttribute(ServicesConfig.class.getName() + "_CACHE", null);
-
-                HttpGraniteContext.createThreadIntance(GraniteConfig.loadConfig(sc), ServicesConfig.loadConfig(sc), null, null, null);
-                }catch (Exception e){
-
-                }
-                // Add SeamFactory and RuntimeFactory
-                GraniteContext.getCurrentInstance().getServicesConfig().addFactory(
-                        getSeamFactory());
-                GraniteContext.getCurrentInstance().getServicesConfig().addFactory(
-                        getNxRuntimeFactory());
-                // Add Nuxeo Channel
-                GraniteContext.getCurrentInstance().getServicesConfig().addChannel(
-                        getNxChannel());
-                Collection<Service> services = getServicesMap();
-                for (Service service : services) {
-                    GraniteContext.getCurrentInstance().getServicesConfig().addService(
-                            service);
-                }
-            } finally {
-                Thread.currentThread().setContextClassLoader(jbossCL);
-                log.debug("JBoss ClassLoader restored");
-            }
-        }
-
-    }
-
-    @Override
-    public void activate(ComponentContext context) throws Exception {
-        if (Boolean.parseBoolean(Framework.getProperty(
-                "org.nuxeo.ecm.platform.relations.initOnStartup", "true"))) {
-            context.getRuntimeContext().getBundle().getBundleContext().addFrameworkListener(
-                    this);
-        }
-    }
-
-    @Override
-    public void deactivate(ComponentContext context) throws Exception {
-        // this is doing nothing if listener was not registered
-        context.getRuntimeContext().getBundle().getBundleContext().removeFrameworkListener(
-                this);
-    }
-*/
+    // This code should have set the granite services configuration, but
+    // GraniteContext.getinstance return null.
+    // Hack is to set the configuration in a Custom AMFMessageFilter ->
+    // NxAMFMessageFilter
+    /*
+     * public Factory getSeamFactory() { return new Factory(SEAM_FACTORY,
+     * SEAM_FACTORY_CLASS, mockMap); }
+     *
+     * public Factory getNxRuntimeFactory() { return new
+     * Factory(RUNTIME_FACTORY, RUNTIME_FACTORY_CLASS, mockMap); }
+     *
+     * public Channel getNxChannel() { return new Channel(CHANNEL,
+     * CHANNEL_CLASS, new EndPoint(ENDPOINT, ENDPOINT_CLASS), mockMap); }
+     *
+     * public void frameworkEvent(FrameworkEvent event) { if (event.getType() ==
+     * FrameworkEvent.STARTED) {
+     *
+     * ClassLoader jbossCL = Thread.currentThread().getContextClassLoader();
+     * ClassLoader nuxeoCL = NxGraniteConfigService.class.getClassLoader(); try
+     * { Thread.currentThread().setContextClassLoader(nuxeoCL);
+     * log.info("GraniteDS configuration registering"); //Can't instanciate try{
+     * MockServletContext sc = new MockServletContext();
+     * sc.setAttribute(ServicesConfig.class.getName() + "_CACHE", null);
+     *
+     * HttpGraniteContext.createThreadIntance(GraniteConfig.loadConfig(sc),
+     * ServicesConfig.loadConfig(sc), null, null, null); }catch (Exception e){
+     *
+     * } // Add SeamFactory and RuntimeFactory
+     * GraniteContext.getCurrentInstance().getServicesConfig().addFactory(
+     * getSeamFactory());
+     * GraniteContext.getCurrentInstance().getServicesConfig().addFactory(
+     * getNxRuntimeFactory()); // Add Nuxeo Channel
+     * GraniteContext.getCurrentInstance().getServicesConfig().addChannel(
+     * getNxChannel()); Collection<Service> services = getServicesMap(); for
+     * (Service service : services) {
+     * GraniteContext.getCurrentInstance().getServicesConfig().addService(
+     * service); } } finally {
+     * Thread.currentThread().setContextClassLoader(jbossCL);
+     * log.debug("JBoss ClassLoader restored"); } }
+     *
+     * }
+     *
+     * @Override public void activate(ComponentContext context) throws Exception
+     * { if (Boolean.parseBoolean(Framework.getProperty(
+     * "org.nuxeo.ecm.platform.relations.initOnStartup", "true"))) {
+     * context.getRuntimeContext
+     * ().getBundle().getBundleContext().addFrameworkListener( this); } }
+     *
+     * @Override public void deactivate(ComponentContext context) throws
+     * Exception { // this is doing nothing if listener was not registered
+     * context
+     * .getRuntimeContext().getBundle().getBundleContext().removeFrameworkListener
+     * ( this); }
+     */
 }

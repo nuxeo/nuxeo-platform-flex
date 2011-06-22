@@ -24,15 +24,20 @@ import java.util.List;
 
 import org.nuxeo.ecm.platform.ui.web.auth.plugins.FormAuthenticator;
 
+/**
+ * Extends default {@link FormAuthenticator} just to change the login page and
+ * have a different plugin name
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class FlexAuthenticationPlugin extends FormAuthenticator {
-
 
     protected String loginPage = "login.swf";
 
     protected String usernameKey = "user_name";
 
     protected String passwordKey = "user_password";
-
 
     @Override
     public List<String> getUnAuthenticatedURLPrefix() {

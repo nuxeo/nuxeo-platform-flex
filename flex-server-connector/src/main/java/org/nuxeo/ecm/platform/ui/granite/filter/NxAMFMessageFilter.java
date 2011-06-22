@@ -52,6 +52,13 @@ import org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigManager;
 import org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService;
 import org.nuxeo.runtime.api.Framework;
 
+/**
+ *
+ * Manages GraniteDS context initialization on a per-request basis
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class NxAMFMessageFilter implements Filter {
 
     private static final Logger log = Logger.getLogger(AMFMessageFilter.class);
@@ -65,7 +72,8 @@ public class NxAMFMessageFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
         graniteConfig = GraniteConfig.loadConfig(config.getServletContext());
-        servicesConfig = (ServicesConfig) config.getServletContext().getAttribute(ServicesConfig.class.getName() + "_CACHE");
+        servicesConfig = (ServicesConfig) config.getServletContext().getAttribute(
+                ServicesConfig.class.getName() + "_CACHE");
         if (servicesConfig == null) {
             servicesConfig = ServicesConfig.loadConfig(config.getServletContext());
             addNxServicesConfig();
@@ -75,13 +83,10 @@ public class NxAMFMessageFilter implements Filter {
     }
 
     public void addNxServicesConfig() throws ServletException {
-        servicesConfig.addFactory(
-                getSeamFactory());
-        servicesConfig.addFactory(
-                getNxRuntimeFactory());
+        servicesConfig.addFactory(getSeamFactory());
+        servicesConfig.addFactory(getNxRuntimeFactory());
         // Add Nuxeo Channel
-        servicesConfig.addChannel(
-                getNxChannel());
+        servicesConfig.addChannel(getNxChannel());
         Collection<Service> services;
         try {
             services = Framework.getService(NxGraniteConfigManager.class).getServicesMap();
@@ -90,26 +95,25 @@ public class NxAMFMessageFilter implements Filter {
             throw new ServletException(e);
         }
         for (Service service : services) {
-            servicesConfig.addService(
-                    service);
+            servicesConfig.addService(service);
         }
     }
 
     public Factory getSeamFactory() {
-        return new Factory(
-                NxGraniteConfigService.SEAM_FACTORY, NxGraniteConfigService.SEAM_FACTORY_CLASS, XMap.EMPTY_XMAP);
+        return new Factory(NxGraniteConfigService.SEAM_FACTORY,
+                NxGraniteConfigService.SEAM_FACTORY_CLASS, XMap.EMPTY_XMAP);
     }
 
     public Factory getNxRuntimeFactory() {
-        return new Factory(
-                NxGraniteConfigService.RUNTIME_FACTORY, NxGraniteConfigService.RUNTIME_FACTORY_CLASS, XMap.EMPTY_XMAP);
+        return new Factory(NxGraniteConfigService.RUNTIME_FACTORY,
+                NxGraniteConfigService.RUNTIME_FACTORY_CLASS, XMap.EMPTY_XMAP);
     }
 
     public Channel getNxChannel() {
-        return new Channel(
-                NxGraniteConfigService.CHANNEL, NxGraniteConfigService.CHANNEL_CLASS,
-                new EndPoint(NxGraniteConfigService.ENDPOINT, NxGraniteConfigService.ENDPOINT_CLASS),
-                XMap.EMPTY_XMAP);
+        return new Channel(NxGraniteConfigService.CHANNEL,
+                NxGraniteConfigService.CHANNEL_CLASS, new EndPoint(
+                        NxGraniteConfigService.ENDPOINT,
+                        NxGraniteConfigService.ENDPOINT_CLASS), XMap.EMPTY_XMAP);
     }
 
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -129,7 +133,6 @@ public class NxAMFMessageFilter implements Filter {
                     graniteConfig, servicesConfig, config.getServletContext(),
                     (HttpServletRequest) request,
                     (HttpServletResponse) response);
-
 
             AMFContextImpl amf = (AMFContextImpl) context.getAMFContext();
 

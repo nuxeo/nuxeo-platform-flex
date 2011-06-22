@@ -22,6 +22,12 @@ package org.nuxeo.ecm.platform.ui.granite.config;
 import org.nuxeo.common.xmap.annotation.XNode;
 import org.nuxeo.common.xmap.annotation.XObject;
 
+/**
+ * Descriptor for a Seam Component that must be exposed as a AMF Service
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 @XObject("seam")
 public class SeamComponent {
 

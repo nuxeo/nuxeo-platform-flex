@@ -29,6 +29,17 @@ import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
 import org.nuxeo.ecm.platform.ui.flex.mapping.DocumentModelTranslator;
 
+/**
+ * Manage types translation for parameters and return values.
+ *
+ * For example, AMF Call will always maipulate {@link FlexDocumentModel} whereas
+ * the java part will always deal with {@link DocumentModel}. This listener is
+ * responsible for doing the signatures translations and the return values
+ * conversions.
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class NuxeoServiceInvocationListener implements
         ServiceInvocationListener {
 
@@ -82,9 +93,7 @@ public class NuxeoServiceInvocationListener implements
                     } else if (tokens[0].endsWith("pathRef")) {
                         args[i] = new PathRef(tokens[1]);
                     }
-
                 }
-
             }
         } catch (Exception e) {
 

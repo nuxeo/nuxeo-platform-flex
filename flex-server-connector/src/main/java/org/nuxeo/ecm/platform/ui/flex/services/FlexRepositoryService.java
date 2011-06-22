@@ -36,6 +36,14 @@ import org.nuxeo.ecm.core.api.impl.blob.ByteArrayBlob;
 import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
 import org.nuxeo.ecm.platform.filemanager.api.FileManager;
 
+/**
+ * High level wrapper around the CoreSession.
+ *
+ * This seam bean exposes a simple API for CRUD operation on Documents
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 @Name("flexRepositoryService")
 @Scope(ScopeType.STATELESS)
 public class FlexRepositoryService {
@@ -67,7 +75,8 @@ public class FlexRepositoryService {
         }
     }
 
-    protected DocumentModel getDocumentByRef(DocumentRef docRef) throws Exception {
+    protected DocumentModel getDocumentByRef(DocumentRef docRef)
+            throws Exception {
         return flexDocumentManager.getDocument(docRef);
     }
 
@@ -77,7 +86,8 @@ public class FlexRepositoryService {
         return doc;
     }
 
-    public FlexDocumentModel createDocumentModel(String parentPath, String type, String name) {
+    public FlexDocumentModel createDocumentModel(String parentPath,
+            String type, String name) {
         FlexDocumentModel fdm = new FlexDocumentModel();
         fdm.setType(type);
         fdm.setPath(parentPath + "/" + name);
@@ -92,7 +102,8 @@ public class FlexRepositoryService {
         }
     }
 
-    public List<DocumentModel> getChildren(String refAsString) throws ClientException {
+    public List<DocumentModel> getChildren(String refAsString)
+            throws ClientException {
         DocumentRef docRef = getRefFromString(refAsString);
         if (docRef == null) {
             return null;
@@ -100,10 +111,12 @@ public class FlexRepositoryService {
         return flexDocumentManager.getChildren(docRef);
     }
 
-    public String uploadFile(byte[] bytes, String fileName, String path) throws Exception {
+    public String uploadFile(byte[] bytes, String fileName, String path)
+            throws Exception {
         Blob b = new ByteArrayBlob(bytes);
         b.setFilename(fileName);
-        fileManager.createDocumentFromBlob(flexDocumentManager, b, path, false, fileName);
+        fileManager.createDocumentFromBlob(flexDocumentManager, b, path, false,
+                fileName);
 
         return "success";
     }

@@ -23,21 +23,40 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
 
+/**
+ * {@link DocumentModel} reprosentation in the Flex world
+ *
+ * Basically the {@link FlexDocumentModel} is a deconected DTO that represents a
+ * {@link DocumentModel}
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class FlexDocumentModel {
 
     private String docRef;
+
     private String name;
+
     private String path;
+
     private String lifeCycleState;
+
     private String type;
+
     private String icon;
+
     private String iconExpanded;
+
     private Boolean isFolder = false;
+
     private String sessionId;
 
     private Map<String, Map<String, Serializable>> data = new HashMap<String, Map<String, Serializable>>();
+
     private Map<String, Serializable> dirtyFields = new HashMap<String, Serializable>();
 
     public FlexDocumentModel() {
@@ -51,7 +70,8 @@ public class FlexDocumentModel {
     }
 
     public FlexDocumentModel(String sessionId, DocumentRef ref, String name,
-            String path, String lcState, String type, String icon, String iconExpanded) {
+            String path, String lcState, String type, String icon,
+            String iconExpanded) {
         docRef = ref.toString();
         this.name = name;
         this.path = path;
@@ -74,7 +94,8 @@ public class FlexDocumentModel {
         data.put(schemaName, map);
     }
 
-    public void setProperty(String schemaName, String fieldName, Serializable value) {
+    public void setProperty(String schemaName, String fieldName,
+            Serializable value) {
         data.get(schemaName).put(fieldName, value);
     }
 

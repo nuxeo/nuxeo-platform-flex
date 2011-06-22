@@ -23,13 +23,20 @@ import org.jboss.seam.annotations.remoting.WebRemote;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
 
+/**
+ * Minimal Context management
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public interface FlexContextManager {
 
     @WebRemote
     FlexDocumentModel getCurrentFlexDocument() throws Exception;
 
     @WebRemote
-    void setCurrentFlexDocument(FlexDocumentModel currentDocument) throws Exception;
+    void setCurrentFlexDocument(FlexDocumentModel currentDocument)
+            throws Exception;
 
     DocumentModel getCurrentDocument();
 

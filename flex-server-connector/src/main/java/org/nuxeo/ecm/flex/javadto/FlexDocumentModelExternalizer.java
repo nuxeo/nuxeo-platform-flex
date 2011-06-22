@@ -27,6 +27,12 @@ import java.util.Map;
 
 import org.granite.messaging.amf.io.util.externalizer.DefaultExternalizer;
 
+/**
+ * Manage AMF Marshaling of the {@link FlexDocumentModel}
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class FlexDocumentModelExternalizer extends DefaultExternalizer {
 
     @Override

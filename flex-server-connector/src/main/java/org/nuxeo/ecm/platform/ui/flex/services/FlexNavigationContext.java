@@ -29,11 +29,16 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
 import org.nuxeo.ecm.platform.ui.flex.mapping.DocumentModelTranslator;
 
+/**
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 @Name("flexNavigationContext")
 @Scope(ScopeType.SESSION)
 public class FlexNavigationContext implements FlexContextManager {
 
-    @In(create=true)
+    @In(create = true)
     private CoreSession flexDocumentManager;
 
     private DocumentModel currentDocument;
@@ -44,8 +49,10 @@ public class FlexNavigationContext implements FlexContextManager {
     }
 
     @WebRemote
-    public void setCurrentFlexDocument(FlexDocumentModel currentDocument) throws Exception {
-        this.currentDocument = DocumentModelTranslator.toDocumentModel(currentDocument, flexDocumentManager);
+    public void setCurrentFlexDocument(FlexDocumentModel currentDocument)
+            throws Exception {
+        this.currentDocument = DocumentModelTranslator.toDocumentModel(
+                currentDocument, flexDocumentManager);
     }
 
     public DocumentModel getCurrentDocument() {
@@ -55,8 +62,5 @@ public class FlexNavigationContext implements FlexContextManager {
     public void setCurrentDocument(DocumentModel currentDocument) {
         this.currentDocument = currentDocument;
     }
-
-
-
 
 }

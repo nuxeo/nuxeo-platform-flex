@@ -23,10 +23,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.Locale;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
@@ -38,6 +38,12 @@ import org.nuxeo.ecm.directory.Session;
 import org.nuxeo.ecm.directory.api.DirectoryService;
 import org.nuxeo.runtime.api.Framework;
 
+/**
+ * High level API on top of {@link DirectoryService}
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 @Name("flexVocabularyService")
 @Scope(ScopeType.STATELESS)
 public class FlexVocabularyService {

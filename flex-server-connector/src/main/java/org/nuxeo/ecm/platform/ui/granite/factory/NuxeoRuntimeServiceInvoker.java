@@ -25,18 +25,20 @@ import org.granite.messaging.service.ServiceException;
 import org.granite.messaging.service.ServiceInvocationContext;
 import org.granite.messaging.service.ServiceInvoker;
 
-public class NuxeoRuntimeServiceInvoker extends ServiceInvoker<NuxeoRuntimeServiceFactory>  {
-
+public class NuxeoRuntimeServiceInvoker extends
+        ServiceInvoker<NuxeoRuntimeServiceFactory> {
 
     private static final long serialVersionUID = 1L;
 
     private static final Logger log = Logger.getLogger(NuxeoRuntimeServiceInvoker.class);
 
     public static final String CAPITALIZED_DESTINATION_ID = "{capitalized.destination.id}";
+
     public static final String DESTINATION_ID = "{destination.id}";
 
-    public NuxeoRuntimeServiceInvoker(Destination destination, NuxeoRuntimeServiceFactory factory, Object instance)
-        throws ServiceException {
+    public NuxeoRuntimeServiceInvoker(Destination destination,
+            NuxeoRuntimeServiceFactory factory, Object instance)
+            throws ServiceException {
         super(destination, factory);
 
         invokee = instance;
@@ -48,7 +50,8 @@ public class NuxeoRuntimeServiceInvoker extends ServiceInvoker<NuxeoRuntimeServi
     }
 
     @Override
-    protected Object afterInvocation(ServiceInvocationContext context, Object result) {
+    protected Object afterInvocation(ServiceInvocationContext context,
+            Object result) {
         log.debug("After Invocation");
         return result;
     }

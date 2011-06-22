@@ -29,14 +29,21 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.remoting.WebRemote;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
-import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.platform.actions.Action;
 import org.nuxeo.ecm.platform.actions.ActionContext;
+import org.nuxeo.ecm.platform.actions.ActionService;
 import org.nuxeo.ecm.platform.actions.ejb.ActionManager;
 import org.nuxeo.ecm.platform.ui.web.util.SeamContextHelper;
 
+/**
+ * Simple Wrapper around the {@link ActionService}
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 @Name("flexActionService")
 @Scope(ScopeType.STATELESS)
 public class FlexActionService {
@@ -44,17 +51,18 @@ public class FlexActionService {
     @In(create = true)
     private ActionManager actionManager;
 
-    @In(create=true)
+    @In(create = true)
     private CoreSession flexDocumentManager;
 
-    @In(create=true)
+    @In(create = true)
     private FlexNavigationContext flexNavigationContext;
 
-    @In(create=false,required=false)
+    @In(create = false, required = false)
     NuxeoPrincipal flexUser;
 
     @WebRemote
-    public List<Action> getActionsListInContext(List<String> categories) throws ClientException {
+    public List<Action> getActionsListInContext(List<String> categories)
+            throws ClientException {
         List<Action> list = new ArrayList<Action>();
         ActionContext context = createActionContext(null);
 
@@ -68,7 +76,8 @@ public class FlexActionService {
     }
 
     @WebRemote
-    public List<Action> getActionsList(List<String> categories, String currentDocumentId) throws ClientException {
+    public List<Action> getActionsList(List<String> categories,
+            String currentDocumentId) throws ClientException {
         List<Action> list = new ArrayList<Action>();
         ActionContext context = createActionContext(currentDocumentId);
         for (String category : categories) {
@@ -80,11 +89,13 @@ public class FlexActionService {
         return list;
     }
 
-    private ActionContext createActionContext(String currentDocumentId) throws ClientException {
+    private ActionContext createActionContext(String currentDocumentId)
+            throws ClientException {
         ActionContext ctx = new ActionContext();
 
         if (currentDocumentId != null) {
-            DocumentModel currentDoc = flexDocumentManager.getDocument(new IdRef(currentDocumentId));
+            DocumentModel currentDoc = flexDocumentManager.getDocument(new IdRef(
+                    currentDocumentId));
             flexNavigationContext.setCurrentDocument(currentDoc);
         }
 

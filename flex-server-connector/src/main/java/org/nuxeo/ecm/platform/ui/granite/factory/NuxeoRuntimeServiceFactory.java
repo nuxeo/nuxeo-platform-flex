@@ -31,6 +31,12 @@ import org.nuxeo.runtime.api.Framework;
 
 import flex.messaging.messages.RemotingMessage;
 
+/**
+ * {@link ServiceFactory} for Nuxeo Runtime Services
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class NuxeoRuntimeServiceFactory extends ServiceFactory {
 
     private static final long serialVersionUID = 1L;
@@ -43,14 +49,17 @@ public class NuxeoRuntimeServiceFactory extends ServiceFactory {
     }
 
     @Override
-    public ServiceInvoker<?> getServiceInstance(RemotingMessage request) throws ServiceException {
+    public ServiceInvoker<?> getServiceInstance(RemotingMessage request)
+            throws ServiceException {
         String messageType = request.getClass().getName();
         String destinationId = request.getDestination();
 
         GraniteContext context = GraniteContext.getCurrentInstance();
-        Destination destination = context.getServicesConfig().findDestinationById(messageType, destinationId);
+        Destination destination = context.getServicesConfig().findDestinationById(
+                messageType, destinationId);
         if (destination == null) {
-            throw new ServiceException("No matching destination: " + destinationId);
+            throw new ServiceException("No matching destination: "
+                    + destinationId);
         }
 
         // all we need is to get bean name
@@ -72,7 +81,7 @@ public class NuxeoRuntimeServiceFactory extends ServiceFactory {
             throw new ServiceException(msg);
         }
 
-        //Create an instance of the component
+        // Create an instance of the component
         Object instance;
         try {
             instance = Framework.getService(service);

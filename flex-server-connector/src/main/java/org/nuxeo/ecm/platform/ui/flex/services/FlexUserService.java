@@ -35,6 +35,12 @@ import org.nuxeo.ecm.core.api.NuxeoPrincipal;
 import org.nuxeo.ecm.platform.usermanager.NuxeoPrincipalImpl;
 import org.nuxeo.ecm.platform.usermanager.UserManager;
 
+/**
+ * High level API on top of the {@link UserManager}
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 @Name("flexUserService")
 @Scope(ScopeType.STATELESS)
 public class FlexUserService {
@@ -49,7 +55,9 @@ public class FlexUserService {
         flexUser.put("lastName", principal.getLastName());
         flexUser.put("company", principal.getCompany());
         flexUser.put("company", principal.getCompany());
-        flexUser.put("label", principal.getName() + " (" + principal.getFirstName() + " " + principal.getLastName() + ")");
+        flexUser.put("label", principal.getName() + " ("
+                + principal.getFirstName() + " " + principal.getLastName()
+                + ")");
         flexUser.put("data", principal.getName());
         flexUser.put("groups", (Serializable) principal.getAllGroups());
 
@@ -89,7 +97,8 @@ public class FlexUserService {
         return mapPrincipal(user);
     }
 
-    public Object updateUser(String userName, Object userValues) throws ClientException {
+    public Object updateUser(String userName, Object userValues)
+            throws ClientException {
         NuxeoPrincipal user = userManager.getPrincipal(userName);
 
         Map<String, Serializable> userMap = (Map<String, Serializable>) userValues;
@@ -160,7 +169,8 @@ public class FlexUserService {
         return mapPrincipal(userManager.getPrincipal(userName));
     }
 
-    public List<Object> getGroups(String groupNamePattern) throws ClientException {
+    public List<Object> getGroups(String groupNamePattern)
+            throws ClientException {
         List<NuxeoGroup> groups = userManager.searchGroups(groupNamePattern);
 
         List<Object> flexGroups = new ArrayList<Object>();
@@ -172,7 +182,8 @@ public class FlexUserService {
         return flexGroups;
     }
 
-    public List<String> getUserNames(String userNamePattern) throws ClientException {
+    public List<String> getUserNames(String userNamePattern)
+            throws ClientException {
         List<NuxeoPrincipal> users = userManager.searchPrincipals(userNamePattern);
 
         List<String> flexUserNames = new ArrayList<String>();
@@ -184,7 +195,8 @@ public class FlexUserService {
         return flexUserNames;
     }
 
-    public List<String> getGroupNames(String groupNamePattern) throws ClientException {
+    public List<String> getGroupNames(String groupNamePattern)
+            throws ClientException {
         List<NuxeoGroup> groups = userManager.searchGroups(groupNamePattern);
 
         List<String> flexGroupNamess = new ArrayList<String>();
@@ -196,7 +208,8 @@ public class FlexUserService {
         return flexGroupNamess;
     }
 
-    public Map<String, Serializable> getGroup(String groupName) throws ClientException {
+    public Map<String, Serializable> getGroup(String groupName)
+            throws ClientException {
         NuxeoGroup group = userManager.getGroup(groupName);
 
         if (group == null) {
@@ -206,7 +219,8 @@ public class FlexUserService {
         return mapGroup(group);
     }
 
-    public void addUserToGroup(String userName, String groupName) throws ClientException {
+    public void addUserToGroup(String userName, String groupName)
+            throws ClientException {
         NuxeoPrincipal user = userManager.getPrincipal(userName);
         NuxeoGroup group = userManager.getGroup(groupName);
 
@@ -216,8 +230,8 @@ public class FlexUserService {
 
         group.getMemberUsers().add(userName);
         userManager.updateGroup(group);
-        //user.getGroups().add(group.getName());
-        //userManager.updatePrincipal(user);
+        // user.getGroups().add(group.getName());
+        // userManager.updatePrincipal(user);
     }
 
 }

@@ -52,6 +52,13 @@ import org.nuxeo.ecm.platform.types.TypeManager;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.runtime.api.Framework;
 
+/**
+ * Helper class used to manage bijection between a {@link DocumentModel} and
+ * it's Flex counterpart the {@link FlexDocumentModel}
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class DocumentModelTranslator {
 
     private static final Log log = LogFactory.getLog(DocumentModelTranslator.class);
@@ -98,8 +105,8 @@ public class DocumentModelTranslator {
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL()+"nuxeo"+bigIcon,
-                BaseURL.getServerURL()+"nuxeo"+bigIconExpanded);
+                BaseURL.getServerURL() + "nuxeo" + bigIcon,
+                BaseURL.getServerURL() + "nuxeo" + bigIconExpanded);
 
         if (fdm.getType().equals("Picture")) {
             String bigDownloadURL = BaseURL.getServerURL() + "nuxeo/";
@@ -156,11 +163,11 @@ public class DocumentModelTranslator {
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
                 doc.getCurrentLifeCycleState(), doc.getType(),
-                BaseURL.getServerURL()+"nuxeo"+bigIcon,
-                BaseURL.getServerURL()+"nuxeo"+bigIconExpanded);
+                BaseURL.getServerURL() + "nuxeo" + bigIcon,
+                BaseURL.getServerURL() + "nuxeo" + bigIconExpanded);
 
-        if (fdm.getType().equals("Picture")){
-            String bigDownloadURL = BaseURL.getServerURL()+"nuxeo/";
+        if (fdm.getType().equals("Picture")) {
+            String bigDownloadURL = BaseURL.getServerURL() + "nuxeo/";
             bigDownloadURL += "nxbigfile" + "/";
             bigDownloadURL += doc.getRepositoryName() + "/";
             bigDownloadURL += doc.getRef().toString() + "/";
@@ -192,8 +199,8 @@ public class DocumentModelTranslator {
         return fdm;
     }
 
-    public static Serializable introspectProperty(Property prop, DocumentModel doc)
-            throws Exception {
+    public static Serializable introspectProperty(Property prop,
+            DocumentModel doc) throws Exception {
         if (prop.getType().isSimpleType()) {
             return prop.getValue();
         } else if (prop.getType().isComplexType()) {
@@ -212,7 +219,8 @@ public class DocumentModelTranslator {
                     bigDownloadURL += "nxbigfile" + "/";
                     bigDownloadURL += doc.getRepositoryName() + "/";
                     bigDownloadURL += doc.getRef().toString() + "/";
-                    bigDownloadURL += prop.getSchema().getName() + ";" + prop.getName() + "/";
+                    bigDownloadURL += prop.getSchema().getName() + ";"
+                            + prop.getName() + "/";
                     bigDownloadURL += fileName;
                     return bigDownloadURL;
                 }
@@ -221,7 +229,8 @@ public class DocumentModelTranslator {
                 Set<Entry<String, Property>> properties = mapProp.entrySet();
                 Map<String, Serializable> map = new HashMap<String, Serializable>();
                 for (Entry<String, Property> entry : properties) {
-                    map.put(entry.getKey(), introspectProperty(entry.getValue(), doc));
+                    map.put(entry.getKey(), introspectProperty(
+                            entry.getValue(), doc));
                 }
                 return (Serializable) map;
             }
@@ -231,7 +240,8 @@ public class DocumentModelTranslator {
                 List<Serializable> lstProp = new ArrayList<Serializable>();
                 lstProp.addAll(listProp.getChildren());
                 return (Serializable) lstProp;
-            } else if ((prop instanceof ArrayProperty) && (prop.getValue() != null)) {
+            } else if ((prop instanceof ArrayProperty)
+                    && (prop.getValue() != null)) {
                 Object[] arrayProp = (Object[]) prop.getValue();
                 List<Serializable> lstProp = new ArrayList<Serializable>();
                 int length = arrayProp.length;

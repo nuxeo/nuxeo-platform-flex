@@ -22,6 +22,12 @@ package org.nuxeo.ecm.platform.ui.granite.config;
 import org.nuxeo.common.xmap.annotation.XNode;
 import org.nuxeo.common.xmap.annotation.XObject;
 
+/**
+ * Descriptor for a Nuxeo Runtime Service
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 @XObject("runtime")
 public class RuntimeComponent {
 

@@ -55,9 +55,7 @@ public class FlexDocumentModelGenerationTests extends RepositoryOSGITestCase {
         doc = coreSession.createDocument(doc);
     }
 
-
-    public void testGenFlexDocumentModel() throws Exception
-    {
+    public void testGenFlexDocumentModel() throws Exception {
         createDocuments();
 
         assertEquals("File", doc.getType());

@@ -28,6 +28,13 @@ import org.nuxeo.ecm.core.api.repository.Repository;
 import org.nuxeo.ecm.core.api.repository.RepositoryManager;
 import org.nuxeo.runtime.api.Framework;
 
+/**
+ * Seam Factory component to manage the {@link CoreSession} in Seam Session
+ * scope
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 @Name("flexDocumentManager")
 @Scope(ScopeType.SESSION)
 public class FlexDocumentManager {
