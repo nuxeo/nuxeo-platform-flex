@@ -13,7 +13,6 @@
 	<artifactId>nuxeo-platform-ui-flex-samples-actions-swf</artifactId>
 	<packaging>swf</packaging>
 	<name>Nuxeo Flex actions sample SWF</name>
-	<version>${nuxeo.features.version}</version>
 
 	<dependencies>
 		<dependency>
