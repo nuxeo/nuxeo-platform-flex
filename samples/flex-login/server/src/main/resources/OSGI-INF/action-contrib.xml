@@ -1,0 +1,13 @@
+<component name="org.nuxeo.ecm.platform.ui.flex.login.actions">
+
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
+    point="actions">
+
+    <action id="flex_samples" link="flexsamples"
+      label="Flex Samples" order="100">
+      <category>MAIN_TABS</category>
+    </action>
+
+  </extension>
+
+</component>
