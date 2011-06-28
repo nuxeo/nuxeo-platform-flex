@@ -51,6 +51,7 @@ import org.granite.util.XMap;
 import org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigManager;
 import org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService;
 import org.nuxeo.runtime.api.Framework;
+import org.nuxeo.runtime.transaction.TransactionHelper;
 
 /**
  *
@@ -128,6 +129,7 @@ public class NxAMFMessageFilter implements Filter {
         log.debug(">> Incoming AMF0 request from: %s",
                 ((HttpServletRequest) request).getRequestURL());
 
+        boolean txStarted = TransactionHelper.startTransaction();
         try {
             GraniteContext context = HttpGraniteContext.createThreadIntance(
                     graniteConfig, servicesConfig, config.getServletContext(),
@@ -157,14 +159,16 @@ public class NxAMFMessageFilter implements Filter {
                     new DataOutputStream(response.getOutputStream()));
             serializer.serializeMessage(amf0Response);
 
-        } catch (IOException e) {
-            log.error(e, "AMF message error");
-            throw e;
         } catch (Exception e) {
             log.error(e, "AMF message error");
+            if (txStarted) {
+                TransactionHelper.setTransactionRollbackOnly();
+            }
             throw new ServletException(e);
         } finally {
             GraniteContext.release();
+            TransactionHelper.commitOrRollbackTransaction();
+            SessionConcurrencyManager.release();
         }
     }
 

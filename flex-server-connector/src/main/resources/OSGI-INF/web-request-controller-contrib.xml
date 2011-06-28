@@ -3,8 +3,8 @@
 
   <extension target="org.nuxeo.ecm.platform.web.common.requestcontroller.service.RequestControllerService"
     point="filterConfig">
-    
-    <filterConfig name="AMFFilterServlet" transactional="true" synchonize="true">
+
+    <filterConfig name="AMFFilterServlet" transactional="false" synchonize="true">
       <pattern>/nuxeo/nuxeo-amf/.*</pattern>
     </filterConfig>
 
