@@ -1,19 +1,19 @@
 package org.nuxeo.ecm.platform.ui.granite.filter;
 
-import java.util.Map;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 
 /**
- * Helper class used to avoid concurrent access from several threads on the same CoreSession
- *
- * TODO : add a GC
+ * Helper class used to avoid concurrent access from several threads on the same
+ * CoreSession
  *
  * @author Tiry (tdelprat@nuxeo.com)
  *
@@ -24,42 +24,67 @@ public class SessionConcurrencyManager {
 
     protected static Log log = LogFactory.getLog(SessionConcurrencyManager.class);
 
-    protected static Map<String, Lock> coreSessionLocks = new ConcurrentHashMap<String, Lock>();
+    // stores lock per CoreSession
+    protected static ConcurrentHashMap<String, ReentrantLock> locksOnCoreSession = new ConcurrentHashMap<String, ReentrantLock>();
 
-    protected static ThreadLocal<String> coreSessionId = new ThreadLocal<String>();
+    // stores current thread bound SessionId
+    protected static ThreadLocal<String> threadSessionId = new ThreadLocal<String>();
 
-    public static void getExclusiveAccess(CoreSession session) {
+    // list of SessionIds waiting for access
+    protected static List<String> sessionIdWaitingForAccess = new CopyOnWriteArrayList<String>();
 
-        if (coreSessionId.get() != null) {
-            if (!coreSessionId.get().equals(session.getSessionId())) {
+    public static void getExclusiveAccess(CoreSession session)
+            throws ClientException {
+
+        if (threadSessionId.get() != null) {
+            if (!threadSessionId.get().equals(session.getSessionId())) {
                 log.warn("You are accessing several core session within the same thread, is this normal ?");
             }
             return;
         }
 
-        synchronized (coreSessionLocks) {
-            if (!coreSessionLocks.keySet().contains(session.getSessionId())) {
-                coreSessionLocks.put(session.getSessionId(),
-                        new ReentrantLock());
-            }
-        }
+        // create lock object if needed
+        locksOnCoreSession.putIfAbsent(session.getSessionId(),
+                new ReentrantLock());
+        String sid = session.getSessionId();
         try {
-            coreSessionLocks.get(session.getSessionId()).tryLock(
-                    MAX_TIMEOUT_WAIT_S, TimeUnit.SECONDS);
-            coreSessionId.set(session.getSessionId());
+            ReentrantLock lock = locksOnCoreSession.get(sid);
+
+            // mark this session as synch
+            sessionIdWaitingForAccess.add(sid);
+
+            // acquire lock
+            boolean sync = lock.tryLock(MAX_TIMEOUT_WAIT_S, TimeUnit.SECONDS);
+
+            if (sync) {
+                sessionIdWaitingForAccess.remove(sid);
+                threadSessionId.set(session.getSessionId());
+            } else {
+                throw new ClientException(
+                        "Unable to obtains exclusive access to session " + sid
+                                + " within the blocking timeout");
+            }
         } catch (InterruptedException e) {
             log.error("can not obtain exclusive access to CoreSession "
                     + session.getSessionId(), e);
+            throw new ClientException(
+                    "Error while trying to obtain exclusive access to session "
+                            + sid, e);
         }
-
     }
 
     public static void release() {
-        if (coreSessionId.get() != null) {
-            synchronized (coreSessionLocks) {
-                coreSessionLocks.get(coreSessionId.get()).unlock();
-                coreSessionId.set(null);
+        String sid = threadSessionId.get();
+        if (sid != null) {
+            ReentrantLock lock = locksOnCoreSession.get(sid);
+            if (lock != null && lock.isHeldByCurrentThread()) {
+                lock.unlock();
+                if (!sessionIdWaitingForAccess.contains(sid)) {
+                    // no one else waiting for (?!)
+                    locksOnCoreSession.remove(sid);
+                }
             }
+            threadSessionId.set(null);
         }
     }
 
