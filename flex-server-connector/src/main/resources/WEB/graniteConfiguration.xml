@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE granite-config PUBLIC "-//Granite Data Services//DTD granite-config internal//EN"
-    "http://www.graniteds.org/public/dtd/1.1.0/granite-config.dtd">
+    "http://www.graniteds.org/public/dtd/2.1.0/granite-config.dtd">
 
 <!--
   GRANITE DATA SERVICES
@@ -25,7 +25,16 @@
 
 <granite-config scan="true">
 
-  <invocationlistener type="org.nuxeo.ecm.platform.ui.flex.listener.NuxeoServiceInvocationListener"/>
+  <invocation-listener type="org.nuxeo.ecm.platform.ui.flex.listener.NuxeoServiceInvocationListener"/>
+
+<!--
+  <converters>
+  <converter type="class"/>
+  </converters>
+ -->
+<!--
+  <amf3-message-interceptor type=""/>
+-->
   <externalizers>
     <externalizer type="org.nuxeo.ecm.flex.javadto.FlexDocumentModelExternalizer">
       <include type="org.nuxeo.ecm.flex.javadto.FlexDocumentModel"/>

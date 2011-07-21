@@ -34,11 +34,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.granite.config.GraniteConfig;
+import org.granite.config.ServletGraniteConfig;
 import org.granite.config.flex.Channel;
 import org.granite.config.flex.EndPoint;
 import org.granite.config.flex.Factory;
 import org.granite.config.flex.Service;
 import org.granite.config.flex.ServicesConfig;
+import org.granite.config.flex.ServletServicesConfig;
 import org.granite.context.AMFContextImpl;
 import org.granite.context.GraniteContext;
 import org.granite.logging.Logger;
@@ -72,11 +74,11 @@ public class NxAMFMessageFilter implements Filter {
 
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
-        graniteConfig = GraniteConfig.loadConfig(config.getServletContext());
+        graniteConfig = ServletGraniteConfig.loadConfig(config.getServletContext());
         servicesConfig = (ServicesConfig) config.getServletContext().getAttribute(
                 ServicesConfig.class.getName() + "_CACHE");
         if (servicesConfig == null) {
-            servicesConfig = ServicesConfig.loadConfig(config.getServletContext());
+            servicesConfig = ServletServicesConfig.loadConfig(config.getServletContext());
             addNxServicesConfig();
         } else if (servicesConfig.findFactoryById(NxGraniteConfigService.SEAM_FACTORY) == null) {
             addNxServicesConfig();

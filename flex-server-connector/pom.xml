@@ -15,7 +15,7 @@
   </description>
 
   <properties>
-    <granite.version>1.1.0.GA</granite.version>
+    <granite.version>2.2.1.GA</granite.version>
   </properties>
 
   <dependencies>
@@ -35,7 +35,7 @@
     </dependency> 
     <dependency>
       <groupId>org.graniteds</groupId>
-      <artifactId>granite-core-swc</artifactId>
+      <artifactId>granite-swc</artifactId>
       <version>${granite.version}</version>
       <type>swc</type>
     </dependency>
@@ -45,14 +45,14 @@
       <version>${granite.version}</version>
       <type>jar</type>
     </dependency>
-
+<!--
     <dependency>
       <groupId>org.graniteds</groupId>
       <artifactId>granite-seam-swc</artifactId>
       <version>${granite.version}</version>
       <type>swc</type>
     </dependency>
-    
+-->    
     
     <dependency>
         <groupId>org.osgi</groupId>
