@@ -5,14 +5,12 @@
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
     point="actions">
 
-
     <action id="flexVocSample"
-      link="/flexsamples/vocabularies.swf" enabled="true"
-      label="flex vocabularies sample">
+      link="/flexsamples/vocabularies.swf" enabled="true" order="50"
+      label="Vocabularies service" help="Demonstrate how to use Nuxeo Vocabularies to populate lists" >
       <category>FLEX_SAMPLES</category>
     </action>
 
   </extension>
-
 
 </component>
