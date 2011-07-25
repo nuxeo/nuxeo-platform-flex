@@ -1,3 +1,21 @@
+<!--
+/*
+ * (C) Copyright 2006-20011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+-->
 <mx:Panel xmlns="org.nuxeo.ecm.flex.login" xmlns:mx="http://www.adobe.com/2006/mxml"
   xmlns:word="*" layout="absolute" creationComplete="init()">
 
@@ -61,6 +79,8 @@
       if (loggedIn)
       {
         currentState="LoggedInState";
+        var parentPanel:Panel = (Panel)(loggedInUser.parent);
+        parentPanel.title="Logged In Nuxeo";
       }
       else
       {
@@ -72,7 +92,6 @@
       currentUser = nxLogin.getConnectedUser();
       var mev:Event = new Event("loggedin",true,false);
       dispatchEvent(mev);
-      //currentState="LoggedInState";
     }
 
     private function loginErrorHandler(event:FaultEvent):void {
@@ -81,7 +100,6 @@
 
   ]]>
   </mx:Script>
-
 
   <mx:Form x="0" y="0" width="100%" backgroundColor="#ffffff" borderStyle="solid" height="100%" id="loginForm">
     <mx:FormHeading label="You need to authenticate :" />
@@ -98,18 +116,10 @@
   </mx:Form>
 
   <mx:Form x="0" y="0" width="100%" backgroundColor="#ffffff" borderStyle="solid" height="100%" id="loggedInUser" visible="false">
-    <mx:FormHeading label="You are logged in :" />
-    <mx:FormItem label="Login :" width="100%">
-      <mx:Label text="{currentUser.name}" />
-    </mx:FormItem>
-    <mx:FormItem label="First Name:" width="100%">
-      <mx:Label text="{currentUser.FirstName}" />
-    </mx:FormItem>
-    <mx:FormItem label="Last Name:" width="100%">
-      <mx:Label text="{currentUser.LastName}" />
-    </mx:FormItem>
-    <mx:Button id="logoutButton" label="Log out" click="doLogout()" visible="false" />
+    <mx:VBox>
+     <mx:Label text="{currentUser.name} ( {currentUser.FirstName} {currentUser.LastName} )" />
+     <mx:Button id="logoutButton" label="Log out" click="doLogout()" visible="false" />
+    </mx:VBox>
   </mx:Form>
-
 
 </mx:Panel>
