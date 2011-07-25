@@ -10,7 +10,6 @@ package org.nuxeo.ecm.flex.dto
   public class FlexDocumentModel implements IExternalizable, IUID
 
   {
-    private var _sessionId:String;
     private var _docRef:String;
     private var _name:String;
     private var _path:String;
@@ -45,16 +44,10 @@ package org.nuxeo.ecm.flex.dto
     {
 
     }
-    
-    public function get sessionId():String
-    {
-		return _sessionId;
-    }
-    
+        
 
     public function readExternal(input:IDataInput):void {
-	_sessionId = input.readUTF();
-            _docRef = input.readUTF();
+      _docRef = input.readUTF();
       _name = input.readUTF();
       _path = input.readUTF();
       _lifeCycleState = input.readUTF();
@@ -67,7 +60,6 @@ package org.nuxeo.ecm.flex.dto
         }
 
     public function writeExternal(output:IDataOutput):void {
-            output.writeUTF(_sessionId);
             output.writeUTF(_docRef);
             output.writeUTF(_name);
             output.writeUTF(_path);
@@ -76,7 +68,7 @@ package org.nuxeo.ecm.flex.dto
             output.writeUTF(_icon);
             output.writeUTF(_iconExpanded);
             output.writeBoolean(_isFolder);
-      output.writeObject(_dirty);
+            output.writeObject(_dirty);
             //output.writeObject(_data);
         }
 
@@ -180,5 +172,6 @@ package org.nuxeo.ecm.flex.dto
 		return _dirty;
 	}
 
-  }
+  }
+
 }
