@@ -1,22 +1,52 @@
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"   xmlns:word="*">    
-    
-        <mx:RemoteObject id="schemaManager" destination="schemaManager"/>
+<!--
+/*
+ * (C) Copyright 2006-2011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"   xmlns:word="*">
 
-        <mx:Panel title="Nuxeo Facet explorer"
-            paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
-        
-            <mx:VBox>
-          
-              <mx:TextInput id="facet" maxChars="30" text="Folderish"/>
-          
-              <mx:Button label="get Document Type" 
-                click="schemaManager.getDocumentTypeNamesForFacet(facet.text)"/>                            
-          
-              <mx:List id="typeList" height="100%" width="100%" 
-                dataProvider="{schemaManager.getDocumentTypeNamesForFacet.lastResult}" />
-            
-            </mx:VBox>
-        
+  <mx:RemoteObject id="schemaManager" destination="schemaManager"/>
+
+  <mx:Panel title="Using NuxeoRuntime service"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+    <mx:VBox>
+      <mx:Label text='You can directly call Nuxeo Runtime services remotely from Flex.'/>
+      <mx:Label text='Here is an sample for calling Nuxeo SchemaManager.'/>
+
+      <mx:Panel title="SchemaManager.getDocumentTypesNamesForFacet()">
+        <mx:VBox>
+          <mx:HBox>
+            <mx:Label text='getDocumentTypesNamesForFacet('/>
+              <mx:ComboBox id="facet">
+                <mx:ArrayCollection>
+                   <mx:String>Folderish</mx:String>
+                   <mx:String>HiddenInNavigation</mx:String>
+                   <mx:String>Commentable</mx:String>
+                </mx:ArrayCollection>
+             </mx:ComboBox>
+            <mx:Label text=')   '/>
+            <mx:Button label="Call"
+              click="schemaManager.getDocumentTypeNamesForFacet(facet.selectedItem)"/>
+          </mx:HBox>
+          <mx:List id="typeList" height="100%" width="100%"
+              dataProvider="{schemaManager.getDocumentTypeNamesForFacet.lastResult}" />
+
+        </mx:VBox>
       </mx:Panel>
-      
+
+    </mx:VBox>
+  </mx:Panel>
 </mx:Application>

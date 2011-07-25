@@ -21,6 +21,8 @@ package org.nuxeo.ecm.platform.ui.flex.listener;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.granite.messaging.service.ServiceInvocationContext;
 import org.granite.messaging.service.ServiceInvocationListener;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -42,6 +44,8 @@ import org.nuxeo.ecm.platform.ui.flex.mapping.DocumentModelTranslator;
  */
 public class NuxeoServiceInvocationListener implements
         ServiceInvocationListener {
+
+    protected static Log log = LogFactory.getLog(NuxeoServiceInvocationListener.class);
 
     public Object afterInvocation(ServiceInvocationContext context,
             Object result) {
@@ -96,7 +100,7 @@ public class NuxeoServiceInvocationListener implements
                 }
             }
         } catch (Exception e) {
-
+            log.error("Error while doing beforeMethodSearch mapping", e);
         }
         return args;
     }

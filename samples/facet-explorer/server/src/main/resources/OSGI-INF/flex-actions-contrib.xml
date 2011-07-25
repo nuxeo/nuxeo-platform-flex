@@ -5,14 +5,12 @@
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
     point="actions">
 
-
-    <action id="flexFacetExplorerSample"
+    <action id="flexFacetExplorerSample" order="40"
       link="/flexsamples/facetExplorer.swf" enabled="true"
-      label="flex facet explorer sample">
+      label="Using NuxeoRuntime services" help="This samples shows how to call directly Nuxeo Runtime servcies">
       <category>FLEX_SAMPLES</category>
     </action>
 
   </extension>
-
 
 </component>

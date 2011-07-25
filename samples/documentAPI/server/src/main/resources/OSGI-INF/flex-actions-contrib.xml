@@ -6,9 +6,9 @@
     point="actions">
 
 
-    <action id="flexdocAPIeSample"
+    <action id="flexdocAPIeSample" order="10"
       link="/flexsamples/documentAPI.swf" enabled="true"
-      label="flex doc API  sample">
+      label="Document API sample" help="Show how to manage Nuxeo DocumentModels from the flex side">
       <category>FLEX_SAMPLES</category>
     </action>
 

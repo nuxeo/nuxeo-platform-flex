@@ -1,32 +1,55 @@
+<!--
+/*
+ * (C) Copyright 2006-20011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+-->
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:nx="org.nuxeo.ecm.flex.login.*" xmlns:word="*">
-	<mx:Script>
-	<![CDATA[
-		import mx.controls.Alert;
-		import mx.rpc.events.FaultEvent;
-		import mx.rpc.events.ResultEvent;
-		import org.nuxeo.ecm.flex.login.NuxeoLogin;
-		import flash.net.*;
+  <mx:Script>
+  <![CDATA[
+    import flash.external.*;
+    import mx.controls.Alert;
+    import mx.rpc.events.FaultEvent;
+    import mx.rpc.events.ResultEvent;
+    import org.nuxeo.ecm.flex.login.NuxeoLogin;
+    import flash.net.*;
 
-		private function faultHandler(event:FaultEvent):void {
-				 Alert.show(event.fault.faultString, event.fault.faultCode.toString());
-		}
+    private function getBaseUrl():String {
+      var curUrl:String =  String( ExternalInterface.call(" function(){ return document.location.href.toString();}"));
+      var pattern:RegExp = /login.swf/;
+      var baseUrl:String = curUrl.replace(pattern, "");
+      return baseUrl;
+    }
 
-				private function goToSamples():void {
-						var u:URLRequest = new URLRequest("http://localhost:8080/nuxeo/flexsamples/index.faces");
-						navigateToURL(u,"_self");
-		}
+    private function faultHandler(event:FaultEvent):void {
+      Alert.show(event.fault.faultString, event.fault.faultCode.toString());
+    }
 
+    private function goToSamples():void {
+      var samplesUrl:URLRequest = new URLRequest(getBaseUrl() + "flexsamples/index.faces");
+      navigateToURL(samplesUrl,"_self");
+    }
 
-	]]>
-	</mx:Script>
+  ]]>
+  </mx:Script>
 
-	<mx:RemoteObject id="authPingTester" destination="authPingTester" fault="faultHandler(event)"/>
+  <mx:RemoteObject id="authPingTester" destination="authPingTester" fault="faultHandler(event)"/>
 
-	<nx:NxLogForm id="logForm" title="Nuxeo-Flex Login Screen" paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"/>
-	<mx:Button id="sampleButton" label="view the samples" click="goToSamples()"  visible="{logForm.currentState=='LoggedInState'}"/>
-	<mx:Button id="pingButton" label="ping server" click="authPingTester.ping()"  visible="{logForm.currentState=='LoggedInState'}"/>
-	<mx:Label id="pingLabel" text='server ping reply: "{authPingTester.ping.lastResult}"'  visible="{logForm.currentState=='LoggedInState'}"/>
-
-
+  <nx:LoginForm id="nxLoginForm" title="Nuxeo-Flex Login Screen" paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10"/>
+  <mx:Button id="sampleButton" label="view the samples" click="goToSamples()"  visible="{nxLoginForm.currentState=='LoggedInState'}"/>
+  <mx:Button id="pingButton" label="ping server" click="authPingTester.ping()"  visible="{nxLoginForm.currentState=='LoggedInState'}"/>
+  <mx:Label id="pingLabel" text='server ping reply: "{authPingTester.ping.lastResult}"'  visible="{nxLoginForm.currentState=='LoggedInState'}"/>
 
 </mx:Application>

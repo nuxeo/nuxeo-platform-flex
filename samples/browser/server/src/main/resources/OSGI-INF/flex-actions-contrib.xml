@@ -5,14 +5,13 @@
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
     point="actions">
 
-
-    <action id="flexBrowserSample"
+    <action id="flexBrowserSample" order="20"
       link="/flexsamples/browser.swf" enabled="true"
-      label="flex browser sample">
+      label="Document API browsing sample"
+      help="Demonstrate APi usage to browse the content of the repository and display Documents properties.">
       <category>FLEX_SAMPLES</category>
     </action>
 
   </extension>
-
 
 </component>
