@@ -1,3 +1,20 @@
+/*
+ * (C) Copyright 2006-20011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+
 package org.nuxeo.ecm.flex.dto
 {
   import mx.collections.ArrayCollection;
@@ -37,7 +54,7 @@ package org.nuxeo.ecm.flex.dto
 
     public function get uid(): String
     {
-            return _docRef;
+      return _docRef;
     }
 
     public function set uid(uid:String): void
@@ -45,7 +62,6 @@ package org.nuxeo.ecm.flex.dto
 
     }
         
-
     public function readExternal(input:IDataInput):void {
       _docRef = input.readUTF();
       _name = input.readUTF();
@@ -57,20 +73,19 @@ package org.nuxeo.ecm.flex.dto
       _isFolder=input.readBoolean();
       _data = input.readObject();
       _dirty = new Object();
-        }
+    }
 
     public function writeExternal(output:IDataOutput):void {
-            output.writeUTF(_docRef);
-            output.writeUTF(_name);
-            output.writeUTF(_path);
-            output.writeUTF(_lifeCycleState);
-            output.writeUTF(_type);
-            output.writeUTF(_icon);
-            output.writeUTF(_iconExpanded);
-            output.writeBoolean(_isFolder);
-            output.writeObject(_dirty);
-            //output.writeObject(_data);
-        }
+      output.writeUTF(_docRef);
+      output.writeUTF(_name);
+      output.writeUTF(_path);
+      output.writeUTF(_lifeCycleState);
+      output.writeUTF(_type);
+      output.writeUTF(_icon);
+      output.writeUTF(_iconExpanded);
+      output.writeBoolean(_isFolder);
+      output.writeObject(_dirty);
+    }
 
     public function get id():String
     {
@@ -96,9 +111,7 @@ package org.nuxeo.ecm.flex.dto
     {
       return _iconExpanded;
     }
-    
-    
-
+        
     public function get contentdata():Object
     {
       return _data;
@@ -111,14 +124,13 @@ package org.nuxeo.ecm.flex.dto
 
     public function getTitle():String
     {
-      //return "fakeTitle";
       return _data.dublincore.title;
     }
 
     public function setTitle(value:String):void
     {
       _data.dublincore.title=value;
-      _dirty.dublincore_title=value;
+      _dirty['dublincore:title']=value;
     }
 
     public function getProperty(schemaName:String, fieldName:String):Object
@@ -164,13 +176,13 @@ package org.nuxeo.ecm.flex.dto
       return fieldNames;
     }
 
-	public function get path():String{
-		return _path;
-	}
+    public function get path():String{
+       return _path;
+    }
 
-	public function get dirtyFields():Object{
-		return _dirty;
-	}
+    public function get dirtyFields():Object{
+        return _dirty;
+    }
 
   }
 
