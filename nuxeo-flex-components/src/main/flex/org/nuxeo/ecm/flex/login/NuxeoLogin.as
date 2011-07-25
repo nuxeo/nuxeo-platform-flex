@@ -6,7 +6,7 @@ package org.nuxeo.ecm.flex.login
   import mx.rpc.events.FaultEvent;
   import mx.controls.Alert;
 
-  public class NuxeoLogin 
+  public class NuxeoLogin
   {
 
     private var _service:HTTPService;
@@ -29,7 +29,7 @@ package org.nuxeo.ecm.flex.login
     }
 
     public function get targetUrl(): String
-    {	
+    {
       return _targetURL;
     }
 
@@ -37,7 +37,6 @@ package org.nuxeo.ecm.flex.login
     {
       _targetURL=url;
     }
-
 
     public function get servertUrl(): String
     {
@@ -52,7 +51,6 @@ package org.nuxeo.ecm.flex.login
     public function login(userName:String, password:String):void
     {
       _service.method="POST";
-      //_service.showBusyCursor=true;
       _service.addEventListener(ResultEvent.RESULT, loginResultHandler);
       _service.url = _serverURL + _targetURL;
       var params:Object=new Object();
@@ -73,7 +71,6 @@ package org.nuxeo.ecm.flex.login
       _service.send();
     }
 
-
     public function isLoggedIn(cb:Function):void
     {
       _service.method="GET";
@@ -85,7 +82,7 @@ package org.nuxeo.ecm.flex.login
 
     private function logoutResultHandler(event:ResultEvent):void
     {
-      if (_cbLogout==null)
+      if (_cbLogout!=null)
          _cbLogout();
     }
 
@@ -110,7 +107,7 @@ package org.nuxeo.ecm.flex.login
       {
         _user=new Object();
         _user=_service.lastResult.user;
-         _loginSuccessCB(event);    
+         _loginSuccessCB(event);
       }
       else
         _loginFailedCB(new FaultEvent("Login Failed"));
