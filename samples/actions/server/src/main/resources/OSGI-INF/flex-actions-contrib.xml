@@ -6,9 +6,9 @@
     point="actions">
 
 
-    <action id="flexActionSample"
+    <action id="flexActionSample" order="30"
       link="/flexsamples/actions.swf" enabled="true"
-      label="flex action sample">
+      label="Action service sample" help="Demonstrate simple usage of the Action Service to fetch possible actions from server.">
       <category>FLEX_SAMPLES</category>
     </action>
 
