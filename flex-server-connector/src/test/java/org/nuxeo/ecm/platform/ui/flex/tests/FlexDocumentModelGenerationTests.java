@@ -21,9 +21,11 @@ package org.nuxeo.ecm.platform.ui.flex.tests;
 
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.PathRef;
+import org.nuxeo.ecm.core.api.impl.DocumentModelImpl;
 import org.nuxeo.ecm.core.repository.jcr.testing.RepositoryOSGITestCase;
 import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
 import org.nuxeo.ecm.platform.ui.flex.mapping.DocumentModelTranslator;
+import org.nuxeo.ecm.platform.ui.flex.services.AttachHelper;
 
 public class FlexDocumentModelGenerationTests extends RepositoryOSGITestCase {
 
@@ -77,5 +79,22 @@ public class FlexDocumentModelGenerationTests extends RepositoryOSGITestCase {
         String coverage = (String) fdm.getProperty("dublincore", "coverage");
         assertNull(coverage);
     }
+
+    public void testAttach() throws Exception {
+
+        DocumentModel doc = session.getRootDocument();
+        System.out.println("SID=" + doc.getSessionId());
+
+        ((DocumentModelImpl)doc).detach(true);
+        System.out.println("SID=" + doc.getSessionId());
+
+        AttachHelper.attach((DocumentModelImpl)doc, "777");
+        System.out.println("SID=" + doc.getSessionId());
+
+        AttachHelper.attach((DocumentModelImpl)doc, "999");
+        System.out.println("SID=" + doc.getSessionId());
+
+    }
+
 
 }

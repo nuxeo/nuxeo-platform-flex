@@ -19,15 +19,19 @@
 
 package org.nuxeo.ecm.platform.ui.flex.services;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
-import org.jboss.seam.annotations.remoting.WebRemote;
+import org.jboss.seam.contexts.Contexts;
+import org.nuxeo.ecm.core.api.ClientRuntimeException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
-import org.nuxeo.ecm.platform.ui.flex.mapping.DocumentModelTranslator;
+import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.impl.DocumentModelImpl;
 
 /**
  *
@@ -41,26 +45,86 @@ public class FlexNavigationContext implements FlexContextManager {
     @In(create = true)
     private CoreSession flexDocumentManager;
 
-    private DocumentModel currentDocument;
+    public static final String CURRENT_DOCUMENT = "currentDocument";
 
-    @WebRemote
-    public FlexDocumentModel getCurrentFlexDocument() throws Exception {
-        return DocumentModelTranslator.toFlexType(currentDocument);
+    protected static final String CONTEXT_PREFIX = "org.nuxeo.flex.context.namedDocument.";
+
+    protected Map<String, DocumentRef> docRefs = new HashMap<String, DocumentRef>();
+
+    protected Map<String, DocumentModelImpl> docModels = new HashMap<String, DocumentModelImpl>();
+
+    public void setDocument(String name, DocumentModel doc) {
+        // store ref
+        docRefs.put(name, doc.getRef());
+        // store in Event scope cache
+        Contexts.getEventContext().set(CONTEXT_PREFIX + name, doc);
     }
 
-    @WebRemote
-    public void setCurrentFlexDocument(FlexDocumentModel currentDocument)
-            throws Exception {
-        this.currentDocument = DocumentModelTranslator.toDocumentModel(
-                currentDocument, flexDocumentManager);
+    public void storeEditableDocument(String name, DocumentModel doc) {
+
+        // store the ref too
+        setDocument(name, doc);
+
+        DocumentModelImpl docModel = (DocumentModelImpl) doc;
+        // detach the Document from it's current session
+        try {
+            docModel.getCurrentLifeCycleState();
+            docModel.detach(true);
+        } catch (Exception e) {
+            throw new ClientRuntimeException("Unable to detach DocumentModel",
+                    e);
+        }
+        docModels.put(name, docModel);
+    }
+
+    public DocumentModel getDocument(String name) {
+
+        // lookup in Event scope cache
+        if (Contexts.getEventContext().isSet(CONTEXT_PREFIX + name)) {
+            return (DocumentModel) Contexts.getEventContext().get(
+                    CONTEXT_PREFIX + name);
+        }
+
+        DocumentRef ref = docRefs.get(name);
+        if (ref != null) {
+            try {
+                if (flexDocumentManager.exists(ref)) {
+                    DocumentModel refreshedDoc = flexDocumentManager.getDocument(ref);
+
+                    if (docModels.containsKey(name)) {
+                        // get stalled cached Document
+                        DocumentModelImpl doc = docModels.get(name);
+                        // update newlyFetched Document
+                        refreshedDoc.copyContent(doc);
+                    }
+                    return refreshedDoc;
+                }
+            } catch (Exception e) {
+                throw new ClientRuntimeException(
+                        "Unable to refetch DocumentModel", e);
+            }
+        }
+        return null;
+    }
+
+    public DocumentModel getStoredEditableDocument(String name) {
+        if (!docModels.containsKey(name)) {
+            return null;
+        }
+        // get stalled cached Document
+        DocumentModelImpl doc = docModels.get(name);
+        // attach to current Session
+        AttachHelper.attach(doc, flexDocumentManager.getSessionId());
+
+        return doc;
     }
 
     public DocumentModel getCurrentDocument() {
-        return currentDocument;
+        return getDocument(CURRENT_DOCUMENT);
     }
 
     public void setCurrentDocument(DocumentModel currentDocument) {
-        this.currentDocument = currentDocument;
+        setDocument(CURRENT_DOCUMENT, currentDocument);
     }
 
 }

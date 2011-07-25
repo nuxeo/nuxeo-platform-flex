@@ -40,7 +40,7 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
             ClassNotFoundException, IllegalAccessException {
         if (o instanceof FlexDocumentModel) {
             FlexDocumentModel fdm = (FlexDocumentModel) o;
-            fdm.setSessionId(in.readUTF());
+            //fdm.setSessionId(in.readUTF());
             fdm.setDocRef(in.readUTF());
             fdm.setName(in.readUTF());
             fdm.setPath(in.readUTF());
@@ -59,7 +59,7 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
             IllegalAccessException {
         if (o instanceof FlexDocumentModel) {
             FlexDocumentModel fdm = (FlexDocumentModel) o;
-            out.writeUTF(fdm.getSessionId());
+            //out.writeUTF(fdm.getSessionId());
             out.writeUTF(fdm.getDocRef());
             if (fdm.getName() == null) {
                 out.writeUTF("");

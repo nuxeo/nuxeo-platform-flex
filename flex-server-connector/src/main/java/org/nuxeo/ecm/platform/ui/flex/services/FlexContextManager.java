@@ -20,26 +20,57 @@
 package org.nuxeo.ecm.platform.ui.flex.services;
 
 import org.jboss.seam.annotations.remoting.WebRemote;
+import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
 
 /**
- * Minimal Context management
+ * Provide Session level storage for the {@link DocumentModel} used in the Seam
+ * Controlers. The {@link CoreSession} exposed in Seam in Event Scoped, so you
+ * can not simply store the {@link DocumentModel} in the Seam Context. This Seam
+ * Component provide the logics to store DocumentModel within the Event Scope
+ * and automatically refetch the document from the current {@link CoreSession}
+ * when accessed outside the initial Event Scope.
+ *
+ * If in addition, you want to maintain some transient state in the
+ * DocumentModel (i.e. you can not save it for now in the repository), and want
+ * to access it in the same state later (for example because you use several
+ * screens to handle the complete update), then you should use the
+ * storeEditableDocument and getStoredEditableDocument methods.
+
  *
  * @author Tiry (tdelprat@nuxeo.com)
  *
  */
 public interface FlexContextManager {
 
+    /**
+     * Set a {@link DocumentModel} inside the context.
+     *
+     * @param name
+     * @param doc
+     */
     @WebRemote
-    FlexDocumentModel getCurrentFlexDocument() throws Exception;
+    public void setDocument(String name, DocumentModel doc);
+
+    /**
+     * Store a {@link DocumentModel} in a context and keeps tracks of the modifications that may have been done.
+     *
+     * @param name
+     * @param doc
+     */
+    @WebRemote
+    public void storeEditableDocument(String name, DocumentModel doc);
 
     @WebRemote
-    void setCurrentFlexDocument(FlexDocumentModel currentDocument)
-            throws Exception;
+    public DocumentModel getDocument(String name);
 
-    DocumentModel getCurrentDocument();
+    @WebRemote
+    public DocumentModel getStoredEditableDocument(String name);
 
-    void setCurrentDocument(DocumentModel currentDocument);
+    @WebRemote
+    public DocumentModel getCurrentDocument();
+
+    @WebRemote
+    public void setCurrentDocument(DocumentModel currentDocument);
 
 }

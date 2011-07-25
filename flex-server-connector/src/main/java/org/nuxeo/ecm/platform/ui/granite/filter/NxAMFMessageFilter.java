@@ -48,6 +48,7 @@ import org.granite.messaging.amf.io.AMF0Serializer;
 import org.granite.messaging.webapp.AMFMessageFilter;
 import org.granite.messaging.webapp.HttpGraniteContext;
 import org.granite.util.XMap;
+import org.nuxeo.ecm.platform.ui.flex.seam.FlexDocumentManager;
 import org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigManager;
 import org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService;
 import org.nuxeo.runtime.api.Framework;
@@ -168,7 +169,7 @@ public class NxAMFMessageFilter implements Filter {
         } finally {
             GraniteContext.release();
             TransactionHelper.commitOrRollbackTransaction();
-            SessionConcurrencyManager.release();
+            FlexDocumentManager.release();
         }
     }
 

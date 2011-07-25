@@ -33,7 +33,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.Blob;
-import org.nuxeo.ecm.core.api.CoreInstance;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
@@ -49,6 +48,7 @@ import org.nuxeo.ecm.core.schema.types.Schema;
 import org.nuxeo.ecm.flex.javadto.FlexDocumentModel;
 import org.nuxeo.ecm.platform.types.Type;
 import org.nuxeo.ecm.platform.types.TypeManager;
+import org.nuxeo.ecm.platform.ui.flex.seam.FlexDocumentManager;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.runtime.api.Framework;
 
@@ -256,9 +256,7 @@ public class DocumentModelTranslator {
 
     public static DocumentModel toDocumentModel(FlexDocumentModel fdoc)
             throws Exception {
-        CoreSession session = CoreInstance.getInstance().getSession(
-                fdoc.getSessionId());
-        return toDocumentModel(fdoc, session);
+        return toDocumentModel(fdoc, FlexDocumentManager.getRequestBoundCoreSession());
     }
 
     public static DocumentModel toDocumentModel(FlexDocumentModel fdoc,
