@@ -6,9 +6,9 @@
     point="actions">
 
 
-    <action id="flexSimpleSample"
+    <action id="flexSimpleSample" order="10"
       link="/flexsamples/simple.swf" enabled="true"
-      label="flex basic sample">
+      label="Basic remoting samples" help="Show how to call Nuxeo server from Flex and demonstrate marshaling between Flex and Nuxeo.">
       <category>FLEX_SAMPLES</category>
     </action>
 

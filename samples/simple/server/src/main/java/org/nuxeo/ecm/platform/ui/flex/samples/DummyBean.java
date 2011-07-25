@@ -21,31 +21,31 @@ package org.nuxeo.ecm.platform.ui.flex.samples;
 
 import java.io.Serializable;
 
+/**
+ * Sample bean used to demonstrate how to map a Bean to an Action Script object
+ *
+ * @author Tiry (tdelprat@nuxeo.com)
+ *
+ */
 public class DummyBean implements Serializable {
 
-    protected String myField;
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
+    protected String myField;
 
-    public DummyBean()
-    {
-       myField="default dummy value";
+    public DummyBean() {
+        myField = "default dummy value";
     }
 
     public String getMyField() {
         return myField;
     }
 
-
     public void setMyField(String myField) {
         this.myField = myField;
     }
 
-    public void doSomething()
-    {
+    public void doSomething() {
         // not impl on the server side
     }
 }

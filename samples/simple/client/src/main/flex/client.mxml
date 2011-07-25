@@ -1,178 +1,142 @@
 <!--
-  -->
+/*
+ * (C) Copyright 2006-2008 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+-->
 
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:word="*" >
 
    <mx:Script>
-		<![CDATA[
-			import org.nuxeo.ecm.flex.sample.dto.DummyBean;			
-			import org.nuxeo.ecm.flex.dto.FlexDocumentModel;			
+    <![CDATA[
+      import org.nuxeo.ecm.flex.sample.dto.DummyBean;
+      import org.nuxeo.ecm.flex.dto.FlexDocumentModel;
 
-			import mx.controls.Alert;
-			import mx.rpc.events.FaultEvent;
-					
+      import mx.controls.Alert;
+      import mx.rpc.events.FaultEvent;
 
-			private function faultHandler(event:FaultEvent):void {
-				 Alert.show(event.fault.faultString, event.fault.faultCode.toString());
-			}			
+      [Bindable]
+      private var _myLocalTestBean:DummyBean;
 
-			private function doSomething():void {
-				Alert.show(service.testSerialization.lastResult.myField,"bean Value");
-				var dto:DummyBean = service.testSerialization.lastResult;				
-				dto.doSomething();
-				Alert.show("Sucess",dto.myField);
-				dto.doSomething2();
-				Alert.show("Sucess",dto.myField);
-			}
+      [Bindable]
+      private var _myTestDoc:FlexDocumentModel;
 
-			private function checkDM():void {
-				Alert.show("DM Test","checkDM");
-				var doc:FlexDocumentModel = service.getTestDocumentModel.lastResult;				
-				Alert.show(doc.name, "doc name");
-				Alert.show(doc.getTitle(), "doc title");
-			}
+      private function faultHandler(event:FaultEvent):void {
+         Alert.show(event.fault.faultString, event.fault.faultCode.toString());
+      }
 
-			private function checkDM2():void {
-				var doc:FlexDocumentModel = service.getSomeDocumentModel.lastResult;				
-				Alert.show(doc.name,"doc name");
-				Alert.show(doc.getTitle(),"doc title");
-				doc.setTitle("New Title from flex");
-				Alert.show(doc.getTitle(), "updated title");
-			}
+      private function testLocalBean():void {
+        _myLocalTestBean = service.getSimpleBean.lastResult;
+        var message:String = "Field initial value : " + _myLocalTestBean.myField + "\n";
+        _myLocalTestBean.doSomething();
+        message += "After call doSomething() : " + _myLocalTestBean.myField + "\n";
+        _myLocalTestBean.doSomething2();
+        message += "After call doSomething2() : " + _myLocalTestBean.myField + "\n";
+        Alert.show(message,"Local test results :");
+      }
 
-			private function displayProperty(doc:FlexDocumentModel, schemaName:String, fieldName:String):void
-			{
-				var val:String= doc.getProperty(schemaName,fieldName).toString();
-				propertyValue.text=val;
-			}
+      private function testLocalDM():void {
+        _myTestDoc = service.getSomeDocumentModel.lastResult;
+        var message:String = "DocumentModel initial value : " +_myTestDoc.uid + ":" + _myTestDoc.getTitle() + "\n";
+        _myTestDoc.setTitle("New Title from Flex");
+        message += "Modified title : " + _myTestDoc.getTitle() + "\n";
+        Alert.show(message,"Local Modified DocumentModel :");
+      }
 
-			private function setProperty(doc:FlexDocumentModel, schemaName:String, fieldName:String,fieldValue:String):void
-			{
-				doc.setProperty(schemaName,fieldName,fieldValue);
-				Alert.show("doc property has been updated locally", "info");
-			}
-	]]>
-	</mx:Script>
+  ]]>
+  </mx:Script>
 
     <mx:RemoteObject id="service" destination="flexStatelessPingTestBean" fault="faultHandler(event)"/>
 
     <mx:Panel
-        title="Nuxeo-Flex AMF Ping test"
-        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+        title="Seam remote call sample 1"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10" width="600">
+
+        <mx:Label text='Sample remote call to a Seam bean :'/>
 
         <mx:HBox>
-            <mx:Button label="Ping Nuxeo Server" click="service.ping()"/>
+            <mx:Button label="Call ping()" click="service.ping()"/>
         </mx:HBox>
 
         <mx:Label text='The server said: "{service.ping.lastResult}"'/>
     </mx:Panel>
 
     <mx:Panel
-        title="Nuxeo-Flex AMF Ping and gest User"
-        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+        title="Seam remote call sample 2"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10" width="600">
+
+        <mx:Label text='Sample remote call to a Seam bean with security context :'/>
 
         <mx:HBox>
-            <mx:Button label="Ping User" click="service.pingUser()"/>
+            <mx:Button label="Call pingUser()" click="service.pingUser()"/>
         </mx:HBox>
 
         <mx:Label text='The server said: "{service.pingUser.lastResult}"'/>
 
     </mx:Panel>
-    
+
     <mx:Panel
-        title="Nuxeo-Flex AMF test serialization"
-        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+        title="Remote call with Bean serialization"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10" width="600">
+
+        <mx:Label text='Call a Seam bean method that returns a Java Bean'/>
 
         <mx:HBox>
-            <mx:Button label="test Serialization" click="service.testSerialization()"/>
+            <mx:Button label="1 - Retrieve Bean from server (service.getSimpleBean())" click="service.getSimpleBean()"/>
         </mx:HBox>
 
-        <mx:Label text='returned Bean field value: "{service.testSerialization.lastResult.myField}"'/>
+        <mx:Label text='returned Bean field value: "{service.getSimpleBean.lastResult.myField}"'/>
 
         <mx:HBox>
-            <mx:Button label="test call on Bean" click="doSomething()"/>
+            <mx:Button label="2 - Modify local (AS) object (testLocalBean())" click="testLocalBean()"/>
         </mx:HBox>
+
+        <mx:HBox>
+            <mx:Button label="3 - send modifications to server (service.setSimpleBean())" click="service.setSimpleBean(_myLocalTestBean)"/>
+        </mx:HBox>
+
+        <mx:Label text='value returned by server: "{service.setSimpleBean.lastResult}"'/>
 
     </mx:Panel>
 
     <mx:Panel
-        title="Nuxeo-Flex AMF test custom serialization"
-        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
-
+        title="Remote call with DocumentModel/FlexDocumentModel mapping"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10" width="600">
         <mx:HBox>
-            <mx:Button label="test Serialization" click="service.getTestDocumentModel()"/>
-        </mx:HBox>
-
-        <mx:Label text='returned Bean field value: "{service.getTestDocumentModel.lastResult.name}"'/>
-
-        <mx:HBox>
-            <mx:Button label="checkDM" click="checkDM()"/>
-        </mx:HBox>
-
-    </mx:Panel>
-
-    <mx:Panel
-        title="Nuxeo-Flex AMF test DocumentModel retrieval"
-        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
-
-
-        <mx:HBox>
-		<mx:TextInput
+         <mx:Label text='target Path :'/>
+         <mx:TextInput
                 id="docPath"
                 maxChars="100"
                 text="/default-domain"/>
-            <mx:Button label="get document by path" click="service.getSomeDocumentModel(docPath.text)"/>
+            <mx:Button label="1 - Retrieve document from server by path" click="service.getSomeDocumentModel(docPath.text)"/>
         </mx:HBox>
 
         <mx:Label text='returned doc id: "{service.getSomeDocumentModel.lastResult.id}"'/>
+        <mx:Label text='returned doc name: "{service.getSomeDocumentModel.lastResult.name}"'/>
+        <mx:Label text='returned doc title: "{service.getSomeDocumentModel.lastResult.getTitle()}"'/>
 
         <mx:HBox>
-		<mx:TextInput
-                id="schemaName"
-                maxChars="20"
-                text="dublincore"/>
-		<mx:TextInput
-                id="fieldName"
-                maxChars="20"
-                text="title"/>
-
-            <mx:Button label="get property" click="displayProperty(service.getSomeDocumentModel.lastResult,schemaName.text,fieldName.text)"/>
-
-		<mx:TextInput
-                id="propertyValue"
-                maxChars="20"                text=""/>
-
+            <mx:Button label="2 - Modify local FlexDocumentModel (testLocalDM())" click="testLocalDM()"/>
         </mx:HBox>
 
         <mx:HBox>
-		<mx:TextInput
-                id="schemaNameUp"
-                maxChars="20"
-                text="dublincore"/>
-		<mx:TextInput
-                id="fieldNameUp"
-                maxChars="20"
-                text="title"/>
-		<mx:TextInput
-                id="fieldValueUp"
-                maxChars="20"
-                text="title"/>
-
-
-            <mx:Button label="set property" click="setProperty(service.getSomeDocumentModel.lastResult,schemaNameUp.text,fieldNameUp.text,fieldValueUp.text)"/>
-
+            <mx:Button label="3 - send modifications to server (service.setSomeDocumentModel())" click="service.setSomeDocumentModel(_myTestDoc)"/>
         </mx:HBox>
 
-        <mx:HBox>
-            <mx:Button label="save back document" click="service.saveDocument(service.getSomeDocumentModel.lastResult)"/>
-        </mx:HBox>
-
-
-        <mx:HBox>
-            <mx:Button label="checkDM2" click="checkDM2()"/>
-        </mx:HBox>
+        <mx:Label text='value returned by server: "{service.setSomeDocumentModel.lastResult}"'/>
 
     </mx:Panel>
-
 
 </mx:Application>
