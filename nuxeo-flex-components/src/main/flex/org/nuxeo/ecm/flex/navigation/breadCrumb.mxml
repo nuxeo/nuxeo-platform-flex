@@ -1,67 +1,94 @@
 <!--
-  -->
+/*
+ * (C) Copyright 2006-2011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+-->
 <mx:Canvas xmlns="org.nuxeo.ecm.flex.navigation" xmlns:mx="http://www.adobe.com/2006/mxml"
   xmlns:word="*">
 
-  	<mx:Script>
-		<![CDATA[
-			import org.nuxeo.ecm.flex.dto.FlexDocumentModel;
-			import mx.rpc.events.ResultEvent;	
-			import mx.controls.Alert;
-			import mx.rpc.events.FaultEvent;
-			import mx.core.Application;
-			
-			[Bindable]
-			private var dirSegmentArray:Array;			
+    <mx:Metadata>
+     [Event(name="changeSelectedDocument", type="flash.events.Event")]
+    </mx:Metadata>
 
-			private var _currentFdm:FlexDocumentModel;
+    <mx:Script>
+    <![CDATA[
+      import org.nuxeo.ecm.flex.dto.FlexDocumentModel;
+      import mx.rpc.events.ResultEvent;
+      import mx.controls.Alert;
+      import mx.rpc.events.FaultEvent;
+      import mx.core.Application;
 
-			public function makeButtons():void {
-				dirSegmentArray = new Array();
-					var dirSegments:Array = _currentFdm.path.split('/');
-					var fullPath:String = '';
-					for (var i:int = 0; i<dirSegments.length; i++) {
-						fullPath += dirSegments[i]+'/';
-						dirSegmentArray.push({label: dirSegments[i], path: fullPath});
-					}
-				
-				pathSegmentRepeater.dataProvider = dirSegmentArray;
-			}
-			
-			public function set currentFdm(value:FlexDocumentModel):void{
-				_currentFdm = value;
-				makeButtons();
-			}
-			
-			private function faultHandler(event:FaultEvent):void {
-				 Alert.show(event.fault.faultString, event.fault.faultCode.toString());
-			}	
-					
-			private function updateCurrentFdm(event:Event):void{
-				flexDocumentManager.getDocument("pathRef:"+event.currentTarget.getRepeaterItem().path);
-			}						
-			
-			private function getDocumentHandler(event:ResultEvent):void{
-				Application.application.fdm = flexDocumentManager.getDocument.lastResult;		
-			}
-		]]>
-	</mx:Script>
-	
-    <mx:RemoteObject id="flexDocumentManager" destination="flexDocumentManager"
-  fault="faultHandler(event)">
+      [Bindable]
+      private var dirSegmentArray:Array;
+
+      private var _selectedDocument:FlexDocumentModel;
+
+      [Bindable(event="changeSelectedDocument")]
+      public function get selectedDocument():FlexDocumentModel {
+        return _selectedDocument;
+      }
+
+      public function set selectedDocument(doc:FlexDocumentModel):void {
+        _selectedDocument=doc;
+         dispatchEvent(new Event("changeSelectedDocument"));
+         makeButtons();
+      }
+
+      public function makeButtons():void {
+        dirSegmentArray = new Array();
+          var dirSegments:Array = _selectedDocument.path.split('/');
+          var fullPath:String = '';
+          for (var i:int = 0; i<dirSegments.length; i++) {
+            fullPath += dirSegments[i]+'/';
+            dirSegmentArray.push({label: dirSegments[i], path: fullPath});
+          }
+
+        pathSegmentRepeater.dataProvider = dirSegmentArray;
+      }
+
+      private function faultHandler(event:FaultEvent):void {
+         Alert.show(event.fault.faultString, event.fault.faultCode.toString());
+      }
+
+      private function updateCurrentFdm(event:Event):void{
+        flexDocumentManager.getDocument("pathRef:"+event.currentTarget.getRepeaterItem().path);
+      }
+
+      private function getDocumentHandler(event:ResultEvent):void{
+        this.selectedDocument = flexDocumentManager.getDocument.lastResult;
+      }
+    ]]>
+  </mx:Script>
+
+    <mx:RemoteObject id="flexDocumentManager"
+      destination="flexDocumentManager"
+      fault="faultHandler(event)">
       <mx:method name="getDocument" result="getDocumentHandler(event)" />
     </mx:RemoteObject>
-	
-	<mx:HBox id="buttonContainer" horizontalGap="0"
-  horizontalAlign="left" verticalAlign="middle">
-		<mx:HBox id="pathButtons" horizontalGap="0" horizontalAlign="left"
-  verticalAlign="middle">
-			<mx:Repeater id="pathSegmentRepeater">
-				<mx:LinkButton label="{pathSegmentRepeater.currentItem.label}"
-  click="updateCurrentFdm(event)" themeColor="#656A6B" cornerRadius="5"
-  paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" />
-				<mx:Label text="/" width="9" />
-			</mx:Repeater>
-		</mx:HBox>
-	</mx:HBox>
+
+  <mx:HBox id="buttonContainer" horizontalGap="0"
+      horizontalAlign="left" verticalAlign="middle">
+    <mx:HBox id="pathButtons" horizontalGap="0" horizontalAlign="left"
+      verticalAlign="middle">
+      <mx:Repeater id="pathSegmentRepeater">
+        <mx:LinkButton label="{pathSegmentRepeater.currentItem.label}"
+            click="updateCurrentFdm(event)" themeColor="#656A6B" cornerRadius="5"
+            paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0" />
+        <mx:Label text="/" width="9" />
+      </mx:Repeater>
+    </mx:HBox>
+  </mx:HBox>
 </mx:Canvas>

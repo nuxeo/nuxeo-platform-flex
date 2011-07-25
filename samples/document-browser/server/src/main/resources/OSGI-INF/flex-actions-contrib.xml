@@ -6,9 +6,9 @@
     point="actions">
 
 
-    <action id="flexdocumentBrowserSample"
+    <action id="flexdocumentBrowserSample" order="70"
       link="/flexsamples/documentBrowser.swf" enabled="true"
-      label="Document Browser explorer sample">
+      label="Document Explorer sample application" help="Sample Explorer buit using the building blocks provided by nuxeo-flex-components">
       <category>FLEX_SAMPLES</category>
     </action>
 

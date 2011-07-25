@@ -1,0 +1,133 @@
+<!--
+/*
+ * (C) Copyright 2006-2011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+-->
+<mx:Canvas xmlns="org.nuxeo.ecm.flex.navigation"
+  xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:word="*" height="100%">
+
+   <mx:Metadata>
+    [Event(name="changeSelectedDocument", type="flash.events.Event")]
+   </mx:Metadata>
+
+   <mx:Script>
+    <![CDATA[
+      import org.nuxeo.ecm.flex.dto.FlexDocumentModel;
+      import mx.collections.ArrayCollection;
+      import mx.controls.Alert;
+      import mx.controls.Tree;
+      import mx.rpc.events.FaultEvent;
+      import mx.rpc.events.ResultEvent;
+      import mx.utils.ObjectProxy;
+      import mx.events.TreeEvent;
+      import mx.events.ListEvent;
+      import mx.core.Application;
+
+      [Bindable]
+      public var docTreeList:ArrayCollection= new ArrayCollection();
+
+      private var rootDocument:FlexDocumentModel;
+
+      private var _showLiefDocuments:Boolean=true;
+
+      private var _selectedDocument:FlexDocumentModel;
+
+      private var _treeNodeToOpen:Object;
+
+      private function initRoot():void
+      {
+        docTreeList = new ArrayCollection();
+        var obj:ObjectProxy = new ObjectProxy();
+        obj["type"] = "doc";
+        obj["children"] = new ArrayCollection();
+        obj["fetch"] = false;
+        obj["fdm"]=rootDocument;
+        obj["label"]=rootDocument.getTitle();
+        docTreeList.addItem(obj);
+        docTreeList.itemUpdated(obj);
+      }
+
+      public function set showLiefDocuments(val:Boolean):void {
+        _showLiefDocuments=val;
+        initRoot();
+      }
+
+      public function set rootPath(path:String):void {
+        flexDocumentManager.getDocument("pathRef:"+path);
+      }
+
+      [Bindable(event="changeSelectedDocument")]
+      public function get selectedDocument():FlexDocumentModel {
+        return _selectedDocument;
+      }
+
+      private function selectDocument(event:ListEvent):void {
+        _selectedDocument=event.itemRenderer.data["fdm"];
+         dispatchEvent(new Event("changeSelectedDocument"));
+      }
+
+      private function getDocumentCallback(event:ResultEvent):void
+      {
+        rootDocument = flexDocumentManager.getDocument.lastResult;
+        initRoot();
+      }
+
+      private function getChildrenCallback(event:ResultEvent):void
+      {
+        var children:ArrayCollection = flexDocumentManager.getChildren.lastResult;
+        var obj:ObjectProxy;
+        for(var i:int = 0; i < children.length; i++) {
+           obj= new ObjectProxy();
+           obj["type"] = "doc";
+           if (children[i].isFolder())
+           {
+             obj["children"] = new ArrayCollection();
+           }
+           obj["fdm"]=children[i];
+           obj["label"]=children[i].getTitle();
+           obj["fetch"] = false;
+           if (children[i].isFolder() || _showLiefDocuments) {
+             _treeNodeToOpen.children.addItem(obj);
+           }
+        }
+        _treeNodeToOpen.fetch = true;
+        docTreeList.itemUpdated(_treeNodeToOpen);
+      }
+
+      private function faultHandler(event:FaultEvent):void {
+         Alert.show(event.fault.faultString, event.fault.faultCode.toString());
+      }
+
+      private function openNode(event:TreeEvent):void {
+        if(event.item.type == "doc" && event.item.fetch == false) {
+           var item:Object = event.item;
+           _treeNodeToOpen=item;
+           flexDocumentManager.getChildren("idRef:"+item["fdm"].id);
+         }
+      }
+
+  ]]>
+  </mx:Script>
+
+    <mx:RemoteObject id="flexDocumentManager" destination="flexDocumentManager" fault="faultHandler(event)">
+      <mx:method name="getChildren" result="getChildrenCallback(event)" />
+      <mx:method name="getDocument" result="getDocumentCallback(event)" />
+    </mx:RemoteObject>
+
+  <mx:Tree height="100%" editorYOffset="90" width="100%"  id="docTree" cornerRadius="20" borderStyle="solid" borderColor="#ffffff" dataProvider="{docTreeList}"
+  itemClick="selectDocument(event)" itemOpen="openNode(event)" />
+
+</mx:Canvas>

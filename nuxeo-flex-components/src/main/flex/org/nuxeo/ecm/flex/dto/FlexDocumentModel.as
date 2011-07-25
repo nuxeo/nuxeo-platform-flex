@@ -124,7 +124,17 @@ package org.nuxeo.ecm.flex.dto
 
     public function getTitle():String
     {
-      return _data.dublincore.title;
+      var title:String=_data.dublincore.title;
+      if (title=="" || title==null) {
+         title=_name;
+      }
+      if (_path=="/") {
+         title="/";
+      }
+      if (title=="" || title==null) {
+         title=_docRef;
+      }
+      return title;
     }
 
     public function setTitle(value:String):void

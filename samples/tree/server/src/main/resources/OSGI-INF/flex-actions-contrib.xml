@@ -5,10 +5,9 @@
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
     point="actions">
 
-
-    <action id="flexTreeSample"
+    <action id="flexTreeSample" order="60"
       link="/flexsamples/tree.swf" enabled="true"
-      label="flex tree sample">
+      label="Document Tree component" help="Sample use of the documentTree component that is part of nuxeo-flex-component>
       <category>FLEX_SAMPLES</category>
     </action>
 

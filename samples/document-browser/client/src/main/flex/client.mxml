@@ -16,11 +16,11 @@
  *     Nuxeo - initial API and implementation
  */
 -->
-
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
   xmlns:nxnav="org.nuxeo.ecm.flex.navigation.*"
   xmlns:word="*"
   layout="absolute">
+
   <mx:Script>
   <![CDATA[
     import org.nuxeo.ecm.flex.dto.FlexDocumentModel;
@@ -29,59 +29,47 @@
     import mx.rpc.events.FaultEvent;
     import mx.rpc.events.ResultEvent;
 
-
       [Bindable]
       public var fdm:FlexDocumentModel;
 
-      private function init():void{
-        flexDocumentManager.getDocument("pathRef:/default-domain");
-      }
-
-      private function getDocumentHandler(event:ResultEvent):void
-      {
-        fdm = flexDocumentManager.getDocument.lastResult;
-        tree.init();
-        breadCrumb.makeButtons();
-      }
-
-
-      private function faultHandler(event:FaultEvent):void {
-         Alert.show(event.fault.faultString, event.fault.faultCode.toString());
+      private function setCurrentDocument(event:Event):void {
+         fdm = event.currentTarget.selectedDocument;
       }
 
   ]]>
   </mx:Script>
 
-      <mx:XMLList id="menuXML">
-        <menuitem label="File">
-            <menuitem label="Open Repository" data="open"/>
-            <menuitem label="Upload Document" data="upload"/>
-        </menuitem>
-    </mx:XMLList>
+  <mx:XMLList id="menuXML">
+    <menuitem label="File">
+       <menuitem label="Open Repository" data="open"/>
+       <menuitem label="Upload Document" data="upload"/>
+    </menuitem>
+  </mx:XMLList>
 
-     <mx:ApplicationControlBar  dock="{true}">
-            <mx:MenuBar height="100%"
-            dataProvider="{menuXML}"
-            labelField="@label"
-            showRoot="true"/>
-    </mx:ApplicationControlBar>
+  <mx:ApplicationControlBar  dock="{true}">
+    <mx:MenuBar height="100%"
+         dataProvider="{menuXML}"
+         labelField="@label"
+         showRoot="true"/>
+  </mx:ApplicationControlBar>
 
-  <mx:RemoteObject  id="flexDocumentManager" destination="flexDocumentManager" fault="faultHandler(event)">
-    <mx:method name="getDocument" result="getDocumentHandler(event)" />
-  </mx:RemoteObject>
+  <mx:Canvas id="container" height="100%" width="100%">
+    <mx:constraintColumns>
+      <mx:ConstraintColumn id="nav" width="20%" minWidth="200"/>
+      <mx:ConstraintColumn id="perspective" width="80%" />
+    </mx:constraintColumns>
 
-<mx:Canvas id="container" height="100%" width="100%">
-  <mx:constraintColumns>
-    <mx:ConstraintColumn id="nav" width="20%" minWidth="200"/>
-    <mx:ConstraintColumn id="perspective" width="80%" />
-  </mx:constraintColumns>
+    <nxnav:documentTree rootPath="/" cornerRadius="20" borderColor="#000000"
+             dropShadowEnabled="true"  borderStyle="solid"  left="nav:5" right="nav:1" top="20" bottom="5"
+             minWidth="200" width="100%" height="100%"  id="tree"
+             changeSelectedDocument="setCurrentDocument(event)"/>
 
-     <nxnav:NxDocTree cornerRadius="20" borderColor="#000000"  dropShadowEnabled="true"  borderStyle="solid"  creationComplete="init()" left="nav:5" right="nav:1" top="20" bottom="5"   minWidth="200" width="100%" height="100%"  id="tree"  />
+    <mx:VBox cornerRadius="20" width="100%" height="100%" left="perspective:5" right="perspective:5" top="12" bottom="20" minWidth="200">
+      <nxnav:breadCrumb selectedDocument="{tree.selectedDocument}" width="100%" height="20" id="breadCrumb" top="7"
+          changeSelectedDocument="setCurrentDocument(event)"/>
+      <nxnav:explorerView cornerRadius="20" borderColor="#000000"  dropShadowEnabled="true"  borderStyle="solid" width="100%" height="100%" currentFdm="{fdm}" />
+    </mx:VBox>
 
-     <mx:VBox cornerRadius="20" width="100%" height="100%" left="perspective:5" right="perspective:5" top="12" bottom="20" minWidth="200">
-       <nxnav:breadCrumb currentFdm="{fdm}" width="100%" height="20" id="breadCrumb" top="7"/>
-       <nxnav:explorerView cornerRadius="20" borderColor="#000000"  dropShadowEnabled="true"  borderStyle="solid" width="100%" height="100%" currentFdm="{fdm}" />
-     </mx:VBox>
-</mx:Canvas>
+  </mx:Canvas>
 
 </mx:Application>
