@@ -58,8 +58,9 @@ public class StateManagerActionBean implements Serializable {
     @WebMethod
     public DocumentModel save() throws Exception {
         DocumentModel doc =  flexNavigationContext.getStoredEditableDocument(DOC_KEY);
-        //flexDocumentManager.clear(DOC_KEY);
+        //flexNavigationContext.removeAll(DOC_KEY);
         if (createMode) {
+            createMode=false;
             return flexDocumentManager.createDocument(doc);
         } else {
             return flexDocumentManager.saveDocument(doc);

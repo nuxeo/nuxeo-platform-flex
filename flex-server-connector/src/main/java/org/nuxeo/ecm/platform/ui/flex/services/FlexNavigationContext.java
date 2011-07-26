@@ -133,8 +133,16 @@ public class FlexNavigationContext implements FlexContextManager {
         setDocument(CURRENT_DOCUMENT, currentDocument);
     }
 
-    public void clear(String name) {
+    public void removeAll(String name) {
+        remove(name);
+        removeStoredEditableDocument(name);
+    }
+
+    public void remove(String name) {
         docRefs.remove(name);
+    }
+
+    public void removeStoredEditableDocument(String name) {
         docModels.remove(name);
     }
 }
