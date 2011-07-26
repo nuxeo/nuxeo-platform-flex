@@ -21,10 +21,12 @@ package org.nuxeo.ecm.flex.dto
   import flash.utils.IExternalizable;
   import flash.utils.IDataInput;
   import flash.utils.IDataOutput;
+  import flash.events.EventDispatcher;
+  import flash.events.Event;
   import mx.core.IUID;
 
   [RemoteClass(alias="org.nuxeo.ecm.flex.javadto.FlexDocumentModel")]
-  public class FlexDocumentModel implements IExternalizable, IUID
+  public class FlexDocumentModel extends EventDispatcher implements IExternalizable, IUID
 
   {
     private var _docRef:String;
@@ -37,6 +39,7 @@ package org.nuxeo.ecm.flex.dto
     private var _icon:String;
     private var _iconExpanded:String;
     private var _isFolder:Boolean;
+    private var _isDirty:Boolean=false;
 
     public function FlexDocumentModel()
     {
@@ -73,6 +76,7 @@ package org.nuxeo.ecm.flex.dto
       _isFolder=input.readBoolean();
       _data = input.readObject();
       _dirty = new Object();
+      _isDirty=false;
     }
 
     public function writeExternal(output:IDataOutput):void {
@@ -141,6 +145,7 @@ package org.nuxeo.ecm.flex.dto
     {
       _data.dublincore.title=value;
       _dirty['dublincore:title']=value;
+      markDirty();
     }
 
     public function getProperty(schemaName:String, fieldName:String):Object
@@ -152,6 +157,7 @@ package org.nuxeo.ecm.flex.dto
     {
       _data[schemaName][fieldName]=value;
       _dirty[schemaName+":"+fieldName]=value;
+      markDirty();
     }
 
     public function isFolder():Boolean
@@ -194,6 +200,15 @@ package org.nuxeo.ecm.flex.dto
         return _dirty;
     }
 
+    protected function markDirty():void {
+       _isDirty=true;
+       dispatchEvent(new Event("dirtyDocument"));
+    }
+
+    [Bindable(event="dirtyDocument")]
+    public function get dirty():Boolean {
+        return _isDirty;
+    }
   }
 
 }

@@ -5,14 +5,12 @@
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
     point="actions">
 
-
-    <action id="flexdocAPIeSample" order="10"
+    <action id="flexdocAPIeSample" order="25"
       link="/flexsamples/documentAPI.swf" enabled="true"
-      label="Document API sample" help="Show how to manage Nuxeo DocumentModels from the flex side">
+      label="Document API sample" help="Show how to update Nuxeo DocumentModels from the flex side">
       <category>FLEX_SAMPLES</category>
     </action>
 
   </extension>
-
 
 </component>

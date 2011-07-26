@@ -1,6 +1,21 @@
 <!--
-  -->
-
+/*
+ * (C) Copyright 2006-2011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+-->
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:word="*">
 
    <mx:Script>
@@ -9,136 +24,101 @@
       import mx.controls.dataGridClasses.DataGridColumn;
       import mx.controls.Alert;
       import mx.rpc.events.FaultEvent;
+      import mx.rpc.events.ResultEvent;
+      import mx.collections.ArrayCollection;
+
+      [Bindable]
+      private var currentDocumentProperties:ArrayCollection;
+
+      [Bindable]
+      private var currentDocument:FlexDocumentModel;
 
       private function faultHandler(event:FaultEvent):void {
          Alert.show(event.fault.faultString, event.fault.faultCode.toString());
       }
 
-      private function displayProperty(doc:FlexDocumentModel, schemaName:String, fieldName:String):void
-      {
-        var val:String= doc.getProperty(schemaName,fieldName).toString();
-        propertyValue.text=val;
-      }
-
-      private function setProperty(doc:FlexDocumentModel, schemaName:String, fieldName:String,fieldValue:String):void
-      {
-        doc.setProperty(schemaName,fieldName,fieldValue);
-        Alert.show("doc property has been updated locally", "info");
-      }
-
-      private function displayMeta(obj:Object):void
-      {
-        var doc:FlexDocumentModel = FlexDocumentModel(obj);
-        Alert.show("created:" + doc.getProperty("dublincore","created") + "\ncreator:" + doc.getProperty("dublincore","creator"), "info");
-        Alert.show("accessing contentdata:" + doc.contentdata.dublincore.title, "info");
-
-      }
-      private function displayTitle( row:Object, column:DataGridColumn ):String {
-               return row.getTitle();
+      private function readPropertyNames():void {
+        var schemas:Array = currentDocument.getSchemas();
+        currentDocumentProperties = new ArrayCollection();
+        var i:int=0;
+        var j:int=0;
+        for (i=0;i<schemas.length;i++)
+        {
+          var fieldNames:Array = currentDocument.getFieldNames(schemas[i]);
+          for (j=0;j<fieldNames.length;j++)
+          {
+            if (i==0 && j==0) {
+               propertyValue.text=String (currentDocument.getProperty(schemas[i],fieldNames[j]));
             }
-                        private function displayCreator( row:Object, column:DataGridColumn ):String {
-               return row.getProperty("dublincore","creator");
-            }
+            var entry:Object= new Object();
+            entry.label=schemas[i] + "." + fieldNames[j];
+            entry.data=schemas[i] + "|" + fieldNames[j];
+            currentDocumentProperties.addItem(entry);
+          }
+        }
+      }
+
+      private function documentChanged(event:ResultEvent):void {
+        //currentDocument = flexDocumentManager.getDocument.lastResult;
+        currentDocument = FlexDocumentModel(event.result);
+        readPropertyNames();
+      }
+
+      private function selectTargetProperty(event:Event):void {
+        var data:String = event.currentTarget.selectedItem.data;
+        var schema:String = data.split("|")[0];
+        var property:String = data.split("|")[1];
+        propertyValue.text=String (currentDocument.getProperty(schema,property));
+      }
+
+      private function changeProperty():void {
+        var data:String = propList.selectedItem.data;
+        var schema:String = data.split("|")[0];
+        var property:String = data.split("|")[1];
+        currentDocument.setProperty(schema,property,propertyValue.text);
+      }
+
+      private function saveChanges():void {
+        flexDocumentManager.saveDocument(currentDocument);
+      }
 
   ]]>
   </mx:Script>
 
-    <mx:RemoteObject id="flexDocumentManager" destination="flexDocumentManager" fault="faultHandler(event)"/>
+    <mx:RemoteObject id="flexDocumentManager" destination="flexDocumentManager" fault="faultHandler(event)">
+      <mx:method name="getDocument" result="documentChanged(event)" />
+      <mx:method name="saveDocument" result="documentChanged(event)" />
+    </mx:RemoteObject>
 
     <mx:Panel
-        title="Nuxeo-Flex AMF DocumentAPI test"
+        title="Sample Document API to update a Document"
         paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
 
-
         <mx:HBox>
-    <mx:TextInput
+          <mx:TextInput
                 id="docPath"
                 maxChars="100"
+                width="300"
                 text="/default-domain"/>
-            <mx:Button label="get document by path" click="flexDocumentManager.getDocument('pathRef:'+docPath.text)"/>
+          <mx:Button label="get document by path" click="flexDocumentManager.getDocument('pathRef:'+docPath.text)"/>
         </mx:HBox>
 
-        <mx:Label text='returned doc id: "{flexDocumentManager.getDocument.lastResult.id}"'/>
+        <mx:Label text='Selected document : uid : "{currentDocument.id} name : "{currentDocument.name}"'/>
 
         <mx:HBox>
-    <mx:TextInput
-                id="schemaName"
-                maxChars="20"
-                text="dublincore"/>
-    <mx:TextInput
-                id="fieldName"
-                maxChars="20"
-                text="title"/>
-
-            <mx:Button label="get property" click="displayProperty(flexDocumentManager.getDocument.lastResult,schemaName.text,fieldName.text)"/>
-
-    <mx:TextInput
+          <mx:Label text='available properties'/>
+          <mx:ComboBox id="propList" dataProvider="{currentDocumentProperties}" change="selectTargetProperty(event)">
+          </mx:ComboBox>
+          <mx:Label text=' selected property value'/>
+          <mx:TextInput
                 id="propertyValue"
                 maxChars="20"                text=""/>
-
+          <mx:Button label="change value" click="changeProperty()"/>
         </mx:HBox>
 
-        <mx:HBox>
-    <mx:TextInput
-                id="schemaNameUp"
-                maxChars="20"
-                text="dublincore"/>
-    <mx:TextInput
-                id="fieldNameUp"
-                maxChars="20"
-                text="title"/>
-    <mx:TextInput
-                id="fieldValueUp"
-                maxChars="20"
-                text="title"/>
-
-
-            <mx:Button label="set property" click="setProperty(flexDocumentManager.getDocument.lastResult,schemaNameUp.text,fieldNameUp.text,fieldValueUp.text)"/>
-
-        </mx:HBox>
-
-        <mx:HBox>
-            <mx:Button label="save back document" click="flexDocumentManager.saveDocument(flexDocumentManager.getDocument.lastResult)"/>
-        </mx:HBox>
-
-
-        <mx:HBox>
-            <mx:Button label="get Children" click="flexDocumentManager.getChildren('idRef:'+flexDocumentManager.getDocument.lastResult.id)"/>
-        </mx:HBox>
-
-
-        <mx:DataGrid id="childrenList" width="100%" height="100%" rowCount="5" dataProvider="{flexDocumentManager.getChildren.lastResult}">
-            <mx:columns>
-                <mx:DataGridColumn dataField="name" headerText="Name"/>
-                <mx:DataGridColumn dataField="id" headerText="docId"/>
-                <mx:DataGridColumn dataField="contentdata.dublincore.title" labelFunction="displayTitle" headerText="Title"/>
-                <mx:DataGridColumn dataField="contentdata.dublincore.creator" labelFunction="displayCreator" headerText="Creator"/>
-            </mx:columns>
-        </mx:DataGrid>
-
-        <mx:Form width="100%" height="100%">
-            <mx:FormItem label="Name">
-                <mx:Label text="{childrenList.selectedItem.name}"/>
-            </mx:FormItem>
-            <mx:FormItem label="DocId">
-                <mx:Label text="{childrenList.selectedItem.id}"/>
-            </mx:FormItem>
-            <mx:FormItem label="Title">
-                <mx:Label text="{childrenList.selectedItem.getTitle()}"/>
-            </mx:FormItem>
-            <mx:FormItem label="Creator">
-                <mx:Label text="{childrenList.selectedItem.getProperty('dublincore','creator')}"/>
-            </mx:FormItem>
-
-        </mx:Form>
-
-        <mx:HBox>
-            <mx:Button label="navigate to" click="flexDocumentManager.getChildren('idRef:'+childrenList.selectedItem.id)"/>
-        </mx:HBox>        <mx:HBox>
-            <mx:Button label="get additionnal meta-data" click="displayMeta(childrenList.selectedItem)"/>
-        </mx:HBox>
-        <mx:HBox>
-            <mx:Button label="delete doc" click="flexDocumentManager.saveDocument(flexDocumentManager.getDocument.lastResult)"/>
+        <mx:HBox visible="{currentDocument!=null}">
+          <mx:Label color="#FF0000" text='Document has local changes, use the save button to save changes in the repository' visible='{currentDocument.dirty}'/>
+          <mx:Button label="save changes" click="saveChanges()" visible='{currentDocument.dirty}'/>
         </mx:HBox>
 
 </mx:Panel>
