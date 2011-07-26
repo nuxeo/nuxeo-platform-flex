@@ -160,9 +160,16 @@ public class DocumentModelTranslator {
             bigIcon = "/icons/file_100.png";
             bigIconExpanded = "/icons/file_100.png";
         }
+
+        String lifeCycleState="unknown";
+        if (doc.getId()!=null && doc.getSessionId()!=null) {
+            // can not read lc for a newly created DocumentModel
+            lifeCycleState = doc.getCurrentLifeCycleState();
+        }
+
         FlexDocumentModel fdm = new FlexDocumentModel(doc.getSessionId(),
                 doc.getRef(), doc.getName(), doc.getPathAsString(),
-                doc.getCurrentLifeCycleState(), doc.getType(),
+                lifeCycleState, doc.getType(),
                 BaseURL.getServerURL() + "nuxeo" + bigIcon,
                 BaseURL.getServerURL() + "nuxeo" + bigIconExpanded);
 
@@ -180,6 +187,7 @@ public class DocumentModelTranslator {
 
         DocumentPart[] parts = doc.getParts();
 
+        Map<String, Serializable> dirtyProps = new HashMap<String, Serializable>();
         for (DocumentPart part : parts) {
             Map<String, Serializable> map = new HashMap<String, Serializable>();
             Collection<Property> props = part.getChildren();
@@ -192,10 +200,15 @@ public class DocumentModelTranslator {
             for (Property prop : props) {
                 String fieldName = prop.getName();
                 fieldName = fieldName.replace(schemaPrefix + ":", "");
-                map.put(fieldName, introspectProperty(prop, doc));
+                Serializable introspectedProperty = introspectProperty(prop, doc);
+                map.put(fieldName, introspectedProperty);
+                if (prop.isDirty()) {
+                   dirtyProps.put(part.getName() + ":" + fieldName, introspectedProperty);
+                }
             }
             fdm.feed(part.getName(), map);
         }
+        fdm.setDirtyFields(dirtyProps);
         return fdm;
     }
 
@@ -270,7 +283,6 @@ public class DocumentModelTranslator {
             String docPath = fdoc.getPath();
             String parentPath = new Path(docPath).removeLastSegments(1).toString();
             doc = session.createDocumentModel(parentPath, name, docType);
-            doc = session.createDocument(doc);
         } else {
             DocumentRef docRef = new IdRef(refAsString);
             doc = session.getDocument(docRef);
@@ -280,6 +292,10 @@ public class DocumentModelTranslator {
 
         for (String path : dirtyFields.keySet()) {
             doc.setPropertyValue(path, dirtyFields.get(path));
+            Property prop = doc.getProperty(path);
+            if (!prop.isDirty()) {
+                log.error("Property should be dirty");
+            }
         }
 
         return doc;

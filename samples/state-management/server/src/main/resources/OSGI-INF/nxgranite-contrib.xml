@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="org.nuxeo.ecm.platform.ui.granite.config.statemanagement">
+
+    <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
+
+    <seam id="flexDocumentManager" source="flexRepositoryService"/>
+
+    <seam id="stateManagerActionBean" source="stateManagerActionBean"/>
+
+  </extension>
+</component>

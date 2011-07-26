@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.IdRef;
 
 /**
  * {@link DocumentModel} reprosentation in the Flex world
@@ -72,7 +73,11 @@ public class FlexDocumentModel {
     public FlexDocumentModel(String sessionId, DocumentRef ref, String name,
             String path, String lcState, String type, String icon,
             String iconExpanded) {
-        docRef = ref.toString();
+        if (ref!=null && ref instanceof IdRef) {
+            docRef = ref.toString();
+        } else {
+            docRef="";
+        }
         this.name = name;
         this.path = path;
         lifeCycleState = lcState;

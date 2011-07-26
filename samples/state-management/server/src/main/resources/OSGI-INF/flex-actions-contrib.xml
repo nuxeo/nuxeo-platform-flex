@@ -1,0 +1,17 @@
+<component name="org.nuxeo.ecm.platform.actions.flex.statemanagement">
+
+  <require>org.nuxeo.ecm.platform.actions</require>
+
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
+    point="actions">
+
+    <action id="flexStateManagementSample" order="80"
+      link="/flexsamples/sm-select.swf" enabled="true"
+      label="Document API and State Management sample"
+      help="Demonstrates how to manage state on the server side while creating or editing documents.">
+      <category>FLEX_SAMPLES</category>
+    </action>
+
+  </extension>
+
+</component>

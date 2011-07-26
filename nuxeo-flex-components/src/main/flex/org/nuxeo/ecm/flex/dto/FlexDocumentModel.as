@@ -75,8 +75,8 @@ package org.nuxeo.ecm.flex.dto
       _iconExpanded=input.readUTF();   
       _isFolder=input.readBoolean();
       _data = input.readObject();
-      _dirty = new Object();
-      _isDirty=false;
+      _dirty = input.readObject();
+      _isDirty= input.readBoolean();
     }
 
     public function writeExternal(output:IDataOutput):void {
@@ -158,6 +158,11 @@ package org.nuxeo.ecm.flex.dto
       _data[schemaName][fieldName]=value;
       _dirty[schemaName+":"+fieldName]=value;
       markDirty();
+    }
+
+    public function isDirty(schemaName:String, fieldName:String):Boolean {
+        var key:String = schemaName+":"+fieldName;        
+	return _dirty[key]!=null;
     }
 
     public function isFolder():Boolean

@@ -22,7 +22,6 @@ public class AttachHelper {
         return sidField;
     }
 
-
     public static void attach(DocumentModelImpl doc, String sid) {
 
         try {

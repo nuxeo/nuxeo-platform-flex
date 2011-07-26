@@ -1,0 +1,117 @@
+<!--
+  -->
+
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:word="*" creationComplete="init()">
+
+   <mx:Script>
+    <![CDATA[
+      import org.nuxeo.ecm.flex.dto.FlexDocumentModel;
+      import mx.collections.ArrayCollection;
+      import mx.controls.dataGridClasses.DataGridColumn;
+      import mx.controls.Alert;
+      import mx.controls.Tree;
+      import mx.rpc.events.FaultEvent;
+      import mx.rpc.events.ResultEvent;
+      import mx.utils.ObjectProxy;
+      import mx.events.TreeEvent;
+      import mx.events.ListEvent;
+      import flash.net.*;
+      import flash.external.*;
+
+      [Bindable]
+      public var currentDocument:FlexDocumentModel;
+
+      [Bindable]
+      public var currentDocumentProperties:ArrayCollection;
+
+      private function init():void
+      {
+        stateManagerActionBean.getDocument();
+      }
+
+      private function getDocumentCallBack(event:ResultEvent):void
+      {
+        currentDocument = stateManagerActionBean.getDocument.lastResult;
+        fetchDetailFromDoc();
+      }
+
+      private function faultHandler(event:FaultEvent):void {
+         Alert.show(event.fault.faultString, event.fault.faultCode.toString());
+      }
+
+      private function fetchDetailFromDoc():void
+      {
+        var schemas:Array = currentDocument.getSchemas();
+        currentDocumentProperties = new ArrayCollection();
+        var i:int=0;
+        var j:int=0;
+        for (i=0;i<schemas.length;i++)
+        {
+          var fieldNames:Array = currentDocument.getFieldNames(schemas[i]);
+          for (j=0;j<fieldNames.length;j++)
+          {
+            if (currentDocument.isDirty(schemas[i],fieldNames[j])) {
+              var entry:Object= new Object();
+              entry.schema=schemas[i];
+              entry.fieldName=fieldNames[j];
+              entry.fieldValue=currentDocument.getProperty(schemas[i],fieldNames[j]);
+              currentDocumentProperties.addItem(entry);
+            }
+          }
+        }
+      }
+
+      private function getBaseUrl():String {
+        var curUrl:String =  String( ExternalInterface.call(" function(){ return document.location.href.toString();}"));
+        var pattern:RegExp = /sm-save.swf/;
+        var baseUrl:String = curUrl.replace(pattern, "");
+        return baseUrl;
+      }
+
+      private function back() {
+        var samplesUrl:URLRequest = new URLRequest(getBaseUrl() + "sm-edit.swf");
+        navigateToURL(samplesUrl,"_self");
+      }
+
+      private function save() {
+        stateManagerActionBean.save();
+      }
+
+      private function serverSideProcessDone(event:ResultEvent):void
+      {
+        currentDocument = stateManagerActionBean.save.lastResult;
+        fetchDetailFromDoc();
+        saveCompleteLabel.visible="true";
+      }
+
+  ]]>
+  </mx:Script>
+
+   <mx:RemoteObject id="stateManagerActionBean" destination="stateManagerActionBean" fault="faultHandler(event)">
+     <mx:method name="save" result="serverSideProcessDone(event)" />
+     <mx:method name="getDocument" result="getDocumentCallBack(event)" />
+   </mx:RemoteObject>
+
+ <mx:Panel
+        title="State Management sample - Step 3/3 : Preview changes and save to repository"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+
+  <mx:Label text='Current document :uuid "{currentDocument.uid}" title : "{currentDocument.getTitle()}"'/>
+
+  <mx:Label text='Grid below lists the modified properties in your document :'/>
+  <mx:DataGrid id="propsgrid" width="100%" height="100%" rowCount="5" dataProvider="{currentDocumentProperties}">
+            <mx:columns>
+                <mx:DataGridColumn dataField="schema"  headerText="SchemaName"/>
+                <mx:DataGridColumn dataField="fieldName" headerText="Field Name"/>
+                <mx:DataGridColumn dataField="fieldValue" headerText="Field Value"/>
+            </mx:columns>
+  </mx:DataGrid>
+  <mx:HBox>
+    <mx:Button label="Back to edit" click="back()"/>
+    <mx:Button label="Save changes in repository" color="#FF0000" click="save()"/>
+  </mx:HBox>
+
+  <mx:Label color="#FF0000" id="saveCompleteLabel" text='Document saved :uuid "{currentDocument.uid}" title : "{currentDocument.getTitle()}"' visible="false"/>
+</mx:Panel>
+
+</mx:Application>

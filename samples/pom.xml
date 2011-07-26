@@ -91,6 +91,24 @@
         <version>${pom.version}</version>
         <type>swf</type>
       </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-state-management-select-swf</artifactId>
+        <version>${pom.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-state-management-edit-swf</artifactId>
+        <version>${pom.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-state-management-save-swf</artifactId>
+        <version>${pom.version}</version>
+        <type>swf</type>
+      </dependency>
       <!-- jar dependencies-->
       <dependency>
         <groupId>org.nuxeo.ecm.platform</groupId>
@@ -147,6 +165,11 @@
         <artifactId>nuxeo-platform-ui-flex-samples-vocabularies</artifactId>
         <version>${pom.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-state-management</artifactId>
+        <version>${pom.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -161,6 +184,7 @@
     <module>users</module>
     <module>vocabularies</module>
     <module>document-browser</module>
+    <module>state-management</module>
     <module>nuxeo-flex-distribution</module>
   </modules>
 

@@ -76,8 +76,13 @@ public class FlexDocumentModelExternalizer extends DefaultExternalizer {
             out.writeUTF(fdm.getIcon());
             out.writeUTF(fdm.getIconExpanded());
             out.writeBoolean(fdm.getIsFolder());
-            // only sends data : nothing is dirty for now
+            // send data
             out.writeObject(fdm.getData());
+            // send dirty fields too : useful for managing transient state on the server side
+            out.writeObject(fdm.getDirtyFields());
+            // send a Flag
+            out.writeBoolean(fdm.getDirtyFields().size()>0);
+
         }
     }
 

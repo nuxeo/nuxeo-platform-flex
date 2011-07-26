@@ -54,6 +54,9 @@ public class FlexNavigationContext implements FlexContextManager {
     protected Map<String, DocumentModelImpl> docModels = new HashMap<String, DocumentModelImpl>();
 
     public void setDocument(String name, DocumentModel doc) {
+        if (doc.getId()==null || doc.getId().equals("")) {
+            return;
+        }
         // store ref
         docRefs.put(name, doc.getRef());
         // store in Event scope cache
@@ -66,13 +69,16 @@ public class FlexNavigationContext implements FlexContextManager {
         setDocument(name, doc);
 
         DocumentModelImpl docModel = (DocumentModelImpl) doc;
-        // detach the Document from it's current session
-        try {
-            docModel.getCurrentLifeCycleState();
-            docModel.detach(true);
-        } catch (Exception e) {
-            throw new ClientRuntimeException("Unable to detach DocumentModel",
-                    e);
+
+        if (doc.getId()!=null && !doc.getId().equals("")) {
+            // detach the Document from it's current session
+            try {
+                docModel.getCurrentLifeCycleState();
+                docModel.detach(true);
+            } catch (Exception e) {
+                throw new ClientRuntimeException("Unable to detach DocumentModel",
+                        e);
+            }
         }
         docModels.put(name, docModel);
     }
@@ -127,4 +133,8 @@ public class FlexNavigationContext implements FlexContextManager {
         setDocument(CURRENT_DOCUMENT, currentDocument);
     }
 
+    public void clear(String name) {
+        docRefs.remove(name);
+        docModels.remove(name);
+    }
 }

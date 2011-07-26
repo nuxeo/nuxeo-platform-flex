@@ -1,0 +1,103 @@
+<!--
+/*
+ * (C) Copyright 2006-2011 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+-->
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+xmlns:nxnav="org.nuxeo.ecm.flex.navigation.*"
+xmlns:word="*">
+
+   <mx:Script>
+    <![CDATA[
+      import org.nuxeo.ecm.flex.dto.FlexDocumentModel;
+      import flash.external.*;
+      import mx.controls.Alert;
+      import mx.rpc.events.FaultEvent;
+      import mx.rpc.events.ResultEvent;
+      import flash.net.*;
+
+      private function faultHandler(event:FaultEvent):void {
+         Alert.show(event.fault.faultString, event.fault.faultCode.toString());
+      }
+
+      private function createDoc() {
+         var dPath:String = nxtree.selectedDocument.path;
+         var dType:String = String(docType.selectedItem);
+         var dName:String = docName.text;
+         stateManagerActionBean.createDocument(dPath,dType,dName);
+      }
+
+      private function editDoc() {
+         stateManagerActionBean.editDocument(nxtree.selectedDocument.uid);
+      }
+
+      private function getBaseUrl():String {
+        var curUrl:String =  String( ExternalInterface.call(" function(){ return document.location.href.toString();}"));
+        var pattern:RegExp = /sm-select.swf/;
+        var baseUrl:String = curUrl.replace(pattern, "");
+        return baseUrl;
+      }
+
+      private function serverSideProcessDone(event:ResultEvent):void {
+        var samplesUrl:URLRequest = new URLRequest(getBaseUrl() + "sm-edit.swf");
+        navigateToURL(samplesUrl,"_self");
+      }
+
+    ]]>
+  </mx:Script>
+
+    <mx:RemoteObject id="stateManagerActionBean" destination="stateManagerActionBean" fault="faultHandler(event)">
+      <mx:method name="createDocument" result="serverSideProcessDone(event)" />
+      <mx:method name="editDocument" result="serverSideProcessDone(event)" />
+    </mx:RemoteObject>
+
+  <mx:Panel
+      title="State Management sample - Step 1/3 : Select Document"
+      paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+
+     <mx:Label text='Select the document to edit or the container for the new document :'/>
+
+     <mx:HBox>
+       <mx:VBox>
+         <nxnav:documentTree rootPath="/" height="400" width="400" borderStyle="solid" id="nxtree"/>
+         <mx:Label id="currentDoc" text='selected document :uuid "{nxtree.selectedDocument.uid}" '/>
+       </mx:VBox>
+       <mx:VBox visible="{nxtree.selectedDocument!=null}">
+         <mx:Button label="Edit this document" click="editDoc()"/>
+         <mx:HBox visible="{nxtree.selectedDocument.isFolder()}">
+           <mx:Button label="Create new Document here" click="createDoc()"/>
+           <mx:VBox>
+             <mx:Label text='Document type:'/>
+             <mx:ComboBox id="docType">
+               <mx:ArrayCollection>
+                 <mx:String>Workspace</mx:String>
+                 <mx:String>Folder</mx:String>
+                 <mx:String>File</mx:String>
+                 <mx:String>Note</mx:String>
+               </mx:ArrayCollection>
+             </mx:ComboBox>
+           </mx:VBox>
+           <mx:VBox>
+             <mx:Label text='Document Name:'/>
+             <mx:TextInput id="docName" maxChars="20" text="newDoc"/>
+           </mx:VBox>
+         </mx:HBox>
+       </mx:VBox>
+     </mx:HBox>
+
+  </mx:Panel>
+
+</mx:Application>
