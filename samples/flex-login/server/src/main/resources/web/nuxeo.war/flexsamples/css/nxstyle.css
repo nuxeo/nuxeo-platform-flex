@@ -3,7 +3,7 @@
 
 body { height:100% }
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+html, body {
   border:0 none;
   font:normal 12px "Lucida Grande",Geneva,Arial, sans-serif;
   margin:0;
@@ -51,6 +51,7 @@ textarea { border:1px solid #dedede; font:normal 12px "Lucida Grande",Geneva,Ari
 
 .header { padding:5px 15px 7px 20px; position:absolute; top:40px }
 
+
 .externalLinks { text-align:right; background-color:#000000; padding:0 18px 13px 0 }
 
 .externalLinks span {
@@ -66,6 +67,10 @@ textarea { border:1px solid #dedede; font:normal 12px "Lucida Grande",Geneva,Ari
 
 .externalLinks a, .externalLinks a:visited { color:#94826e; display:inline-block; padding-top:3px }
 .externalLinks a:hover { color:00a1f5 }
+
+.link {font-size:9pt}
+.link a, .link a:visited { font-size:9pt; color:#94826e; display:inline-block; padding-top:3px }
+.link a:hover { color:00a1f5 }
 
 
 /* Common */
@@ -175,3 +180,10 @@ textarea { border:1px solid #dedede; font:normal 12px "Lucida Grande",Geneva,Ari
 
 .boldLabel { font-weight: bold }
 .thinLabel { color: #bbb }
+
+
+
+
+.sampleTitle { font:bold 16px "Lucida Grande",Geneva,Arial, sans-serif; margin:25px 0 10px; color:#c30000; padding:5px }
+.sampleHelp { font:italic 12px "Lucida Grande",Geneva,Arial, sans-serif; margin:25px 0 10px; color:#333333; padding:3px }
+.code {white-space:pre-line; font:11px monospace}

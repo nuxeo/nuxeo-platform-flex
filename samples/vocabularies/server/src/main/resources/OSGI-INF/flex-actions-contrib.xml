@@ -6,7 +6,7 @@
     point="actions">
 
     <action id="flexVocSample"
-      link="/flexsamples/vocabularies.swf" enabled="true" order="50"
+      link="/flexsamples/vocabularies.swf" enabled="true" order="50" icon="thumbs/flex_voc.png"
       label="Vocabularies service" help="Demonstrate how to use Nuxeo Vocabularies to populate lists" >
       <category>FLEX_SAMPLES</category>
     </action>

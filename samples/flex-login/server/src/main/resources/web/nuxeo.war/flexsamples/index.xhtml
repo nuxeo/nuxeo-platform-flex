@@ -10,22 +10,58 @@
 </head>
 
 <body class="main">
-  <h1><h:outputText value="Available Flex samples" /></h1>
-  <ui:repeat value="#{webActions.getActionsList('FLEX_SAMPLES')}"
-    var="action">
-    <li>
-    <h2><h:outputLink value="/nuxeo#{messages[action.link]}">
-      <h:outputText value="#{messages[action.label]}" />
-    </h:outputLink></h2>
-    <p><h:outputText value="#{messages[action.help]}" /></p>
-    </li>
-  </ui:repeat>
-  <br />
-  <br />
 
-  <h:outputLink value="/nuxeo/">
-    <h:outputText value="Back To JSF webapp" />
-  </h:outputLink>
+   <h1><h:outputText value="Nuxeo Flex samples" /></h1>
+
+   <div style="float:right">
+     <h:outputLink value="/nuxeo/">
+         <h:outputText value="Back To JSF webapp" />
+     </h:outputLink>
+   </div>
+
+  <table width="100%">
+    <tr>
+     <td width="50%">
+      <h2><h:outputText value="Deployed Flex samples" /></h2>
+      <ui:repeat value="#{webActions.getActionsList('FLEX_SAMPLES')}" var="action">
+        <table class="sampleTable">
+          <tr>
+            <td rowspan="2" class="sampleImage">
+            <img src="#{action.icon}" rendered="#{action.icon!=null}" width="150px"/>
+            </td>
+            <td class="sampleTitle" width="100%">
+              <h:outputLink value="/nuxeo#{messages[action.link]}">
+               <h:outputText value="#{messages[action.label]}" />
+              </h:outputLink>
+            </td>
+          </tr>
+          <tr>
+            <td class="sampleHelp" width="100%"><h:outputText value="#{messages[action.help]}" /></td>
+          </tr>
+        </table>
+        <hr/>
+      </ui:repeat>
+     </td>
+     <td>
+      <h2><h:outputText value="About Nuxeo Flex Connector" /></h2>
+
+      <h3>Getting source code</h3>
+      <div class="link"> &gt; <A href="http://hg.nuxeo.com/addons/nuxeo-platform-flex/" target="_tab">http://hg.nuxeo.com/addons/nuxeo-platform-flex/</A>
+      </div>
+      <div class="code">
+      hg clone http://hg.nuxeo.com/addons/nuxeo-platform-flex/
+mvn clean install
+      </div>
+
+      <h3>Wiki documentation</h3>
+      <div class="link"> &gt; <A href="http://doc.nuxeo.com/display/NXDOC/Flex" target="_tab">Visit Flex Connector documentation at doc.nuxeo.com</A></div>
+
+      <h3>Component documentation</h3>
+      <div class="link"> &gt; <A href="http://explorer.nuxeo.org/nuxeo/site/distribution/current/" target="_tab">Visit Flex Connector documentation at explorer.nuxeo.com</A></div>
+
+     </td>
+    </tr>
+  </table>
 
 </body>
 </html>

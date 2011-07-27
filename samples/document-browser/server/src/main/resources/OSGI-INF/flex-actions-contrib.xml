@@ -6,7 +6,7 @@
     point="actions">
 
 
-    <action id="flexdocumentBrowserSample" order="70"
+    <action id="flexdocumentBrowserSample" order="70" icon="thumbs/flex_docbrowser.png"
       link="/flexsamples/documentBrowser.swf" enabled="true"
       label="Document Explorer sample application" help="Sample Explorer buit using the building blocks provided by nuxeo-flex-components">
       <category>FLEX_SAMPLES</category>

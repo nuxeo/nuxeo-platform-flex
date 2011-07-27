@@ -5,7 +5,7 @@
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
     point="actions">
 
-    <action id="flexSimpleSample" order="10"
+    <action id="flexSimpleSample" order="10" icon="thumbs/flex_simple.png"
       link="/flexsamples/simple.swf" enabled="true"
       label="Basic remoting samples" help="Demonstrates calls from Flex to Seam Beans including marshaling between the java and the Flex side.">
       <category>FLEX_SAMPLES</category>
