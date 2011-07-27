@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="org.nuxeo.ecm.platform.ui.granite.config.facetExplorer">
 
+    <documentation>
+      Configure the required remotable services for the Runtime Service Sample
+    <documentation>
+
     <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
+      <runtime id="schemaManager" class="org.nuxeo.ecm.core.schema.SchemaManager" />
+    </extension>
 
-	<runtime id="schemaManager" class="org.nuxeo.ecm.core.schema.SchemaManager" />
-
-  </extension>
 </component>

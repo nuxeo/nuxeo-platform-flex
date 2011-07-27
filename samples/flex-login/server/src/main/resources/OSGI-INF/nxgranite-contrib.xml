@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="org.nuxeo.ecm.platform.ui.granite.config.login">
 
+    <documentation>
+      Configure the required remotable service for the Login Sample
+    <documentation>
+
     <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
-			
-			<seam id="authPingTester" />
-  </extension>
+      <seam id="authPingTester" />
+    </extension>
 </component>

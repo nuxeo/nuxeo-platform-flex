@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="org.nuxeo.ecm.platform.ui.granite.config.users">
 
+    <documentation>
+      Configure the required remotable services for the User Management Sample
+    <documentation>
+
     <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
-						
-	<seam id="flexUserService" />
-  </extension>
+      <seam id="flexUserService" />
+    </extension>
+
 </component>

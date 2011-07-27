@@ -39,7 +39,7 @@ import org.nuxeo.ecm.platform.actions.ejb.ActionManager;
 import org.nuxeo.ecm.platform.ui.web.util.SeamContextHelper;
 
 /**
- * Simple Wrapper around the {@link ActionService}
+ * High level Wrapper around the {@link ActionService}
  *
  * @author Tiry (tdelprat@nuxeo.com)
  *

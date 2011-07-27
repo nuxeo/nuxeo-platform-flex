@@ -28,11 +28,14 @@ import org.jboss.seam.annotations.Unwrap;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.repository.Repository;
 import org.nuxeo.ecm.core.api.repository.RepositoryManager;
+import org.nuxeo.ecm.platform.ui.granite.filter.NxAMFMessageFilter;
 import org.nuxeo.runtime.api.Framework;
 
 /**
  * Seam Factory component to manage the {@link CoreSession} in Seam Session
- * scope
+ * scope. The {@link CoreSession} is in fact managed by the
+ * {@link NxAMFMessageFilter}, this Seam component is only used to make the
+ * {@link CoreSession} visible and injectable as a Seam Component
  *
  * @author Tiry (tdelprat@nuxeo.com)
  *
@@ -60,7 +63,7 @@ public class FlexDocumentManager {
     }
 
     public static void release() {
-        if (session.get()!= null) {
+        if (session.get() != null) {
             try {
                 Repository.close(session.get());
             } finally {

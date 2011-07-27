@@ -28,7 +28,7 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
 
 /**
- * {@link DocumentModel} reprosentation in the Flex world
+ * {@link DocumentModel} representation in the Flex world
  *
  * Basically the {@link FlexDocumentModel} is a deconected DTO that represents a
  * {@link DocumentModel}

@@ -34,6 +34,18 @@ import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.impl.DocumentModelImpl;
 
 /**
+ * This Seam components can be used to manage {@link DocumentModel} related
+ * state on the server side. Because the {@link CoreSession} is only maintained
+ * during the scope of a HttpRequest, if you want to maintain DocumentModel
+ * across several requests, you will need to only store a {@link DocumentRef} or
+ * detach/reattach the {@link DocumentModel} This Seam beans does the work for
+ * you :
+ * <ul>
+ * <li>Store {@link DocumentRef} and re-fetch if not transient state needs to be
+ * managed (provides Event scoped cache)</li>
+ * <li>Store Detached {@link DocumentModel} and re-attach if transient state
+ * needs to be managed</li>
+ * </ul>
  *
  * @author Tiry (tdelprat@nuxeo.com)
  *
@@ -53,8 +65,13 @@ public class FlexNavigationContext implements FlexContextManager {
 
     protected Map<String, DocumentModelImpl> docModels = new HashMap<String, DocumentModelImpl>();
 
+    /**
+     * Store the {@link DocumentRef} so that {@link DocumentModel} can be easily
+     * re-fetched later. Warning : The {@link DocumentModel} Object reference
+     * returned by the associated get method will change across requests.
+     */
     public void setDocument(String name, DocumentModel doc) {
-        if (doc.getId()==null || doc.getId().equals("")) {
+        if (doc.getId() == null || doc.getId().equals("")) {
             return;
         }
         // store ref
@@ -63,6 +80,10 @@ public class FlexNavigationContext implements FlexContextManager {
         Contexts.getEventContext().set(CONTEXT_PREFIX + name, doc);
     }
 
+    /**
+     * Store the Document as a detached {@link DocumentModel} so that the Object
+     * reference (and attached DocumentModel adapters) can be kept.
+     */
     public void storeEditableDocument(String name, DocumentModel doc) {
 
         // store the ref too
@@ -70,19 +91,23 @@ public class FlexNavigationContext implements FlexContextManager {
 
         DocumentModelImpl docModel = (DocumentModelImpl) doc;
 
-        if (doc.getId()!=null && !doc.getId().equals("")) {
+        if (doc.getId() != null && !doc.getId().equals("")) {
             // detach the Document from it's current session
             try {
                 docModel.getCurrentLifeCycleState();
                 docModel.detach(true);
             } catch (Exception e) {
-                throw new ClientRuntimeException("Unable to detach DocumentModel",
-                        e);
+                throw new ClientRuntimeException(
+                        "Unable to detach DocumentModel", e);
             }
         }
         docModels.put(name, docModel);
     }
 
+    /**
+     * Return a newly fetched {@link DocumentModel} using the current
+     * {@link CoreSession}. WARN : Object reference will change across requests
+     */
     public DocumentModel getDocument(String name) {
 
         // lookup in Event scope cache
@@ -113,6 +138,10 @@ public class FlexNavigationContext implements FlexContextManager {
         return null;
     }
 
+    /**
+     * Return a reattached {@link DocumentModel}. Object reference and attached
+     * Adapters will be preserved across requests.
+     */
     public DocumentModel getStoredEditableDocument(String name) {
         if (!docModels.containsKey(name)) {
             return null;
@@ -125,23 +154,39 @@ public class FlexNavigationContext implements FlexContextManager {
         return doc;
     }
 
+    /**
+     * Shortcut for getDocument with name = currentDocument
+     */
     public DocumentModel getCurrentDocument() {
         return getDocument(CURRENT_DOCUMENT);
     }
 
+    /**
+     * Shortcut for setDocument with name = currentDocument
+     */
     public void setCurrentDocument(DocumentModel currentDocument) {
         setDocument(CURRENT_DOCUMENT, currentDocument);
     }
 
+    /**
+     * Remove the stored {@link DocumentRef} and the detached
+     * {@link DocumentModel} associated to the name
+     */
     public void removeAll(String name) {
         remove(name);
         removeStoredEditableDocument(name);
     }
 
+    /**
+     * Remove the stored {@link DocumentRef} associated to the name
+     */
     public void remove(String name) {
         docRefs.remove(name);
     }
 
+    /**
+     * Remove the stored detached {@link DocumentModel} associated to the name
+     */
     public void removeStoredEditableDocument(String name) {
         docModels.remove(name);
     }

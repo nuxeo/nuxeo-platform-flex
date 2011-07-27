@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="org.nuxeo.ecm.platform.ui.granite.config.browser">
 
-    <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
-						
-    <seam id="flexDocumentManager" source="flexRepositoryService"/>
+    <documentation>
+      Configure the required remotable service for the Browser Sample
+    <documentation>
 
-  </extension>
+    <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
+      <seam id="flexDocumentManager" source="flexRepositoryService"/>
+    </extension>
+
 </component>

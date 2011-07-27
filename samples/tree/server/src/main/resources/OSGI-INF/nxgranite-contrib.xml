@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="org.nuxeo.ecm.platform.ui.granite.config.tree">
 
+    <documentation>
+      Configure the required remotable services for the Tree Sample
+    <documentation>
+
     <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
-	
-    <seam id="flexDocumentManager" source="flexRepositoryService"/>
-  </extension>
+      <seam id="flexDocumentManager" source="flexRepositoryService"/>
+    </extension>
+
 </component>

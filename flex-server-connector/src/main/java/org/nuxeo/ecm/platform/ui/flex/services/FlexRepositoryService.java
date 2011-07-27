@@ -39,7 +39,7 @@ import org.nuxeo.ecm.platform.filemanager.api.FileManager;
 /**
  * High level wrapper around the CoreSession.
  *
- * This seam bean exposes a simple API for CRUD operation on Documents
+ * This seam bean exposes a simple API for CRUD operation on {@link DocumentModel}
  *
  * @author Tiry (tdelprat@nuxeo.com)
  *
