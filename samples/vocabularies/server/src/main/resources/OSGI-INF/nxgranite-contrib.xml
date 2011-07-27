@@ -3,7 +3,7 @@
 
     <documentation>
       Configure the required remotable services for the Vocabulary Sample
-    <documentation>
+    </documentation>
 
     <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
       <seam id="flexVocabularyService"/>

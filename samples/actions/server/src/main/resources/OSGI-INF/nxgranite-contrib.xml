@@ -3,9 +3,11 @@
 
     <documentation>
       Configure the required remotable service for the Action Sample
-    <documentation>
+    </documentation>
+
     <extension target="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService" point="services">
       <seam id="flexDocumentManager" source="flexRepositoryService"/>
       <seam id="flexActionService" />
     </extension>
+
 </component>
