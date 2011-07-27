@@ -2,13 +2,13 @@
 <component name="org.nuxeo.ecm.platform.ui.granite.config.NxGraniteConfigService">
   <documentation>
     The NxGranite configuration service provides an extension point
-    to declare what services should be remotely available via AMF.<br/>
-    NxGraniteConfigService is responsible for automatically configure GraniteDS.<br/>
+    to declare what services should be remotely available via AMF.
+    NxGraniteConfigService is responsible for automatically configure GraniteDS.
     The services exposed via Granite could be :
-    <ul>
-      <li> Seam components : only methods annotated with @WebRemote will be visible</li>
-      <li> Nuxeo Runtime Service </li>
-    </ul>
+
+      - Seam components : only methods annotated with @WebRemote will be visible
+      - Nuxeo Runtime Service
+
     @author Laurent Doguin (ldoguin@nuxeo.com)
   </documentation>
 
@@ -22,10 +22,10 @@
     <documentation>
 
     There are two available type of services:
-     <ul>
-       <li> Runtime services : needs to register the service interface name and an id</li>
-       <li> Seam Beans : needs to register the Seam bean component name and an id</li> </li>
-     </ul>
+
+       - Runtime services : needs to register the service interface name and an id
+       - Seam Beans : needs to register the Seam bean component name and an id
+
      Here is the minimum configuration to register your service:
 
       <code>
