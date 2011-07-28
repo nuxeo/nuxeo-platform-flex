@@ -170,6 +170,11 @@
         <artifactId>nuxeo-platform-ui-flex-samples-state-management</artifactId>
         <version>${pom.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-container-tab</artifactId>
+        <version>${pom.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -186,6 +191,7 @@
     <module>document-browser</module>
     <module>state-management</module>
     <module>nuxeo-flex-distribution</module>
+    <module>samples-container-tab</module>
   </modules>
 
 </project>

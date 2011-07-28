@@ -1,0 +1,17 @@
+<component name="org.nuxeo.ecm.platform.actions.flex.login">
+
+  <require>org.nuxeo.ecm.platform.actions</require>
+
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
+    point="actions">
+
+    <action id="flexLoginSample" order="45" icon="thumbs/flex_login.png"
+      link="/login.swf" enabled="true"
+      label="Flex Login sample"
+      help="Show how to login in Nuxeo from a Flex module. After you logout, you can test it directly by navigating to /nuxeo/flexsamples/">
+      <category>FLEX_SAMPLES</category>
+    </action>
+
+  </extension>
+
+</component>

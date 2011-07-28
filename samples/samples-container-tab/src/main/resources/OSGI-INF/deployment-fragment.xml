@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<fragment version="1">
+
+  <extension target="application#MODULE">
+    <module>
+      <ejb>${bundle.fileName}</ejb>
+    </module>
+  </extension>
+
+  <extension target="faces-config#NAVIGATION">
+    <navigation-case>
+      <from-outcome>flexsamples</from-outcome>
+      <to-view-id>/flexsamples/index.xhtml</to-view-id>
+      <redirect />
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>view_flexsamples</from-outcome>
+      <to-view-id>/view_flexsamples.xhtml</to-view-id>
+      <redirect />
+    </navigation-case>
+  </extension>
+
+  <install>
+    <unzip from="${bundle.fileName}" to="/" prefix="web">
+      <include>web/nuxeo.war/**</include>
+    </unzip>
+  </install>
+</fragment>
+
+

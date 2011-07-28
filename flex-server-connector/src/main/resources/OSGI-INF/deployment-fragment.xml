@@ -2,16 +2,6 @@
 
 <fragment>
 
-
-  <extension target="application#MODULE">
-
-    <module>
-      <ejb>${bundle.fileName}</ejb>
-    </module>
-
-  </extension>
-
-
   <!-- comment that to disable filter based auth -->
   <extension target="web#FILTER-MAPPING">
 
@@ -31,15 +21,6 @@
 
   </extension>
 
-  <extension target="web#CONTEXT-PARAM">
-   <!-- uncomment to restric flamingo usage
-   <context-param>
-      <param-name>flamingoConfig.webRemoteEnabled</param-name>
-      <param-value>true</param-value>
-    </context-param>
-   -->
-  </extension>
-
   <extension target="web#SERVLET">
     <servlet>
       <servlet-name>Nuxeo Flex Login Servlet</servlet-name>
@@ -52,7 +33,7 @@
       <servlet-name>Nuxeo Flex Login Servlet</servlet-name>
       <url-pattern>/flexlogin/*</url-pattern>
     </servlet-mapping>
-    
+
   </extension>
 
 
@@ -61,13 +42,13 @@
         <servlet-name>AMFMessageServlet</servlet-name>
         <servlet-class>org.granite.messaging.webapp.AMFMessageServlet</servlet-class>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>AMFMessageServlet</servlet-name>
         <url-pattern>/nuxeo-amf/*</url-pattern>
     </servlet-mapping>
-    
-      
+
+
       <filter>
         <filter-name>AMFMessageFilter</filter-name>
         <filter-class>org.nuxeo.ecm.platform.ui.granite.filter.NxAMFMessageFilter</filter-class>
@@ -77,13 +58,13 @@
         <filter-name>AMFMessageFilter</filter-name>
         <url-pattern>/nuxeo-amf/*</url-pattern>
     </filter-mapping>
-  
-  
+
+
   </extension>
 
 
 
-  
+
   <install>
 
     <!--  create a temp dir -->
