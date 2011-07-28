@@ -1,38 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <services-config>
-    <services>        
-        <service
-            id="schemaManager"
-            class="flex.messaging.services.RemotingService"
-            messageTypes="flex.messaging.messages.RemotingMessage">
-            <destination id="schemaManager">
-            <channels>      
-                <channel ref="nx-amf"/>
-            </channels>
-                <properties>
-                    <factory>nxruntimeFactory</factory>
-                    <class>org.nuxeo.ecm.core.schema.SchemaManager</class>
-                </properties>
-            
-            </destination>
-        </service>
-        
-    </services>
-   
-    <factories>
-        <factory id="nxRuntimeFactory" class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoRuntimeServiceFactory" />  
-    </factories>
+  <services>
+    <service id="schemaManager" class="flex.messaging.services.RemotingService"
+      messageTypes="flex.messaging.messages.RemotingMessage">
+      <destination id="schemaManager">
+        <channels>
+          <channel ref="nx-amf" />
+        </channels>
+        <properties>
+          <factory>nxruntimeFactory</factory>
+          <class>org.nuxeo.ecm.core.schema.SchemaManager</class>
+        </properties>
+      </destination>
+    </service>
+  </services>
 
-    <channels>
-        <channel-definition id="nx-amf" class="mx.messaging.channels.AMFChannel">
-            <endpoint
-                uri="http://{server.name}:{server.port}/nuxeo/nuxeo-amf/amf"
-                class="flex.messaging.endpoints.AMFEndpoint"/>
-        </channel-definition>
+  <factories>
+    <factory id="nxRuntimeFactory"
+      class="org.nuxeo.ecm.platform.ui.granite.factory.NuxeoRuntimeServiceFactory" />
+  </factories>
 
-        <!--server.port and server.name are resolved dynamically at run time-->
-    </channels>
-
+  <channels>
+    <channel-definition id="nx-amf" class="mx.messaging.channels.AMFChannel">
+      <!--server.port and server.name are dynamically resolved at runtime -->
+      <endpoint uri="http://{server.name}:{server.port}/nuxeo/nuxeo-amf/amf"
+        class="flex.messaging.endpoints.AMFEndpoint" />
+    </channel-definition>
+  </channels>
 
 </services-config>

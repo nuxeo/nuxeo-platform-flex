@@ -13,62 +13,260 @@
   <description>
     Nuxeo Enterprise Platform: Flex bridge based on GraniteDS
   </description>
-  <version>5.4.2-SNAPSHOT</version>
+  <version>1.1-5.4.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
+    <flex.home>${env.FLEX_HOME}</flex.home>
     <flex.sdk.version>3.2.0.3958</flex.sdk.version>
     <granite.version>1.1.0.GA</granite.version>
+    <nuxeo.flex.version>1.1-5.4.2-SNAPSHOT</nuxeo.flex.version>
   </properties>
 
   <modules>
-    <module>flex-server-connector</module>
-    <module>nuxeo-flex-components</module>
-    <module>nuxeo-flex-components-extra</module>
-    <module>samples</module>
+    <module>nuxeo-flex-connector</module>
   </modules>
 
+  <profiles>
+    <profile>
+      <id>connector</id>
+      <modules>
+        <module>nuxeo-flex-connector</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>samples</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>nuxeo-flex-connector</module>
+        <module>nuxeo-flex-components</module>
+        <module>nuxeo-flex-components-extra</module>
+        <module>samples</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>all</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <modules>
+        <module>nuxeo-flex-connector</module>
+        <module>nuxeo-flex-components</module>
+        <module>nuxeo-flex-components-extra</module>
+        <module>samples</module>
+        <module>nuxeo-flex-distribution</module>
+      </modules>
+    </profile>
+  </profiles>
+
   <dependencyManagement>
-   <dependencies>
-    <dependency>
-      <groupId>org.graniteds</groupId>
-      <artifactId>granite-seam</artifactId>
-      <version>${granite.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.graniteds</groupId>
-      <artifactId>granite-core</artifactId>
-      <version>${granite.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.nuxeo.ecm.platform</groupId>
-      <artifactId>nuxeo-platform-ui-flex-server-connector</artifactId>
-      <version>${pom.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.nuxeo.ecm.platform</groupId>
-      <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
-      <version>${pom.version}</version>
-      <type>swc</type>
-    </dependency>
-    <dependency>
-      <groupId>org.nuxeo.ecm.platform</groupId>
-      <artifactId>nuxeo-platform-ui-flex-client-components-extra</artifactId>
-      <version>${pom.version}</version>
-      <type>swc</type>
-    </dependency>
+    <dependencies>
+      <!-- Nuxeo Flex -->
       <dependency>
-        <groupId>papervision</groupId>
-        <artifactId>papervision-phunky</artifactId>
-        <version>1</version>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-server-connector</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
+        <version>${nuxeo.flex.version}</version>
         <type>swc</type>
       </dependency>
       <dependency>
-        <groupId>effects</groupId>
-        <artifactId>tweener</artifactId>
-        <version>1</version>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-client-components-extra</artifactId>
+        <version>${nuxeo.flex.version}</version>
         <type>swc</type>
       </dependency>
+
+      <!-- Nuxeo samples -->
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-sample-actions</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-actions-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-browser</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-browser-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-documentAPI</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-documentAPI-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-document-browser</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-document-browser-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-document-browser-air</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-document-browser-air-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-facet-explorer</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-facet-explorer-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-sample-login</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-sample-login</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-sample-login-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-simple</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-simple-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-tree</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-tree-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-users</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-users-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-vocabularies</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-vocabularies-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-state-management-select-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-state-management</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-state-management-edit-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-state-management-save-swf</artifactId>
+        <version>${nuxeo.flex.version}</version>
+        <type>swf</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-flex-samples-container-tab</artifactId>
+        <version>${nuxeo.flex.version}</version>
+      </dependency>
+
+      <!-- Granite -->
+      <dependency>
+        <groupId>org.graniteds</groupId>
+        <artifactId>granite-seam</artifactId>
+        <version>${granite.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.graniteds</groupId>
+        <artifactId>granite-core</artifactId>
+        <version>${granite.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.graniteds</groupId>
+        <artifactId>granite-core-swc</artifactId>
+        <version>${granite.version}</version>
+        <type>swc</type>
+      </dependency>
+      <dependency>
+        <groupId>org.graniteds</groupId>
+        <artifactId>granite-seam-swc</artifactId>
+        <version>${granite.version}</version>
+        <type>swc</type>
+      </dependency>
+
+      <!-- Flex SDK -->
       <dependency>
         <groupId>com.adobe.flex.framework</groupId>
         <artifactId>flex-framework</artifactId>
@@ -80,6 +278,20 @@
         <artifactId>air-framework</artifactId>
         <version>${flex.sdk.version}</version>
         <type>pom</type>
+      </dependency>
+
+      <!-- Third-parties -->
+      <dependency>
+        <groupId>papervision</groupId>
+        <artifactId>papervision-phunky</artifactId>
+        <version>1</version>
+        <type>swc</type>
+      </dependency>
+      <dependency>
+        <groupId>effects</groupId>
+        <artifactId>tweener</artifactId>
+        <version>1</version>
+        <type>swc</type>
       </dependency>
       <dependency>
         <groupId>com.adobe.cairngorm</groupId>
@@ -96,9 +308,9 @@
     </dependencies>
   </dependencyManagement>
 
-
-  <dependencies> 
-  <dependency>
+  <!--  -->
+  <dependencies>
+    <dependency>
       <groupId>org.nuxeo.ecm.core</groupId>
       <artifactId>nuxeo-core-api</artifactId>
     </dependency>
@@ -202,7 +414,26 @@
     </dependency>
   </dependencies>
 
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonatype.flexmojos</groupId>
+          <artifactId>flexmojos-maven-plugin</artifactId>
+          <version>3.0.0</version>
+          <extensions>true</extensions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
   <developers>
+    <developer>
+      <id>Nuxeo</id>
+      <name>Nuxeo Developers Team</name>
+      <email>nuxeo-dev@lists.nuxeo.com</email>
+      <timezone>+1</timezone>
+    </developer>
     <developer>
       <name>Thierry Delprat</name>
       <email>td@nuxeo.com</email>
@@ -214,7 +445,6 @@
       <organization>Nuxeo SAS</organization>
     </developer>
   </developers>
-
 
   <scm>
     <connection>scm:hg:http://hg.nuxeo.org/addons/nuxeo-platform-flex</connection>
@@ -228,12 +458,11 @@
         <groupId>net.sourceforge.maven-taglib</groupId>
         <artifactId>maven-taglib-plugin</artifactId>
         <configuration>
-          <taglib.src.dir>src/main/resources/WEB</taglib.src.dir>  
+          <taglib.src.dir>src/main/resources/WEB</taglib.src.dir>
         </configuration>
       </plugin>
     </plugins>
   </reporting>
-
 
   <repositories>
     <repository>
@@ -258,6 +487,5 @@
       </snapshots>
     </repository>
   </repositories>
-
 
 </project>

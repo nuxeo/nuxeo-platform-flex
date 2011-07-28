@@ -1,26 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-
   <parent>
-    <artifactId>nuxeo-platform-ui-flex-sample</artifactId>
     <groupId>org.nuxeo.ecm.platform</groupId>
-    <version>5.4.2-SNAPSHOT</version>
+    <artifactId>nuxeo-platform-ui-flex</artifactId>
+    <version>1.1-5.4.2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>nuxeo-flex-distribution</artifactId>
   <name>Nuxeo Flex Distribution</name>
   <description>
-    Nuxeo Enterprise Platform: Flex integration  based on JBoss SEAM
+    Nuxeo Enterprise Platform: Flex integration based on JBoss SEAM
   </description>
-  <packaging>pom</packaging>
+  <packaging>zip</packaging>
 
   <dependencies>
     <dependency>
       <groupId>org.graniteds</groupId>
       <artifactId>granite-core</artifactId>
-    </dependency> 
+    </dependency>
     <dependency>
       <groupId>org.graniteds</groupId>
       <artifactId>granite-seam</artifactId>
@@ -84,20 +83,11 @@
       <plugin>
         <groupId>org.nuxeo.build</groupId>
         <artifactId>nuxeo-distribution-tools</artifactId>
-        <executions>
-          <execution>
-            <id>antbuild</id>
-            <phase>package</phase>
-            <goals>
-              <goal>build</goal>
-            </goals>
-            <configuration>
-              <buildFiles>
-                <buildFile>${basedir}/src/main/assemble/assembly.xml</buildFile>
-              </buildFiles>
-            </configuration>
-          </execution>
-        </executions>
+        <configuration>
+          <buildFiles>
+            <buildFile>${basedir}/src/main/assemble/assembly.xml</buildFile>
+          </buildFiles>
+        </configuration>
       </plugin>
     </plugins>
   </build>

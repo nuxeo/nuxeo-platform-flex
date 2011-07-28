@@ -1,11 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex</artifactId>
-    <version>5.4.2-SNAPSHOT</version>
+    <version>1.1-5.4.2-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -16,182 +15,19 @@
   </description>
   <packaging>pom</packaging>
 
-  <dependencyManagement>
-    <dependencies>
-      <!-- swf dependencies-->
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-actions-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-browser-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-documentAPI-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-document-browser-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-document-browser-air-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-facet-explorer-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-sample-login</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-sample-login-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-simple-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-tree-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-users-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-vocabularies-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-state-management-select-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-state-management-edit-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-state-management-save-swf</artifactId>
-        <version>${pom.version}</version>
-        <type>swf</type>
-      </dependency>
-      <!-- jar dependencies-->
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-sample-actions</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-browser</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-documentAPI</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-document-browser</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-document-browser-air</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-facet-explorer</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-sample-login</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-simple</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-tree</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-users</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-vocabularies</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-state-management</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-platform-ui-flex-samples-container-tab</artifactId>
-        <version>${pom.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <modules>
     <module>actions</module>
     <module>browser</module>
+    <module>document-browser</module>
     <module>documentAPI</module>
     <module>facet-explorer</module>
     <module>flex-login</module>
+    <module>samples-container-tab</module>
     <module>simple</module>
+    <module>state-management</module>
     <module>tree</module>
     <module>users</module>
     <module>vocabularies</module>
-    <module>document-browser</module>
-    <module>state-management</module>
-    <module>nuxeo-flex-distribution</module>
-    <module>samples-container-tab</module>
   </modules>
 
 </project>

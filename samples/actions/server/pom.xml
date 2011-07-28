@@ -1,23 +1,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex-samples-actions-parent</artifactId>
-    <version>5.4.2-SNAPSHOT</version>
+    <version>1.1-5.4.2-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>nuxeo-platform-ui-flex-sample-actions</artifactId>
   <name>Nuxeo Actions Flex Sample Server side</name>
   <description>
-    Nuxeo Enterprise Platform: Flex Actions sample server side
-    components
+    Nuxeo Enterprise Platform: Flex Actions sample server side components
   </description>
-
-
-
 
   <dependencies>
     <dependency>
@@ -27,31 +22,32 @@
     </dependency>
   </dependencies>
 
- <build>
-        <plugins>
-            <plugin>
-                <groupId>net.israfil.mojo</groupId>
-                <artifactId>maven-flex2-plugin</artifactId>
-                <executions><execution>
-                        <id>copy-flex</id>
-                        <phase>process-classes</phase>
-                        <goals><goal>copy-flex-applications</goal></goals>
-                        <configuration>
-                            <modules>
-                                <swfModule>
-                                    <groupId>org.nuxeo.ecm.platform</groupId>
-                                    <artifactId>nuxeo-platform-ui-flex-samples-actions-swf</artifactId>
-                                    <targetPath>${project.build.directory}/classes/web/nuxeo.war/flexsamples</targetPath>
-                                    <targetFilename>actions.swf</targetFilename>
-                                </swfModule>
-                            </modules>
-                        </configuration>
-                </execution></executions>
-            </plugin>
-        </plugins>
-</build>
-
-
-
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>net.israfil.mojo</groupId>
+        <artifactId>maven-flex2-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-flex</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>copy-flex-applications</goal>
+            </goals>
+            <configuration>
+              <modules>
+                <swfModule>
+                  <groupId>org.nuxeo.ecm.platform</groupId>
+                  <artifactId>nuxeo-platform-ui-flex-samples-actions-swf</artifactId>
+                  <targetPath>${project.build.directory}/classes/web/nuxeo.war/flexsamples</targetPath>
+                  <targetFilename>actions.swf</targetFilename>
+                </swfModule>
+              </modules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

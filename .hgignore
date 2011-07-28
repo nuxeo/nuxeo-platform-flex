@@ -7,8 +7,6 @@ bin
 target
 *~
 *.orig
-samples/build.properties
-build.properties
 *.iml
 *.ipr
 *.iws

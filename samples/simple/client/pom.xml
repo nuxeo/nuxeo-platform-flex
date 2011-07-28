@@ -1,37 +1,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.nuxeo.ecm.platform</groupId>
+    <artifactId>nuxeo-platform-ui-flex-samples-simple-parent</artifactId>
+    <version>1.1-5.4.2-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
 
-	<parent>
-		<groupId>org.nuxeo.ecm.platform</groupId>
-		<artifactId>nuxeo-platform-ui-flex-samples-simple-parent</artifactId>
-		<version>5.4.2-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+  <groupId>org.nuxeo.ecm.platform</groupId>
+  <artifactId>nuxeo-platform-ui-flex-samples-simple-swf</artifactId>
+  <packaging>swf</packaging>
+  <name>Nuxeo Flex simple sample SWF</name>
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.nuxeo.ecm.platform</groupId>
-	<artifactId>nuxeo-platform-ui-flex-samples-simple-swf</artifactId>
-	<packaging>swf</packaging>
-	<name>Nuxeo Flex simple sample SWF</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.nuxeo.ecm.platform</groupId>
+      <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
+      <type>swc</type>
+    </dependency>
+  </dependencies>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.nuxeo.ecm.platform</groupId>
-			<artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
-			<type>swc</type>
-		</dependency>
-	</dependencies>
-
-	<build>
-		<sourceDirectory>src/main/flex/</sourceDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.sonatype.flexmojos</groupId>
-				<artifactId>flexmojos-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<extensions>true</extensions>
-			</plugin>
-		</plugins>
-	</build>
+  <build>
+    <sourceDirectory>src/main/flex/</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.flexmojos</groupId>
+        <artifactId>flexmojos-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

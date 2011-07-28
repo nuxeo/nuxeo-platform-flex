@@ -68,7 +68,7 @@
                 class="flex.messaging.endpoints.AMFEndpoint"/>
         </channel-definition>
 
-        <!--server.port and server.name are resolved dynamically at run time-->
+        <!--server.port and server.name are dynamically resolved at runtime-->
     </channels>
 
 

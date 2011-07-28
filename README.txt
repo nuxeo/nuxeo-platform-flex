@@ -2,38 +2,62 @@ Content :
 ---------
 
 This directory contains :
- - flex-server-connector 
-   the Nuxeo EP plugin that exposes Nuxeo API to flex clients using AMF protocol
- - nuxeo-flex-components
-   the AS SWC that contains helpers and objects necessary to exchange data with Nuxeo server
- - samples
-   some sample code
 
-For the samples, please see the README in the samples directory.
+ - nuxeo-flex-connector
+   The Nuxeo EP plugin that exposes Nuxeo API to flex clients using AMF protocol
+
+ - nuxeo-flex-components and nuxeo-flex-components-extra
+   The AS SWC that contains helpers and objects necessary to exchange data with Nuxeo server
+
+ - samples
+   This directory contains sample implementations showing how to use Nuxeo API from Flex clients.
+   All samples include a client (Flex) part and a server (Java) part.
+   The server side jar embeds the Flex part to add it as a resource to the webapp so you can download the SWF into your browser.
+
+ - nuxeo-flex-distribution
+   A sample distribution based on Nuxeo CAP and all Flex samples
+
 
 Building :
 ----------
 
-All build is managed by maven for the java part and for the swf part.
-For convenience, ant goals are also provided:
+You need Maven 2.2.1.
 
-Launch build using maven :
- - mvn clean install
+ - Build the nuxeo-flex-connector:
+   mvn package -Pconnector
 
-Launch build using ant :
- - ant install
+ - Build the samples:
+   mvn package -Psamples
+
+ - Full build (including the sample distribution):
+   mvn package -Pall
 
 
 Deploy to Nuxeo server :
 ------------------------
-To deploy the connector, you simply have to copy the flex-server-connector jar into the plugins directory of nuxeo.ear.
 
-Deploy using ant :
- - and deploy
+  * Automatic deployment (recommended):
 
-This task uses the build.properties to define the target JBoss/Nuxeo instance.
-This task runs the maven build and then copy the jar into the nuxeo.ear.
+    Look at the nuxeo-flex-distribution module and create your own distribution module
+    for automatically packaging Nuxeo with the Flex connector and other required modules.
 
-Finally copy the jars below under nuxeo.ear/libi (jboss) or nxserver/lib (tomcat):
- - granite-core-1.1.0.GA.jar
- - granite-seam-1.1.0.GA.jar
+    Such a method ensures there will be no missing libraries.
+
+  * Manual deployment:
+
+    To manually deploy the connector, you have to copy the jar from nuxeo-flex-connector/target/
+    into the plugins directory of your Nuxeo server:
+     - $NUXEO_HOME/server/default/deploy/nuxeo.ear/plugins/ (JBoss)
+     - $NUXEO_HOME/nxserver/plugins/ (Tomcat)
+
+    And to copy at least the two Granite libraries "granite-core" and "granite-seam" into:
+     - $NUXEO_HOME/server/default/deploy/nuxeo.ear/lib/ (JBoss)
+     - $NUXEO_HOME/nxserver/lib/ (Tomcat)
+
+    Note you may need to add other third-party libraries.
+
+Deploy the samples to Nuxeo server :
+------------------------------------
+    Jar files go into Nuxeo plugins directory:
+     - $NUXEO_HOME/server/default/deploy/nuxeo.ear/plugins/ (JBoss)
+     - $NUXEO_HOME/nxserver/plugins/ (Tomcat)

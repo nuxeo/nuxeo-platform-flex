@@ -1,4 +1,0 @@
-# Example for Windows
-tomcat.dir=C:/Program Files/tomcat
-# Example for Unix
-#tomcat.dir=/opt/tomcat

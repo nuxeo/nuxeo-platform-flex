@@ -1,21 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
          http://maven.apache.org/maven-v4_0_0.xsd">
-
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-platform-ui-flex-samples-document-browser-parent</artifactId>
-    <version>5.4.2-SNAPSHOT</version>
+    <version>1.1-5.4.2-SNAPSHOT</version>
   </parent>
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.nuxeo.ecm.platform</groupId>
-    <artifactId>nuxeo-platform-ui-flex-samples-document-browser-air-swf</artifactId>
-    <packaging>swf</packaging>
-    <name>Nuxeo AIR Document Browser SWF</name>
+  <artifactId>nuxeo-platform-ui-flex-samples-document-browser-air-swf</artifactId>
+  <packaging>swf</packaging>
+  <name>Nuxeo AIR Document Browser SWF</name>
 
- <dependencies>
+  <dependencies>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
@@ -39,7 +36,6 @@
       <version>3.2.0.3958</version>
       <type>pom</type>
     </dependency>
-
   </dependencies>
 
   <build>
