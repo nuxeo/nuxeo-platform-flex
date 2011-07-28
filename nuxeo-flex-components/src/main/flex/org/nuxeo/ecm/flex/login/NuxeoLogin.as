@@ -118,8 +118,7 @@ package org.nuxeo.ecm.flex.login
     private function loginResultHandler(event:ResultEvent):void
     {
       var loginResponse:String=_service.lastResult.status;
-
-      if (loginResponse=="OK")
+      if ("OK"==loginResponse)
       {
         _user=new Object();
         _user=_service.lastResult.user;
