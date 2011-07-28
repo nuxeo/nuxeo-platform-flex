@@ -24,6 +24,7 @@
   <modules>
     <module>flex-server-connector</module>
     <module>nuxeo-flex-components</module>
+    <module>nuxeo-flex-components-extra</module>
     <module>samples</module>
   </modules>
 
@@ -47,6 +48,12 @@
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
+      <version>${pom.version}</version>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.ecm.platform</groupId>
+      <artifactId>nuxeo-platform-ui-flex-client-components-extra</artifactId>
       <version>${pom.version}</version>
       <type>swc</type>
     </dependency>

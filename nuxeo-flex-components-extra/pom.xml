@@ -11,16 +11,36 @@
   </parent>
 
     <groupId>org.nuxeo.ecm.platform</groupId>
-    <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
+    <artifactId>nuxeo-platform-ui-flex-client-components-extra</artifactId>
     <packaging>swc</packaging>
-    <name>Nuxeo Flex components</name>
+    <name>Nuxeo Flex components Extra</name>
 
  <dependencies>
+   <dependency>
+    <groupId>org.nuxeo.ecm.platform</groupId>
+    <artifactId>nuxeo-platform-ui-flex-client-components</artifactId>
+    <type>swc</type>
+   </dependency>
+   <dependency>
+      <groupId>papervision</groupId>
+      <artifactId>papervision-phunky</artifactId>
+      <type>swc</type>
+    </dependency>
+    <dependency>
+      <groupId>effects</groupId>
+      <artifactId>tweener</artifactId>
+      <type>swc</type>
+    </dependency>
     <dependency>
       <groupId>com.adobe.flex.framework</groupId>
       <artifactId>flex-framework</artifactId>
       <type>pom</type>
     </dependency>   
+    <dependency>
+    <groupId>com.adobe.cairngorm</groupId>
+      <artifactId>cairngorm-bin</artifactId>
+      <type>swc</type>
+    </dependency>
     <dependency>
       <groupId>com.adobe.as3core</groupId>
       <artifactId>corelib.swc</artifactId>

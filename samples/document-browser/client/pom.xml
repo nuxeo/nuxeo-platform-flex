@@ -20,6 +20,11 @@
 			<type>swc</type>
 		</dependency>
 		<dependency>
+			<groupId>org.nuxeo.ecm.platform</groupId>
+			<artifactId>nuxeo-platform-ui-flex-client-components-extra</artifactId>
+			<type>swc</type>
+		</dependency>
+		<dependency>
 			<groupId>papervision</groupId>
 			<artifactId>papervision-phunky</artifactId>
 			<version>1</version>
