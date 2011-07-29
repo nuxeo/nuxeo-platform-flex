@@ -13,14 +13,14 @@
   <description>
     Nuxeo Enterprise Platform: Flex bridge based on GraniteDS
   </description>
-  <version>1.1-5.4.2-SNAPSHOT</version>
+  <version>1.1-5.4.2</version>
   <packaging>pom</packaging>
 
   <properties>
     <flex.home>${env.FLEX_HOME}</flex.home>
     <flex.sdk.version>3.2.0.3958</flex.sdk.version>
     <granite.version>1.1.0.GA</granite.version>
-    <nuxeo.flex.version>1.1-5.4.2-SNAPSHOT</nuxeo.flex.version>
+    <nuxeo.flex.version>1.1-5.4.2</nuxeo.flex.version>
   </properties>
 
   <modules>
