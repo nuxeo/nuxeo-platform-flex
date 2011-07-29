@@ -11,8 +11,14 @@
   xmlns:a4j="https://ajax4jsf.dev.java.net/ajax">
 
   <ui:define name="body">
+    <script>
+    function backToSamplesListing() {
+      document.getElementById('flexsampleframe').src='#{contextPath}/flexsamples/index.faces';
+      return false;
+    }
+    </script>
     <div>
-      <a href="javascript:document.getElementById('flexsampleframe').src='#{contextPath}/flexsamples/index.faces'">Back to Flex Sample Listing</a>
+      <a href="javascript:void(0)" onclick="return backToSamplesListing()">Back to Flex Sample Listing</a>
     </div>
     <iframe id="flexsampleframe" name="flexsampleframe" src="#{contextPath}/flexsamples/index.faces" frameborder="0" scrolling="auto" width="100%" height="500px">
     </iframe>
